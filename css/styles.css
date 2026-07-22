@@ -1,5 +1,5 @@
 /* ==========================================================================
-   AltilloJVG - Sistema de Estilos CSS Ampliado
+   AltilloJVG - Sistema de Estilos CSS Refinado
    Instituto Superior del Profesorado "Joaquín V. González"
    ========================================================================== */
 
@@ -14,11 +14,6 @@
   --accent-gold: hsl(38, 55%, 50%);       /* #C4933F */
   --accent-gold-dark: hsl(38, 58%, 42%);  /* #AA7C26 */
   --accent-gold-light: hsl(42, 70%, 94%); /* #FDF8EC */
-
-  /* Colores La Caravana / Agrupación Estudiantil */
-  --caravana-cyan: #009BE3;
-  --caravana-cyan-dark: #007BB5;
-  --caravana-light: #E6F5FC;
 
   /* Colores Tarjetas Especiales */
   --card-blue-bg: hsl(210, 80%, 96%);     /* #EBF3FC */
@@ -76,31 +71,6 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-}
-
-/* --- Ribbon / Banner Superior Agrupación --- */
-.caravana-top-banner {
-  background: linear-gradient(90deg, #007BB5 0%, #009BE3 50%, #00B4D8 100%);
-  color: #FFFFFF;
-  padding: 8px 16px;
-  font-size: 0.82rem;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  box-shadow: 0 2px 6px rgba(0, 155, 227, 0.2);
-}
-
-.caravana-mini-logo {
-  height: 22px;
-  width: auto;
-  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.2));
-}
-
-.caravana-quote {
-  font-style: italic;
-  letter-spacing: 0.3px;
 }
 
 /* --- Barra Superior Móvil --- */
@@ -193,6 +163,19 @@ body {
   text-transform: uppercase;
 }
 
+.caravana-subtle-tag {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 0.76rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.caravana-subtle-tag strong {
+  color: #009BE3;
+  font-weight: 600;
+}
+
 /* --- Layout Principal (Grid de 2 Columnas) --- */
 .main-container {
   max-width: 1240px;
@@ -224,7 +207,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
 .section-title-wrapper {
@@ -257,38 +240,10 @@ body {
   font-weight: 400;
 }
 
-/* Filtros por Departamento de Carreras */
-.carreras-filter-tabs {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 20px;
-  overflow-x: auto;
-  padding-bottom: 6px;
-}
-
-.filter-tab {
-  padding: 8px 16px;
-  border-radius: 20px;
-  border: 1px solid var(--border-light);
-  background-color: var(--bg-main);
-  color: var(--text-muted);
-  font-size: 0.82rem;
-  font-weight: 600;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: all var(--transition-fast);
-}
-
-.filter-tab.active, .filter-tab:hover {
-  background-color: var(--primary-navy);
-  color: #FFFFFF;
-  border-color: var(--primary-navy);
-}
-
-/* Grilla de 18 Tarjetas de Carreras */
+/* Grilla Limpia de 18 Profesorados (4 columnas en escritorio) */
 .carreras-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 16px;
   margin-bottom: 24px;
 }
@@ -297,7 +252,7 @@ body {
   background: var(--bg-surface);
   border: 1px solid var(--border-light);
   border-radius: var(--radius-md);
-  padding: 18px 14px;
+  padding: 18px 12px;
   text-decoration: none;
   color: var(--text-dark);
   display: flex;
@@ -316,9 +271,9 @@ body {
 }
 
 .carrera-card .card-icon {
-  width: 38px;
-  height: 38px;
-  margin-bottom: 10px;
+  width: 36px;
+  height: 36px;
+  margin-bottom: 8px;
   color: var(--primary-navy);
   transition: transform var(--transition-fast);
 }
@@ -337,10 +292,15 @@ body {
   margin-bottom: 4px;
 }
 
+/* Etiqueta del Departamento Oficial de la Carrera */
 .carrera-card .card-dept {
   font-size: 0.72rem;
   color: var(--text-muted);
-  font-weight: 500;
+  font-weight: 600;
+  background-color: var(--bg-main);
+  padding: 2px 8px;
+  border-radius: 10px;
+  border: 1px solid var(--border-light);
 }
 
 .carrera-card .card-arrow {
@@ -505,7 +465,7 @@ body {
   color: var(--card-green-text);
 }
 
-/* Tarjeta Materiales Estudiantiles (Naranja Novedades) */
+/* Tarjeta Horarios y Aulas */
 .side-card.horarios {
   background-color: var(--card-orange-bg);
   border-color: #FFE0B2;
@@ -577,7 +537,7 @@ body {
   opacity: 0.8;
 }
 
-/* --- Footer Institucional & Mención a La Caravana --- */
+/* --- Footer Institucional --- */
 .site-footer {
   background-color: var(--primary-navy-dark);
   color: var(--bg-surface);
@@ -636,16 +596,16 @@ body {
   color: var(--accent-gold);
 }
 
-/* Credit Badge para Estudiantes Independientes + La Caravana */
+/* Crédito sutil en pie de página */
 .footer-credits-bar {
   max-width: 1240px;
   margin: 25px auto 0 auto;
-  padding-top: 18px;
+  padding-top: 16px;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   color: #94A3B8;
   flex-wrap: wrap;
   gap: 12px;
@@ -658,9 +618,9 @@ body {
 }
 
 .caravana-footer-logo {
-  height: 26px;
+  height: 20px;
   width: auto;
-  border-radius: 4px;
+  opacity: 0.9;
 }
 
 /* --- Navegación Inferior Móvil (Bottom Nav Bar) --- */
@@ -878,13 +838,6 @@ body {
 @media (max-width: 768px) {
   body {
     padding-bottom: 65px;
-  }
-
-  .caravana-top-banner {
-    font-size: 0.75rem;
-    flex-direction: column;
-    gap: 4px;
-    text-align: center;
   }
 
   .mobile-top-bar {

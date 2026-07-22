@@ -1,22 +1,33 @@
 /**
- * AltilloJVG - Cascading Dropdowns & File Upload Logic (18 Profesorados Oficiales)
+ * AltilloJVG - Cascading Dropdowns & File Upload Logic
  * Instituto Superior del Profesorado "Joaquín V. González"
  */
 
-// Estructura Curricular de los 18 Profesorados del ISP Joaquín V. González
+// Estructura Curricular Real de los 18 Profesorados Oficiales del ISP Joaquín V. González
 const CURRICULUM_DATA = {
-  // --- Ciencias Sociales y Humanidades ---
   "Profesorado de Historia": {
     "1° Año": ["Introducción a la Historia", "Historia Antigua de Oriente y Egipto", "Historia de Grecia y Roma", "Geografía General", "Pedagogía"],
     "2° Año": ["Historia Medieval", "Historia de América I", "Historiografía", "Sociología y Antropología", "Didáctica General"],
     "3° Año": ["Historia Moderna", "Historia de América II", "Historia Argentina I", "Residencia I"],
     "4° Año": ["Historia Contemporánea", "Historia de América III", "Historia Argentina II", "Residencia II"]
   },
+  "Profesorado de Castellano, Literatura y Latín": {
+    "1° Año": ["Introducción a los Estudios Literarios", "Gramática I", "Lingüística I", "Latín I", "Pedagogía"],
+    "2° Año": ["Gramática II", "Lingüística II", "Literatura Latinoamericana I", "Latín II", "Didáctica Especial"],
+    "3° Año": ["Literatura Argentina I", "Literatura Latinoamericana II", "Semiótica", "Residencia I"],
+    "4° Año": ["Literatura Argentina II", "Literatura Universal", "Teoría Literaria", "Residencia II"]
+  },
   "Profesorado de Geografía": {
     "1° Año": ["Geografía Física I", "Geografía Humana", "Cartografía", "Pedagogía"],
     "2° Año": ["Geografía de América", "Geografía Urbana", "Geomorfología", "Didáctica Especial"],
     "3° Año": ["Geografía de Argentina", "Geografía Económica", "Geopolítica", "Residencia I"],
     "4° Año": ["Geografía Mundial Contemporánea", "Ordenamiento Territorial", "Residencia II"]
+  },
+  "Profesorado de Matemática": {
+    "1° Año": ["Álgebra I", "Análisis Matemático I", "Geometría Euclidiana", "Pedagogía"],
+    "2° Año": ["Álgebra II", "Análisis Matemático II", "Probabilidad y Estadística", "Didáctica de la Matemática I"],
+    "3° Año": ["Geometría No Euclidiana", "Análisis Matemático III", "Física General", "Residencia I"],
+    "4° Año": ["Fundamentos de la Matemática", "Ecuaciones Diferenciales", "Residencia II"]
   },
   "Profesorado de Filosofía": {
     "1° Año": ["Introducción a la Filosofía", "Historia de la Filosofía Antigua", "Lógica I", "Pedagogía"],
@@ -30,19 +41,17 @@ const CURRICULUM_DATA = {
     "3° Año": ["Psicología Evolutiva II", "Psicopatología", "Psicología Institucional", "Residencia I"],
     "4° Año": ["Psicopedagogía", "Técnicas de Evaluación", "Residencia II"]
   },
-  "Profesorado de Ciencias Jurídicas": {
+  "Profesorado de Cs. Jurídicas, Políticas y Sociales": {
     "1° Año": ["Derecho Político", "Derecho Civil I", "Teoría del Estado", "Pedagogía"],
-    "2° Año": ["Derecho Constitucional", "Derecho Penal", "Sociología Jurídica", "Didáctica de las Ciencias Jurídicas"],
+    "2° Año": ["Derecho Constitucional", "Derecho Penal", "Sociología Jurídica", "Didáctica de las Cs. Jurídicas"],
     "3° Año": ["Derecho Internacional", "Derecho Administrativo", "Economía Política", "Residencia I"],
     "4° Año": ["Derechos Humanos", "Derecho del Trabajo", "Residencia II"]
   },
-
-  // --- Lenguas Extranjeras y Literatura ---
-  "Profesorado de Lengua y Literatura": {
-    "1° Año": ["Introducción a los Estudios Literarios", "Gramática I", "Lingüística I", "Literatura Española I", "Pedagogía"],
-    "2° Año": ["Gramática II", "Lingüística II", "Literatura Latinoamericana I", "Literatura Española II", "Didáctica Especial"],
-    "3° Año": ["Literatura Argentina I", "Literatura Latinoamericana II", "Semiótica", "Residencia I"],
-    "4° Año": ["Literatura Argentina II", "Literatura Universal", "Teoría Literaria", "Residencia II"]
+  "Profesorado de Ciencias Económicas": {
+    "1° Año": ["Principios de Economía", "Contabilidad I", "Matemática Financiera", "Pedagogía"],
+    "2° Año": ["Microeconomía", "Contabilidad II", "Derecho Comercial", "Didáctica de la Economía"],
+    "3° Año": ["Macroeconomía", "Administración de Empresas", "Finanzas Públicas", "Residencia I"],
+    "4° Año": ["Economía Argentina", "Sistemas de Información Contable", "Residencia II"]
   },
   "Profesorado de Inglés": {
     "1° Año": ["Lengua Inglesa I", "Fonética y Fonología I", "Gramática Inglesa I", "Pedagogía"],
@@ -62,13 +71,17 @@ const CURRICULUM_DATA = {
     "3° Año": ["Lengua Italiana III", "Literatura Italiana I", "Residencia I"],
     "4° Año": ["Lengua Italiana IV", "Literatura Italiana II", "Residencia II"]
   },
-
-  // --- Ciencias Exactas y Naturales ---
-  "Profesorado de Matemática": {
-    "1° Año": ["Álgebra I", "Análisis Matemático I", "Geometría Euclidiana", "Pedagogía"],
-    "2° Año": ["Álgebra II", "Análisis Matemático II", "Probabilidad y Estadística", "Didáctica de la Matemática I"],
-    "3° Año": ["Geometría No Euclidiana", "Análisis Matemático III", "Física General", "Residencia I"],
-    "4° Año": ["Fundamentos de la Matemática", "Ecuaciones Diferenciales", "Residencia II"]
+  "Profesorado de Alemán": {
+    "1° Año": ["Lengua Alemana I", "Fonética Alemana I", "Gramática Alemana I", "Pedagogía"],
+    "2° Año": ["Lengua Alemana II", "Cultura Alemana", "Didáctica del Alemán"],
+    "3° Año": ["Lengua Alemana III", "Literatura Alemana I", "Residencia I"],
+    "4° Año": ["Lengua Alemana IV", "Literatura Alemana II", "Residencia II"]
+  },
+  "Profesorado de Portugués": {
+    "1° Año": ["Lengua Portuguesa I", "Fonética Portuguesa I", "Gramática Portuguesa I", "Pedagogía"],
+    "2° Año": ["Lengua Portuguesa II", "Cultura Brasilera/Portuguesa", "Didáctica del Portugués"],
+    "3° Año": ["Lengua Portuguesa III", "Literatura en Lengua Portuguesa I", "Residencia I"],
+    "4° Año": ["Lengua Portuguesa IV", "Literatura en Lengua Portuguesa II", "Residencia II"]
   },
   "Profesorado de Física": {
     "1° Año": ["Física General I", "Álgebra Lineal", "Análisis Matemático I", "Pedagogía"],
@@ -94,25 +107,11 @@ const CURRICULUM_DATA = {
     "3° Año": ["Ecología y Medio Ambiente", "Astronomía", "Residencia I"],
     "4° Año": ["Epistemología de las Ciencias", "Proyecto de Investigación", "Residencia II"]
   },
-
-  // --- Educación, Economía e Informática ---
   "Profesorado de Educación Primaria": {
     "1° Año": ["Taller de Lectura y Escritura", "Matemática I", "Ciencias Sociales I", "Pedagogía"],
     "2° Año": ["Prácticas del Lenguaje I", "Ciencias Naturales I", "Psicología Educacional", "Didáctica General"],
     "3° Año": ["Matemática II", "Sujetos de la Educación Primaria", "Residencia I"],
     "4° Año": ["Ateneo de Prácticas", "Educación Inclusiva", "Residencia II"]
-  },
-  "Profesorado de Educación Inicial": {
-    "1° Año": ["Sujeto de la Educación Inicial I", "Juego y Desarrollo", "Lenguaje Musical", "Pedagogía"],
-    "2° Año": ["Didáctica de la Educación Inicial", "Literatura Infantil", "Expresión Corporal"],
-    "3° Año": ["Sujeto de la Educación Inicial II", "Prácticas del Lenguaje en el Jardín", "Residencia I"],
-    "4° Año": ["Taller de Juego Tradicional", "Gestión Institucional", "Residencia II"]
-  },
-  "Profesorado de Economía": {
-    "1° Año": ["Principios de Economía", "Contabilidad I", "Matemática Financiera", "Pedagogía"],
-    "2° Año": ["Microeconomía", "Contabilidad II", "Derecho Comercial", "Didáctica de la Economía"],
-    "3° Año": ["Macroeconomía", "Administración de Empresas", "Finanzas Públicas", "Residencia I"],
-    "4° Año": ["Economía Argentina", "Sistemas de Información Contable", "Residencia II"]
   },
   "Profesorado de Informática": {
     "1° Año": ["Algoritmos y Programación I", "Arquitectura de Computadoras", "Matemática Discreta", "Pedagogía"],

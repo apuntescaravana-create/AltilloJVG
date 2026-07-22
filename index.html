@@ -13,14 +13,6 @@
 <body>
 
   <!-- ==========================================================================
-       0. RIBBON BANNER DE AGRUPACIÓN ESTUDIANTIL (La Caravana)
-       ========================================================================== -->
-  <div class="caravana-top-banner">
-    <img src="assets/logo-caravana.svg" alt="La Caravana Logo" class="caravana-mini-logo">
-    <span class="caravana-quote">"Por una educación pública, gratuita, popular y de calidad. Construyendo el Joaquín que queremos."</span>
-  </div>
-
-  <!-- ==========================================================================
        1. BARRA SUPERIOR MÓVIL (Top Bar Mobile)
        ========================================================================== -->
   <div class="mobile-top-bar" aria-label="Menú superior celular">
@@ -52,6 +44,7 @@
           </svg>
         </div>
         <p class="brand-subtitle">REPOSITORIO DIGITAL DEL INSTITUTO DE FORMACIÓN DOCENTE</p>
+        <p class="caravana-subtle-tag">Desarrollado colaborativamente por <strong>estudiantes independientes + La Caravana</strong></p>
       </div>
     </div>
   </header>
@@ -65,7 +58,7 @@
       <!-- COLUMNA IZQUIERDA: Panel de Carreras y Recursos -->
       <div class="left-content-area">
         
-        <!-- SECCIÓN 1: Todas las Carreras (18 Profesorados) -->
+        <!-- SECCIÓN 1: Todas las Carreras (18 Profesorados Reales del JVG) -->
         <section class="section-card" id="carrerasSection">
           <div class="section-header">
             <div class="section-title-wrapper">
@@ -77,185 +70,176 @@
               </div>
               <div>
                 <h2 class="section-title">Todas las Carreras</h2>
-                <p class="section-description">Explorá los apuntes y finales por departamento del Joaquín (18 Profesorados).</p>
+                <p class="section-description">Explorá los documentos por carrera (18 Profesorados).</p>
               </div>
             </div>
           </div>
 
-          <!-- Tabs de Filtro por Departamento -->
-          <div class="carreras-filter-tabs">
-            <button class="filter-tab active" data-filter="all">Todos (18)</button>
-            <button class="filter-tab" data-filter="sociales">Sociales & Humanidades</button>
-            <button class="filter-tab" data-filter="lenguas">Lenguas & Literatura</button>
-            <button class="filter-tab" data-filter="exactas">Exactas & Naturales</button>
-            <button class="filter-tab" data-filter="otros">Educación & Tecnología</button>
-          </div>
-
-          <!-- Grilla de Tarjetas de los 18 Profesorados -->
+          <!-- Grilla Limpia de las 18 Carreras Reales con sus Departamentos Oficiales -->
           <div class="carreras-grid" id="carrerasGrid">
 
             <!-- 1. Historia -->
-            <a href="#" class="carrera-card" data-dept="sociales">
+            <a href="#" class="carrera-card">
               <svg class="card-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M4 22h16v-2H4v2zm2-4h2V8H6v10zm5 0h2V8h-2v10zm5 0h2V8h-2v10zM2 6h20V4H2v2zm10-5L2 4h20L12 1z"/>
               </svg>
               <span class="card-title">Profesorado de Historia</span>
-              <span class="card-dept">Sociales</span>
+              <span class="card-dept">Dpto. Historia</span>
             </a>
 
-            <!-- 2. Geografía -->
-            <a href="#" class="carrera-card" data-dept="sociales">
-              <svg class="card-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-              </svg>
-              <span class="card-title">Profesorado de Geografía</span>
-              <span class="card-dept">Sociales</span>
-            </a>
-
-            <!-- 3. Filosofía -->
-            <a href="#" class="carrera-card" data-dept="sociales">
-              <svg class="card-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
-              </svg>
-              <span class="card-title">Profesorado de Filosofía</span>
-              <span class="card-dept">Humanidades</span>
-            </a>
-
-            <!-- 4. Psicología -->
-            <a href="#" class="carrera-card" data-dept="sociales">
-              <svg class="card-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
-              </svg>
-              <span class="card-title">Profesorado de Psicología</span>
-              <span class="card-dept">Humanidades</span>
-            </a>
-
-            <!-- 5. Ciencias Jurídicas -->
-            <a href="#" class="carrera-card" data-dept="sociales">
-              <svg class="card-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M3 6l9-4 9 4v10a2 2 0 01-2 2H5a2 2 0 01-2-2V6z"/>
-              </svg>
-              <span class="card-title">Profesorado de Cs. Jurídicas</span>
-              <span class="card-dept">Sociales</span>
-            </a>
-
-            <!-- 6. Lengua y Literatura -->
-            <a href="#" class="carrera-card" data-dept="lenguas">
+            <!-- 2. Castellano, Literatura y Latín -->
+            <a href="#" class="carrera-card">
               <svg class="card-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
               </svg>
               <span class="card-title">Lengua y Literatura</span>
-              <span class="card-dept">Lenguas</span>
+              <span class="card-dept">Dpto. LyL</span>
             </a>
 
-            <!-- 7. Inglés -->
-            <a href="#" class="carrera-card" data-dept="lenguas">
+            <!-- 3. Geografía -->
+            <a href="#" class="carrera-card">
               <svg class="card-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M3 5h18M3 12h18M3 19h18"/>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
               </svg>
-              <span class="card-title">Profesorado de Inglés</span>
-              <span class="card-dept">Lenguas</span>
+              <span class="card-title">Profesorado de Geografía</span>
+              <span class="card-dept">Dpto. Geografía</span>
             </a>
 
-            <!-- 8. Francés -->
-            <a href="#" class="carrera-card" data-dept="lenguas">
-              <svg class="card-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9 9 0 100-18 9 9 0 000 18z"/>
-              </svg>
-              <span class="card-title">Profesorado de Francés</span>
-              <span class="card-dept">Lenguas</span>
-            </a>
-
-            <!-- 9. Italiano -->
-            <a href="#" class="carrera-card" data-dept="lenguas">
-              <svg class="card-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M7 8h10M7 12h10M7 16h10"/>
-              </svg>
-              <span class="card-title">Profesorado de Italiano</span>
-              <span class="card-dept">Lenguas</span>
-            </a>
-
-            <!-- 10. Matemática -->
-            <a href="#" class="carrera-card" data-dept="exactas">
+            <!-- 4. Matemática -->
+            <a href="#" class="carrera-card">
               <svg class="card-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                 <rect x="4" y="3" width="16" height="18" rx="2"/>
                 <line x1="8" y1="7" x2="16" y2="7"/>
                 <line x1="8" y1="12" x2="16" y2="12"/>
               </svg>
               <span class="card-title">Profesorado de Matemática</span>
-              <span class="card-dept">Exactas</span>
+              <span class="card-dept">Dpto. Matemática</span>
             </a>
 
-            <!-- 11. Física -->
-            <a href="#" class="carrera-card" data-dept="exactas">
+            <!-- 5. Filosofía -->
+            <a href="#" class="carrera-card">
+              <svg class="card-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+              </svg>
+              <span class="card-title">Profesorado de Filosofía</span>
+              <span class="card-dept">Filo, Psico y Cs. Ed.</span>
+            </a>
+
+            <!-- 6. Psicología -->
+            <a href="#" class="carrera-card">
+              <svg class="card-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+              </svg>
+              <span class="card-title">Profesorado de Psicología</span>
+              <span class="card-dept">Filo, Psico y Cs. Ed.</span>
+            </a>
+
+            <!-- 7. Ciencias Jurídicas -->
+            <a href="#" class="carrera-card">
+              <svg class="card-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 6l9-4 9 4v10a2 2 0 01-2 2H5a2 2 0 01-2-2V6z"/>
+              </svg>
+              <span class="card-title">Profesorado de Cs. Jurídicas</span>
+              <span class="card-dept">Dpto. Cs. Jurídicas</span>
+            </a>
+
+            <!-- 8. Ciencias Económicas -->
+            <a href="#" class="carrera-card">
+              <svg class="card-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V6m0 8v2m0-6c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+              <span class="card-title">Profesorado de Cs. Económicas</span>
+              <span class="card-dept">Dpto. Cs. Económicas</span>
+            </a>
+
+            <!-- 9. Inglés -->
+            <a href="#" class="carrera-card">
+              <svg class="card-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 5h18M3 12h18M3 19h18"/>
+              </svg>
+              <span class="card-title">Profesorado de Inglés</span>
+              <span class="card-dept">Dpto. Inglés</span>
+            </a>
+
+            <!-- 10. Francés -->
+            <a href="#" class="carrera-card">
+              <svg class="card-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9 9 0 100-18 9 9 0 000 18z"/>
+              </svg>
+              <span class="card-title">Profesorado de Francés</span>
+              <span class="card-dept">Dpto. Francés</span>
+            </a>
+
+            <!-- 11. Italiano -->
+            <a href="#" class="carrera-card">
+              <svg class="card-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M7 8h10M7 12h10M7 16h10"/>
+              </svg>
+              <span class="card-title">Profesorado de Italiano</span>
+              <span class="card-dept">Dpto. Italiano</span>
+            </a>
+
+            <!-- 12. Alemán -->
+            <a href="#" class="carrera-card">
+              <svg class="card-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 3v18h14V3H5z"/>
+              </svg>
+              <span class="card-title">Profesorado de Alemán</span>
+              <span class="card-dept">Dpto. Alemán</span>
+            </a>
+
+            <!-- 13. Portugués -->
+            <a href="#" class="carrera-card">
+              <svg class="card-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3L2 12l10 9 10-9-10-9z"/>
+              </svg>
+              <span class="card-title">Profesorado de Portugués</span>
+              <span class="card-dept">Dpto. Portugués</span>
+            </a>
+
+            <!-- 14. Física -->
+            <a href="#" class="carrera-card">
               <svg class="card-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
               </svg>
               <span class="card-title">Profesorado de Física</span>
-              <span class="card-dept">Exactas</span>
+              <span class="card-dept">Dpto. Física</span>
             </a>
 
-            <!-- 12. Química -->
-            <a href="#" class="carrera-card" data-dept="exactas">
+            <!-- 15. Química -->
+            <a href="#" class="carrera-card">
               <svg class="card-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L5.605 15.12a2 2 0 00-1.806.547M8 4h8l-1 5.5a4 4 0 01-1.5 2.7l-1.5 1.1a4 4 0 01-4 0l-1.5-1.1A4 4 0 016 9.5L5 4h3z"/>
               </svg>
               <span class="card-title">Profesorado de Química</span>
-              <span class="card-dept">Naturales</span>
+              <span class="card-dept">Dpto. Química</span>
             </a>
 
-            <!-- 13. Biología -->
-            <a href="#" class="carrera-card" data-dept="exactas">
+            <!-- 16. Biología -->
+            <a href="#" class="carrera-card">
               <svg class="card-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
               </svg>
               <span class="card-title">Profesorado de Biología</span>
-              <span class="card-dept">Naturales</span>
+              <span class="card-dept">Dpto. Biología</span>
             </a>
 
-            <!-- 14. Ciencias Naturales -->
-            <a href="#" class="carrera-card" data-dept="exactas">
+            <!-- 17. Ciencias Naturales -->
+            <a href="#" class="carrera-card">
               <svg class="card-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v18m9-9H3"/>
               </svg>
               <span class="card-title">Ciencias Naturales</span>
-              <span class="card-dept">Naturales</span>
+              <span class="card-dept">Dpto. Cs. Naturales</span>
             </a>
 
-            <!-- 15. Educación Primaria -->
-            <a href="#" class="carrera-card" data-dept="otros">
+            <!-- 18. Educación Primaria -->
+            <a href="#" class="carrera-card">
               <svg class="card-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
               </svg>
               <span class="card-title">Educación Primaria</span>
-              <span class="card-dept">Pedagogía</span>
-            </a>
-
-            <!-- 16. Educación Inicial -->
-            <a href="#" class="carrera-card" data-dept="otros">
-              <svg class="card-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-              </svg>
-              <span class="card-title">Educación Inicial</span>
-              <span class="card-dept">Pedagogía</span>
-            </a>
-
-            <!-- 17. Economía -->
-            <a href="#" class="carrera-card" data-dept="otros">
-              <svg class="card-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V6m0 8v2m0-6c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-              </svg>
-              <span class="card-title">Educación Comercial</span>
-              <span class="card-dept">Economía</span>
-            </a>
-
-            <!-- 18. Informática -->
-            <a href="#" class="carrera-card" data-dept="otros">
-              <svg class="card-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-              </svg>
-              <span class="card-title">Profesorado de Informática</span>
-              <span class="card-dept">Tecnología</span>
+              <span class="card-dept">Dpto. Ed. Primaria</span>
             </a>
 
           </div>
@@ -292,7 +276,7 @@
           </div>
         </section>
 
-        <!-- SECCIÓN 2: Materiales e Información Útil del Estudiante (Nuevo Apartado) -->
+        <!-- SECCIÓN 2: Materiales e Información Útil del Estudiante -->
         <section class="section-card" id="recursosSection">
           <div class="section-header">
             <div class="section-title-wrapper">
@@ -318,7 +302,7 @@
               </div>
               <div>
                 <h4 class="resource-box-title">Horarios de Cursada y Aulas</h4>
-                <p class="resource-box-desc">Distribución por turnos (Mañana, Tarde, Noche) y asignación de aulas.</p>
+                <p class="resource-box-desc">Distribución por turnos (Mañana, Tarde, Noche) y asignación de salones.</p>
               </div>
             </a>
 
@@ -464,14 +448,14 @@
       </nav>
     </div>
 
-    <!-- Barra de Crédito a la Agrupación Estudiantil -->
+    <!-- Barra de Créditos sutil -->
     <div class="footer-credits-bar">
       <div class="caravana-credit">
         <img src="assets/logo-caravana.svg" alt="Logo La Caravana" class="caravana-footer-logo">
-        <span>Desarrollado de manera colaborativa por <strong>estudiantes independientes + La Caravana</strong> (Patria Grande en el Joaquín).</span>
+        <span>Creado por <strong>estudiantes independientes + La Caravana</strong> (Patria Grande en el Joaquín).</span>
       </div>
       <div>
-        <span>AltilloJVG © 2026 - Repositorio Estudiantil Libre</span>
+        <span>AltilloJVG © 2026 - Repositorio Estudiantil</span>
       </div>
     </div>
   </footer>
