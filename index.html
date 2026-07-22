@@ -6,8 +6,8 @@
   <title>AltilloJVG | Repositorio Digital del Instituto Joaquín V. González</title>
   <meta name="description" content="Plataforma colaborativa y repositorio digital para alumnos del Instituto Superior del Profesorado Joaquín V. González. Resúmenes, parciales, normativas y planes de estudio impulsados por estudiantes independientes y La Caravana.">
 
-  <!-- Estilos y Fuentes con Cache Buster v=4 -->
-  <link rel="stylesheet" href="css/styles.css?v=4">
+  <!-- Estilos y Fuentes con Cache Buster v=5 -->
+  <link rel="stylesheet" href="css/styles.css?v=5">
   <link rel="icon" type="image/svg+xml" href="assets/logo-owl.svg">
 </head>
 <body>
@@ -580,7 +580,25 @@
     </div>
   </div>
 
+  <!-- ==========================================================================
+       7. MODAL DINÁMICO DE RECURSOS INSTITUCIONALES
+       ========================================================================== -->
+  <div class="modal-overlay" id="infoModal">
+    <div class="modal-container" style="max-width: 680px;">
+      <div class="modal-header">
+        <h3 class="modal-header-title" id="infoModalTitle">
+          Información Institucional
+        </h3>
+        <button class="modal-close-btn" id="closeInfoModalBtn">&times;</button>
+      </div>
+      <div class="modal-body" id="infoModalBody" style="max-height: 75vh; overflow-y: auto;">
+        <!-- Contenido inyectado dinámicamente -->
+      </div>
+    </div>
+  </div>
+
   <!-- Scripts JavaScript -->
+  <script src="data/resources_data.js"></script>
   <script src="js/main.js"></script>
   <script src="js/upload_form.js"></script>
 </body>
