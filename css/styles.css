@@ -1,5 +1,5 @@
 /* ==========================================================================
-   AltilloJVG - Paleta de Colores Inspirada en La Caravana
+   AltilloJVG - Sistema de Estilos CSS Refinado (Paleta Cyan La Caravana)
    Instituto Superior del Profesorado "Joaquín V. González"
    ========================================================================== */
 
@@ -9,40 +9,42 @@
 /* --- Design Tokens & CSS Variables --- */
 :root {
   /* Paleta Inspirada en La Caravana */
-  --primary-cyan: hsl(199, 100%, 45%);     /* #009BE3 - Cyan Principal La Caravana */
-  --primary-cyan-dark: hsl(204, 100%, 35%);/* #007BB5 - Azul Medio */
-  --primary-navy: hsl(212, 72%, 16%);      /* #0B2545 - Azul Noche Institucional */
+  --primary-cyan: #009BE3;                 /* Cyan Caravana Original */
+  --primary-cyan-dark: #007BB5;            /* Azul Cyan Intenso */
+  --primary-cyan-light: #E6F5FC;           /* Celeste Glaciar Suave */
+  --primary-navy: #0B2545;                 /* Azul Noche para contraste */
   
   /* Acentos de Color */
-  --accent-gold: hsl(38, 70%, 50%);        /* #D99B26 - Dorado Cálido CTA */
-  --accent-gold-dark: hsl(38, 75%, 40%);   /* #B57E19 */
+  --accent-gold: #D99B26;                  /* Dorado Cálido CTA */
+  --accent-gold-dark: #B57E19;             /* Dorado Oscuro */
 
-  /* Colores Tarjetas Especiales */
-  --card-blue-bg: hsl(199, 85%, 95%);     /* #E6F5FC - Fondo Celeste Claro */
-  --card-blue-text: hsl(204, 100%, 30%);   /* #005F8C */
+  /* Colores Tarjetas */
+  --card-blue-bg: #E6F5FC;
+  --card-blue-text: #005F8C;
 
-  --card-green-bg: hsl(145, 50%, 94%);    /* #E4F7EC - Verde Menta */
-  --card-green-text: hsl(150, 60%, 20%);  /* #105932 */
+  --card-green-bg: #E4F7EC;
+  --card-green-text: #105932;
 
-  --card-orange-bg: hsl(35, 100%, 95%);   /* #FFF3E0 - Naranja Miel */
-  --card-orange-text: hsl(25, 90%, 32%);   /* #C65100 */
+  --card-orange-bg: #FFF3E0;
+  --card-orange-text: #C65100;
 
   /* Fondos y Neutros */
-  --bg-main: hsl(205, 40%, 98%);          /* #F3F8FC - Fondo suave azulado */
-  --bg-surface: hsl(0, 0%, 100%);         /* #FFFFFF */
-  --text-dark: hsl(212, 40%, 15%);        /* #132238 */
-  --text-muted: hsl(210, 20%, 48%);       /* #60738A */
-  --border-light: hsl(202, 35%, 90%);     /* #D9E7F4 */
+  --bg-main: #F3F8FC;                      /* Fondo celeste muy suave */
+  --bg-surface: #FFFFFF;                   /* Blanco puro */
+  --text-dark: #0F172A;                    /* Texto principal oscuro */
+  --text-muted: #64748B;                   /* Texto secundario */
+  --border-light: #CBD5E1;                 /* Borde sutil */
+  --border-cyan: #BEE3F8;                  /* Borde cian sutil */
 
   /* Tipografías */
   --font-heading: 'Outfit', sans-serif;
   --font-body: 'Inter', sans-serif;
 
   /* Sombras y Elevaciones */
-  --shadow-sm: 0 2px 6px rgba(0, 155, 227, 0.05);
-  --shadow-md: 0 8px 18px -4px rgba(11, 37, 69, 0.08);
-  --shadow-lg: 0 14px 28px -6px rgba(11, 37, 69, 0.12);
-  --shadow-gold: 0 8px 20px rgba(217, 155, 38, 0.25);
+  --shadow-sm: 0 2px 6px rgba(0, 155, 227, 0.08);
+  --shadow-md: 0 8px 20px -4px rgba(0, 155, 227, 0.15);
+  --shadow-lg: 0 14px 28px -6px rgba(11, 37, 69, 0.15);
+  --shadow-cyan: 0 8px 22px rgba(0, 155, 227, 0.3);
 
   /* Transiciones */
   --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -82,7 +84,7 @@ body {
   align-items: center;
   padding: 12px 20px;
   background-color: var(--bg-surface);
-  border-bottom: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border-cyan);
 }
 
 .mobile-top-bar button {
@@ -95,10 +97,10 @@ body {
 
 /* --- Header / Banner Principal (Hero) --- */
 .hero-header {
-  background: radial-gradient(circle at 50% 30%, #FFFFFF 0%, #EAF4FC 100%);
+  background: radial-gradient(circle at 50% 30%, #FFFFFF 0%, #E6F5FC 100%);
   padding: 35px 20px 25px 20px;
   text-align: center;
-  border-bottom: 2px solid var(--primary-cyan);
+  border-bottom: 3px solid var(--primary-cyan);
   position: relative;
   overflow: hidden;
 }
@@ -115,7 +117,7 @@ body {
 .hero-logo-img {
   width: 140px;
   height: auto;
-  filter: drop-shadow(0 4px 12px rgba(0, 155, 227, 0.15));
+  filter: drop-shadow(0 4px 14px rgba(0, 155, 227, 0.25));
 }
 
 .hero-titles {
@@ -178,6 +180,32 @@ body {
   font-weight: 700;
 }
 
+/* --- Botón CTA Móvil Destacado --- */
+.mobile-hero-cta {
+  display: none;
+  margin-top: 16px;
+}
+
+.btn-mobile-upload {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 320px;
+  padding: 12px 20px;
+  background: linear-gradient(135deg, var(--primary-cyan) 0%, var(--primary-cyan-dark) 100%);
+  color: #FFFFFF;
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 700;
+  border-radius: 30px;
+  text-decoration: none;
+  box-shadow: var(--shadow-cyan);
+  border: none;
+  cursor: pointer;
+}
+
 /* --- Layout Principal --- */
 .main-container {
   max-width: 1240px;
@@ -199,7 +227,7 @@ body {
   background: var(--bg-surface);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
-  border: 1px solid var(--border-light);
+  border: 1px solid var(--border-cyan);
   padding: 28px;
   position: relative;
   margin-bottom: 24px;
@@ -222,7 +250,7 @@ body {
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background-color: var(--card-blue-bg);
+  background-color: var(--primary-cyan-light);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -233,7 +261,7 @@ body {
   font-family: var(--font-heading);
   font-size: 1.4rem;
   font-weight: 700;
-  color: var(--text-dark);
+  color: var(--primary-navy);
 }
 
 .section-description {
@@ -250,8 +278,8 @@ body {
 }
 
 .resource-box {
-  background-color: var(--bg-main);
-  border: 1px solid var(--border-light);
+  background-color: #FAFDFF;
+  border: 1px solid var(--border-cyan);
   border-radius: var(--radius-md);
   padding: 18px;
   display: flex;
@@ -273,11 +301,11 @@ body {
   width: 42px;
   height: 42px;
   border-radius: 10px;
-  background-color: var(--card-blue-bg);
+  background-color: var(--primary-cyan);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--primary-cyan);
+  color: #FFFFFF;
   flex-shrink: 0;
 }
 
@@ -295,7 +323,7 @@ body {
   line-height: 1.3;
 }
 
-/* --- Grilla de Carreras (Ubicada Abajo) --- */
+/* --- Grilla de Carreras --- */
 .carreras-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -305,7 +333,7 @@ body {
 
 .carrera-card {
   background: var(--bg-surface);
-  border: 1px solid var(--border-light);
+  border: 1px solid var(--border-cyan);
   border-radius: var(--radius-md);
   padding: 18px 12px;
   text-decoration: none;
@@ -351,27 +379,27 @@ body {
   font-size: 0.72rem;
   color: var(--primary-cyan-dark);
   font-weight: 600;
-  background-color: var(--card-blue-bg);
+  background-color: var(--primary-cyan-light);
   padding: 3px 10px;
   border-radius: 12px;
 }
 
 /* Barra Inferior de Características */
 .features-strip {
-  background-color: var(--bg-main);
+  background-color: #FAFDFF;
   border-radius: var(--radius-md);
   padding: 16px 20px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 16px;
-  border: 1px solid var(--border-light);
+  border: 1px solid var(--border-cyan);
 }
 
 .feature-item {
   display: flex;
   align-items: center;
   gap: 12px;
-  border-right: 1px solid var(--border-light);
+  border-right: 1px solid var(--border-cyan);
   padding-right: 12px;
 }
 
@@ -419,30 +447,30 @@ body {
   box-shadow: var(--shadow-md);
 }
 
-/* Tarjeta Normativa (Celeste Claro) */
+/* Tarjeta Normativa */
 .side-card.normativa {
   background-color: var(--card-blue-bg);
-  border-color: #CBE6F6;
+  border-color: #BEE3F8;
 }
 
 .side-card.normativa .side-card-icon {
-  background-color: #BBE0F5;
-  color: var(--card-blue-text);
+  background-color: var(--primary-cyan);
+  color: #FFFFFF;
 }
 
 .side-card.normativa .side-card-title {
-  color: var(--card-blue-text);
+  color: var(--primary-navy);
 }
 
-/* Tarjeta Planes (Verde Claro) */
+/* Tarjeta Planes */
 .side-card.planes {
   background-color: var(--card-green-bg);
   border-color: #C8EEDB;
 }
 
 .side-card.planes .side-card-icon {
-  background-color: #B2E5CB;
-  color: var(--card-green-text);
+  background-color: #2E7D32;
+  color: #FFFFFF;
 }
 
 .side-card.planes .side-card-title {
@@ -456,32 +484,32 @@ body {
 }
 
 .side-card.horarios .side-card-icon {
-  background-color: #FFCC80;
-  color: var(--card-orange-text);
+  background-color: #E65100;
+  color: #FFFFFF;
 }
 
 .side-card.horarios .side-card-title {
   color: var(--card-orange-text);
 }
 
-/* Tarjeta CTA Subí tus documentos (Dorado Cálido) */
+/* Tarjeta CTA Subí tus documentos (Cyan Caravana) */
 .side-card.cta-upload {
-  background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-gold-dark) 100%);
-  color: var(--bg-surface);
-  box-shadow: var(--shadow-gold);
+  background: linear-gradient(135deg, var(--primary-cyan) 0%, var(--primary-cyan-dark) 100%);
+  color: #FFFFFF;
+  box-shadow: var(--shadow-cyan);
 }
 
 .side-card.cta-upload .side-card-icon {
   background-color: rgba(255, 255, 255, 0.25);
-  color: var(--bg-surface);
+  color: #FFFFFF;
 }
 
 .side-card.cta-upload .side-card-title {
-  color: var(--bg-surface);
+  color: #FFFFFF;
 }
 
 .side-card.cta-upload .side-card-desc {
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(255, 255, 255, 0.95);
 }
 
 .side-card-icon {
@@ -527,7 +555,7 @@ body {
   color: var(--bg-surface);
   padding: 35px 20px 20px 20px;
   margin-top: 40px;
-  border-top: 3px solid var(--primary-cyan);
+  border-top: 4px solid var(--primary-cyan);
 }
 
 .footer-content {
@@ -738,7 +766,7 @@ body {
   width: 100%;
   padding: 12px 14px;
   border-radius: var(--radius-sm);
-  border: 1px solid var(--border-light);
+  border: 1px solid var(--border-cyan);
   font-family: var(--font-body);
   font-size: 0.92rem;
   color: var(--text-dark);
@@ -791,13 +819,13 @@ body {
   padding: 14px;
   border-radius: var(--radius-md);
   border: none;
-  background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-gold-dark) 100%);
+  background: linear-gradient(135deg, var(--primary-cyan) 0%, var(--primary-cyan-dark) 100%);
   color: #FFFFFF;
   font-family: var(--font-heading);
   font-size: 1rem;
   font-weight: 700;
   cursor: pointer;
-  box-shadow: var(--shadow-gold);
+  box-shadow: var(--shadow-cyan);
   transition: all var(--transition-fast);
   margin-top: 10px;
 }
@@ -842,6 +870,11 @@ body {
 
   .brand-title {
     font-size: 2.8rem;
+  }
+
+  /* Mostrar botón CTA destacado arriba en celulares */
+  .mobile-hero-cta {
+    display: block;
   }
 
   .carreras-grid {
