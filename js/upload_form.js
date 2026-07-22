@@ -228,7 +228,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const fileSizeMB = (file.size / (1024 * 1024)).toFixed(2);
     fileSelectText.innerHTML = `<strong>${file.name}</strong> (${fileSizeMB} MB)`;
     if (fileSizeMB > 20) {
-      fileSelectText.innerHTML += `<br><span style="color:#C59B27;">⚠️ Archivo >20MB: Se enviará enlace de Google Drive.</span>`;
+      fileSelectText.innerHTML += `<br><span style="color:#C59B27;">📌 Archivo de ${fileSizeMB} MB listo para procesar.</span>`;
     }
   }
 
