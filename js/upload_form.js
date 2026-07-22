@@ -53,7 +53,7 @@ const CURRICULUM_DATA = {
     "3° Año": ["Derecho Internacional", "Derecho Administrativo", "Economía Política", "Residencia I"],
     "4° Año": ["Derechos Humanos", "Derecho del Trabajo", "Residencia II"]
   },
-  "Profesorado de Ciencias Económicas": {
+  "Profesorado de Economía y Cs. de la Administración": {
     "1° Año": ["Principios de Economía", "Contabilidad I", "Matemática Financiera", "Pedagogía"],
     "2° Año": ["Microeconomía", "Contabilidad II", "Derecho Comercial", "Didáctica de la Economía"],
     "3° Año": ["Macroeconomía", "Administración de Empresas", "Finanzas Públicas", "Residencia I"],
