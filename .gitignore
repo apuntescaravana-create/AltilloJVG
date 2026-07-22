@@ -1,0 +1,11 @@
+# Secrets & Environment variables
+.env
+.env.local
+
+# Node modules & dependencies
+node_modules/
+npm-debug.log*
+
+# OS metadata
+.DS_Store
+Thumbs.db
