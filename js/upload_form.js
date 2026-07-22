@@ -3,7 +3,7 @@
  * Instituto Superior del Profesorado "Joaquín V. González"
  */
 
-// Estructura Curricular Real de los 18 Profesorados Oficiales del ISP Joaquín V. González
+// Estructura Curricular Real del ISP Joaquín V. González
 const CURRICULUM_DATA = {
   "Profesorado de Historia": {
     "1° Año": ["Introducción a la Historia", "Historia Antigua de Oriente y Egipto", "Historia de Grecia y Roma", "Geografía General", "Pedagogía"],
@@ -11,7 +11,7 @@ const CURRICULUM_DATA = {
     "3° Año": ["Historia Moderna", "Historia de América II", "Historia Argentina I", "Residencia I"],
     "4° Año": ["Historia Contemporánea", "Historia de América III", "Historia Argentina II", "Residencia II"]
   },
-  "Profesorado de Castellano, Literatura y Latín": {
+  "Profesorado de Lengua y Literatura": {
     "1° Año": ["Introducción a los Estudios Literarios", "Gramática I", "Lingüística I", "Latín I", "Pedagogía"],
     "2° Año": ["Gramática II", "Lingüística II", "Literatura Latinoamericana I", "Latín II", "Didáctica Especial"],
     "3° Año": ["Literatura Argentina I", "Literatura Latinoamericana II", "Semiótica", "Residencia I"],
@@ -40,6 +40,12 @@ const CURRICULUM_DATA = {
     "2° Año": ["Psicología Evolutiva I", "Psicoanálisis", "Psicología Social", "Didáctica de la Psicología"],
     "3° Año": ["Psicología Evolutiva II", "Psicopatología", "Psicología Institucional", "Residencia I"],
     "4° Año": ["Psicopedagogía", "Técnicas de Evaluación", "Residencia II"]
+  },
+  "Profesorado de Cs. de la Educación": {
+    "1° Año": ["Introducción a la Pedagogía", "Historia de la Educación I", "Filosofía de la Educación", "Sociología de la Educación"],
+    "2° Año": ["Didáctica General", "Psicología del Aprendizaje", "Historia de la Educación II", "Política Educativa"],
+    "3° Año": ["Investigación Educativa", "Diseño Curricular", "Evaluación Institucional", "Residencia I"],
+    "4° Año": ["Educación Comparada", "Taller de Tesis y Proyectos", "Residencia II"]
   },
   "Profesorado de Cs. Jurídicas, Políticas y Sociales": {
     "1° Año": ["Derecho Político", "Derecho Civil I", "Teoría del Estado", "Pedagogía"],
@@ -71,18 +77,6 @@ const CURRICULUM_DATA = {
     "3° Año": ["Lengua Italiana III", "Literatura Italiana I", "Residencia I"],
     "4° Año": ["Lengua Italiana IV", "Literatura Italiana II", "Residencia II"]
   },
-  "Profesorado de Alemán": {
-    "1° Año": ["Lengua Alemana I", "Fonética Alemana I", "Gramática Alemana I", "Pedagogía"],
-    "2° Año": ["Lengua Alemana II", "Cultura Alemana", "Didáctica del Alemán"],
-    "3° Año": ["Lengua Alemana III", "Literatura Alemana I", "Residencia I"],
-    "4° Año": ["Lengua Alemana IV", "Literatura Alemana II", "Residencia II"]
-  },
-  "Profesorado de Portugués": {
-    "1° Año": ["Lengua Portuguesa I", "Fonética Portuguesa I", "Gramática Portuguesa I", "Pedagogía"],
-    "2° Año": ["Lengua Portuguesa II", "Cultura Brasilera/Portuguesa", "Didáctica del Portugués"],
-    "3° Año": ["Lengua Portuguesa III", "Literatura en Lengua Portuguesa I", "Residencia I"],
-    "4° Año": ["Lengua Portuguesa IV", "Literatura en Lengua Portuguesa II", "Residencia II"]
-  },
   "Profesorado de Física": {
     "1° Año": ["Física General I", "Álgebra Lineal", "Análisis Matemático I", "Pedagogía"],
     "2° Año": ["Física General II", "Físicoquímica", "Análisis Matemático II", "Didáctica de la Física"],
@@ -107,12 +101,6 @@ const CURRICULUM_DATA = {
     "3° Año": ["Ecología y Medio Ambiente", "Astronomía", "Residencia I"],
     "4° Año": ["Epistemología de las Ciencias", "Proyecto de Investigación", "Residencia II"]
   },
-  "Profesorado de Educación Primaria": {
-    "1° Año": ["Taller de Lectura y Escritura", "Matemática I", "Ciencias Sociales I", "Pedagogía"],
-    "2° Año": ["Prácticas del Lenguaje I", "Ciencias Naturales I", "Psicología Educacional", "Didáctica General"],
-    "3° Año": ["Matemática II", "Sujetos de la Educación Primaria", "Residencia I"],
-    "4° Año": ["Ateneo de Prácticas", "Educación Inclusiva", "Residencia II"]
-  },
   "Profesorado de Informática": {
     "1° Año": ["Algoritmos y Programación I", "Arquitectura de Computadoras", "Matemática Discreta", "Pedagogía"],
     "2° Año": ["Programación II (POO)", "Sistemas Operativos", "Bases de Datos", "Didáctica de la Informática"],
@@ -131,7 +119,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const fileInput = document.getElementById('fileInput');
   const fileSelectText = document.getElementById('fileSelectText');
 
-  // Populate Carreras initial list
   populateCarreras();
 
   function populateCarreras() {
@@ -150,7 +137,6 @@ document.addEventListener('DOMContentLoaded', () => {
   selectCarrera.addEventListener('change', (e) => {
     const selectedCarrera = e.target.value;
     
-    // Reset child dropdowns
     selectAnio.innerHTML = '<option value="">-- Seleccioná el Año --</option>';
     selectMateria.innerHTML = '<option value="">-- Primero seleccioná Año --</option>';
     selectMateria.disabled = true;
