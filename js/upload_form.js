@@ -3,31 +3,43 @@
  * Instituto Superior del Profesorado "Joaquín V. González"
  */
 
-// Estructura Curricular Real del ISP Joaquín V. González
+// Estructura Curricular de las 18 Carreras Oficiales del ISP Joaquín V. González (1:1 con la Web Oficial)
 const CURRICULUM_DATA = {
-  "Profesorado de Historia": {
-    "1° Año": ["Introducción a la Historia", "Historia Antigua de Oriente y Egipto", "Historia de Grecia y Roma", "Geografía General", "Pedagogía"],
-    "2° Año": ["Historia Medieval", "Historia de América I", "Historiografía", "Sociología y Antropología", "Didáctica General"],
-    "3° Año": ["Historia Moderna", "Historia de América II", "Historia Argentina I", "Residencia I"],
-    "4° Año": ["Historia Contemporánea", "Historia de América III", "Historia Argentina II", "Residencia II"]
+  "Profesorado de Biología": {
+    "1° Año": ["Biología General", "Botánica I", "Zoología I", "Química General", "Pedagogía"],
+    "2° Año": ["Biología Celular y Molecular", "Botánica II", "Zoología II", "Didáctica Especial"],
+    "3° Año": ["Genética", "Ecología", "Fisiología Humana", "Residencia I"],
+    "4° Año": ["Evolución", "Biogeografía", "Residencia II"]
   },
-  "Profesorado de Lengua y Literatura": {
-    "1° Año": ["Introducción a los Estudios Literarios", "Gramática I", "Lingüística I", "Latín I", "Pedagogía"],
-    "2° Año": ["Gramática II", "Lingüística II", "Literatura Latinoamericana I", "Latín II", "Didáctica Especial"],
-    "3° Año": ["Literatura Argentina I", "Literatura Latinoamericana II", "Semiótica", "Residencia I"],
-    "4° Año": ["Literatura Argentina II", "Literatura Universal", "Teoría Literaria", "Residencia II"]
+  "Profesorado de Ciencias de la Administración": {
+    "1° Año": ["Administración General", "Contabilidad I", "Matemática Aplicada", "Pedagogía"],
+    "2° Año": ["Sistemas de Información", "Administración Financiera", "Derecho Comercial", "Didáctica de la Administración"],
+    "3° Año": ["Gestión de Organizaciones", "Recursos Humanos", "Residencia I"],
+    "4° Año": ["Práctica Profesional", "Taller de Gestión", "Residencia II"]
   },
-  "Profesorado de Geografía": {
-    "1° Año": ["Geografía Física I", "Geografía Humana", "Cartografía", "Pedagogía"],
-    "2° Año": ["Geografía de América", "Geografía Urbana", "Geomorfología", "Didáctica Especial"],
-    "3° Año": ["Geografía de Argentina", "Geografía Económica", "Geopolítica", "Residencia I"],
-    "4° Año": ["Geografía Mundial Contemporánea", "Ordenamiento Territorial", "Residencia II"]
+  "Profesorado de Ciencias de la Educación": {
+    "1° Año": ["Introducción a la Pedagogía", "Historia de la Educación I", "Filosofía de la Educación", "Sociología de la Educación"],
+    "2° Año": ["Didáctica General", "Psicología del Aprendizaje", "Historia de la Educación II", "Política Educativa"],
+    "3° Año": ["Investigación Educativa", "Diseño Curricular", "Evaluación Institucional", "Residencia I"],
+    "4° Año": ["Educación Comparada", "Taller de Tesis y Proyectos", "Residencia II"]
   },
-  "Profesorado de Matemática": {
-    "1° Año": ["Álgebra I", "Análisis Matemático I", "Geometría Euclidiana", "Pedagogía"],
-    "2° Año": ["Álgebra II", "Análisis Matemático II", "Probabilidad y Estadística", "Didáctica de la Matemática I"],
-    "3° Año": ["Geometría No Euclidiana", "Análisis Matemático III", "Física General", "Residencia I"],
-    "4° Año": ["Fundamentos de la Matemática", "Ecuaciones Diferenciales", "Residencia II"]
+  "Profesorado de Ciencias Jurídicas": {
+    "1° Año": ["Derecho Político", "Derecho Civil I", "Teoría del Estado", "Pedagogía"],
+    "2° Año": ["Derecho Constitucional", "Derecho Penal", "Sociología Jurídica", "Didáctica de las Cs. Jurídicas"],
+    "3° Año": ["Derecho Internacional", "Derecho Administrativo", "Residencia I"],
+    "4° Año": ["Derechos Humanos", "Derecho del Trabajo", "Residencia II"]
+  },
+  "Profesorado de Ciencia Política": {
+    "1° Año": ["Introducción a la Ciencia Política", "Historia de las Ideas Políticas I", "Teoría del Estado", "Pedagogía"],
+    "2° Año": ["Historia de las Ideas Políticas II", "Sistemas Políticos Comparados", "Sociología Política", "Didáctica de la Ciencia Política"],
+    "3° Año": ["Relaciones Internacionales", "Opinión Pública y Comunicación", "Residencia I"],
+    "4° Año": ["Análisis de Políticas Públicas", "Pensamiento Político Argentino", "Residencia II"]
+  },
+  "Profesorado de Economía": {
+    "1° Año": ["Principios de Economía", "Matemática Financiera", "Historia Económica", "Pedagogía"],
+    "2° Año": ["Microeconomía", "Macroeconomía I", "Estadística Económica", "Didáctica de la Economía"],
+    "3° Año": ["Macroeconomía II", "Economía Internacional", "Finanzas Públicas", "Residencia I"],
+    "4° Año": ["Economía Argentina", "Estructura Económica", "Residencia II"]
   },
   "Profesorado de Filosofía": {
     "1° Año": ["Introducción a la Filosofía", "Historia de la Filosofía Antigua", "Lógica I", "Pedagogía"],
@@ -35,35 +47,11 @@ const CURRICULUM_DATA = {
     "3° Año": ["Filosofía Moderna", "Ética", "Metafísica", "Residencia I"],
     "4° Año": ["Filosofía Contemporánea", "Filosofía Argentina y Latinoamericana", "Residencia II"]
   },
-  "Profesorado de Psicología": {
-    "1° Año": ["Introducción a la Psicología", "Psicología General", "Biología del Comportamiento", "Pedagogía"],
-    "2° Año": ["Psicología Evolutiva I", "Psicoanálisis", "Psicología Social", "Didáctica de la Psicología"],
-    "3° Año": ["Psicología Evolutiva II", "Psicopatología", "Psicología Institucional", "Residencia I"],
-    "4° Año": ["Psicopedagogía", "Técnicas de Evaluación", "Residencia II"]
-  },
-  "Profesorado de Cs. de la Educación": {
-    "1° Año": ["Introducción a la Pedagogía", "Historia de la Educación I", "Filosofía de la Educación", "Sociología de la Educación"],
-    "2° Año": ["Didáctica General", "Psicología del Aprendizaje", "Historia de la Educación II", "Política Educativa"],
-    "3° Año": ["Investigación Educativa", "Diseño Curricular", "Evaluación Institucional", "Residencia I"],
-    "4° Año": ["Educación Comparada", "Taller de Tesis y Proyectos", "Residencia II"]
-  },
-  "Profesorado de Cs. Jurídicas, Políticas y Sociales": {
-    "1° Año": ["Derecho Político", "Derecho Civil I", "Teoría del Estado", "Pedagogía"],
-    "2° Año": ["Derecho Constitucional", "Derecho Penal", "Sociología Jurídica", "Didáctica de las Cs. Jurídicas"],
-    "3° Año": ["Derecho Internacional", "Derecho Administrativo", "Economía Política", "Residencia I"],
-    "4° Año": ["Derechos Humanos", "Derecho del Trabajo", "Residencia II"]
-  },
-  "Profesorado de Economía y Cs. de la Administración": {
-    "1° Año": ["Principios de Economía", "Contabilidad I", "Matemática Financiera", "Pedagogía"],
-    "2° Año": ["Microeconomía", "Contabilidad II", "Derecho Comercial", "Didáctica de la Economía"],
-    "3° Año": ["Macroeconomía", "Administración de Empresas", "Finanzas Públicas", "Residencia I"],
-    "4° Año": ["Economía Argentina", "Sistemas de Información Contable", "Residencia II"]
-  },
-  "Profesorado de Inglés": {
-    "1° Año": ["Lengua Inglesa I", "Fonética y Fonología I", "Gramática Inglesa I", "Pedagogía"],
-    "2° Año": ["Lengua Inglesa II", "Fonética y Fonología II", "Gramática Inglesa II", "Estudios Culturales"],
-    "3° Año": ["Lengua Inglesa III", "Literatura en Lengua Inglesa I", "Didáctica del Inglés", "Residencia I"],
-    "4° Año": ["Lengua Inglesa IV", "Literatura en Lengua Inglesa II", "Residencia II"]
+  "Profesorado de Física": {
+    "1° Año": ["Física General I", "Álgebra Lineal", "Análisis Matemático I", "Pedagogía"],
+    "2° Año": ["Física General II", "Físicoquímica", "Análisis Matemático II", "Didáctica de la Física"],
+    "3° Año": ["Termodinámica", "Electromagnetismo", "Mecánica Clásica", "Residencia I"],
+    "4° Año": ["Física Moderna y Cuántica", "Óptica", "Residencia II"]
   },
   "Profesorado de Francés": {
     "1° Año": ["Lengua Francesa I", "Fonética Francesa I", "Gramática Francesa I", "Pedagogía"],
@@ -71,41 +59,59 @@ const CURRICULUM_DATA = {
     "3° Año": ["Lengua Francesa III", "Literatura Francesa I", "Residencia I"],
     "4° Año": ["Lengua Francesa IV", "Literatura Francesa II", "Residencia II"]
   },
-  "Profesorado de Italiano": {
-    "1° Año": ["Lengua Italiana I", "Fonética Italiana I", "Gramática Italiana I", "Pedagogía"],
-    "2° Año": ["Lengua Italiana II", "Cultura e Historia Italiana", "Didáctica del Italiano"],
-    "3° Año": ["Lengua Italiana III", "Literatura Italiana I", "Residencia I"],
-    "4° Año": ["Lengua Italiana IV", "Literatura Italiana II", "Residencia II"]
+  "Profesorado de Geografía": {
+    "1° Año": ["Geografía Física I", "Geografía Humana", "Cartografía", "Pedagogía"],
+    "2° Año": ["Geografía de América", "Geografía Urbana", "Geomorfología", "Didáctica Especial"],
+    "3° Año": ["Geografía de Argentina", "Geografía Económica", "Geopolítica", "Residencia I"],
+    "4° Año": ["Geografía Mundial Contemporánea", "Ordenamiento Territorial", "Residencia II"]
   },
-  "Profesorado de Física": {
-    "1° Año": ["Física General I", "Álgebra Lineal", "Análisis Matemático I", "Pedagogía"],
-    "2° Año": ["Física General II", "Físicoquímica", "Análisis Matemático II", "Didáctica de la Física"],
-    "3° Año": ["Termodinámica", "Electromagnetismo", "Mecánica Clásica", "Residencia I"],
-    "4° Año": ["Física Moderna y Cuántica", "Óptica", "Residencia II"]
-  },
-  "Profesorado de Química": {
-    "1° Año": ["Química General e Inorgánica I", "Matemática Aplicada", "Física General", "Pedagogía"],
-    "2° Año": ["Química Orgánica I", "Química Analítica", "Físicoquímica", "Didáctica de la Química"],
-    "3° Año": ["Química Orgánica II", "Bioquímica", "Química Industrial", "Residencia I"],
-    "4° Año": ["Química Ambiental", "Análisis Instrumental", "Residencia II"]
-  },
-  "Profesorado de Biología": {
-    "1° Año": ["Biología General", "Botánica I", "Zoología I", "Química General", "Pedagogía"],
-    "2° Año": ["Biología Celular y Molecular", "Botánica II", "Zoología II", "Didáctica de la Biología"],
-    "3° Año": ["Genética", "Ecología", "Fisiología Humana", "Residencia I"],
-    "4° Año": ["Evolución", "Biogeografía", "Residencia II"]
-  },
-  "Profesorado de Ciencias Naturales": {
-    "1° Año": ["Biología I", "Química I", "Física I", "Geociencias", "Pedagogía"],
-    "2° Año": ["Biología II", "Química II", "Física II", "Didáctica de las Ciencias Naturales"],
-    "3° Año": ["Ecología y Medio Ambiente", "Astronomía", "Residencia I"],
-    "4° Año": ["Epistemología de las Ciencias", "Proyecto de Investigación", "Residencia II"]
+  "Profesorado de Historia": {
+    "1° Año": ["Introducción a la Historia", "Historia Antigua de Oriente y Egipto", "Historia de Grecia y Roma", "Geografía General", "Pedagogía"],
+    "2° Año": ["Historia Medieval", "Historia de América I", "Historiografía", "Sociología y Antropología", "Didáctica General"],
+    "3° Año": ["Historia Moderna", "Historia de América II", "Historia Argentina I", "Residencia I"],
+    "4° Año": ["Historia Contemporánea", "Historia de América III", "Historia Argentina II", "Residencia II"]
   },
   "Profesorado de Informática": {
     "1° Año": ["Algoritmos y Programación I", "Arquitectura de Computadoras", "Matemática Discreta", "Pedagogía"],
     "2° Año": ["Programación II (POO)", "Sistemas Operativos", "Bases de Datos", "Didáctica de la Informática"],
     "3° Año": ["Redes de Computadoras", "Ingeniería de Software", "Tecnología Educativa", "Residencia I"],
     "4° Año": ["Seguridad Informática", "Robótica Educativa", "Residencia II"]
+  },
+  "Profesorado de Inglés": {
+    "1° Año": ["Lengua Inglesa I", "Fonética y Fonología I", "Gramática Inglesa I", "Pedagogía"],
+    "2° Año": ["Lengua Inglesa II", "Fonética y Fonología II", "Gramática Inglesa II", "Estudios Culturales"],
+    "3° Año": ["Lengua Inglesa III", "Literatura en Lengua Inglesa I", "Didáctica del Inglés", "Residencia I"],
+    "4° Año": ["Lengua Inglesa IV", "Literatura en Lengua Inglesa II", "Residencia II"]
+  },
+  "Profesorado de Italiano": {
+    "1° Año": ["Lengua Italiana I", "Fonética Italiana I", "Gramática Italiana I", "Pedagogía"],
+    "2° Año": ["Lengua Italiana II", "Cultura e Historia Italiana", "Didáctica del Italiano"],
+    "3° Año": ["Lengua Italiana III", "Literatura Italiana I", "Residencia I"],
+    "4° Año": ["Lengua Italiana IV", "Literatura Italiana II", "Residencia II"]
+  },
+  "Profesorado de Lengua y Literatura": {
+    "1° Año": ["Introducción a los Estudios Literarios", "Gramática I", "Lingüística I", "Latín I", "Pedagogía"],
+    "2° Año": ["Gramática II", "Lingüística II", "Literatura Latinoamericana I", "Latín II", "Didáctica Especial"],
+    "3° Año": ["Literatura Argentina I", "Literatura Latinoamericana II", "Semiótica", "Residencia I"],
+    "4° Año": ["Literatura Argentina II", "Literatura Universal", "Teoría Literaria", "Residencia II"]
+  },
+  "Profesorado de Matemática": {
+    "1° Año": ["Álgebra I", "Análisis Matemático I", "Geometría Euclidiana", "Pedagogía"],
+    "2° Año": ["Álgebra II", "Análisis Matemático II", "Probabilidad y Estadística", "Didáctica de la Matemática I"],
+    "3° Año": ["Geometría No Euclidiana", "Análisis Matemático III", "Física General", "Residencia I"],
+    "4° Año": ["Fundamentos de la Matemática", "Ecuaciones Diferenciales", "Residencia II"]
+  },
+  "Profesorado de Psicología": {
+    "1° Año": ["Introducción a la Psicología", "Psicología General", "Biología del Comportamiento", "Pedagogía"],
+    "2° Año": ["Psicología Evolutiva I", "Psicoanálisis", "Psicología Social", "Didáctica de la Psicología"],
+    "3° Año": ["Psicología Evolutiva II", "Psicopatología", "Psicología Institucional", "Residencia I"],
+    "4° Año": ["Psicopedagogía", "Técnicas de Evaluación", "Residencia II"]
+  },
+  "Profesorado de Química": {
+    "1° Año": ["Química General e Inorgánica I", "Matemática Aplicada", "Física General", "Pedagogía"],
+    "2° Año": ["Química Orgánica I", "Química Analítica", "Físicoquímica", "Didáctica de la Química"],
+    "3° Año": ["Química Orgánica II", "Bioquímica", "Química Industrial", "Residencia I"],
+    "4° Año": ["Química Ambiental", "Análisis Instrumental", "Residencia II"]
   }
 };
 
