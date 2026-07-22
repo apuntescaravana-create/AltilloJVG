@@ -1,5 +1,5 @@
 /* ==========================================================================
-   AltilloJVG - Sistema de Estilos CSS
+   AltilloJVG - Sistema de Estilos CSS Ampliado
    Instituto Superior del Profesorado "Joaquín V. González"
    ========================================================================== */
 
@@ -15,12 +15,20 @@
   --accent-gold-dark: hsl(38, 58%, 42%);  /* #AA7C26 */
   --accent-gold-light: hsl(42, 70%, 94%); /* #FDF8EC */
 
+  /* Colores La Caravana / Agrupación Estudiantil */
+  --caravana-cyan: #009BE3;
+  --caravana-cyan-dark: #007BB5;
+  --caravana-light: #E6F5FC;
+
   /* Colores Tarjetas Especiales */
   --card-blue-bg: hsl(210, 80%, 96%);     /* #EBF3FC */
   --card-blue-text: hsl(214, 56%, 24%);   /* #1E3A5F */
 
   --card-green-bg: hsl(135, 40%, 95%);    /* #E8F5E9 */
   --card-green-text: hsl(140, 50%, 22%);  /* #1B4D2B */
+
+  --card-orange-bg: hsl(28, 85%, 96%);    /* #FFF3E0 */
+  --card-orange-text: hsl(24, 75%, 30%);  /* #E65100 */
 
   /* Fondos y Neutros */
   --bg-main: hsl(210, 30%, 98%);          /* #F8FAFC */
@@ -70,6 +78,31 @@ body {
   flex-direction: column;
 }
 
+/* --- Ribbon / Banner Superior Agrupación --- */
+.caravana-top-banner {
+  background: linear-gradient(90deg, #007BB5 0%, #009BE3 50%, #00B4D8 100%);
+  color: #FFFFFF;
+  padding: 8px 16px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  box-shadow: 0 2px 6px rgba(0, 155, 227, 0.2);
+}
+
+.caravana-mini-logo {
+  height: 22px;
+  width: auto;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.2));
+}
+
+.caravana-quote {
+  font-style: italic;
+  letter-spacing: 0.3px;
+}
+
 /* --- Barra Superior Móvil --- */
 .mobile-top-bar {
   display: none;
@@ -91,22 +124,11 @@ body {
 /* --- Header / Banner Principal (Hero) --- */
 .hero-header {
   background: radial-gradient(circle at 50% 30%, #FFFFFF 0%, #F1F5F9 100%);
-  padding: 40px 20px 30px 20px;
+  padding: 35px 20px 25px 20px;
   text-align: center;
   border-bottom: 1px solid var(--border-light);
   position: relative;
   overflow: hidden;
-}
-
-.hero-header::before {
-  content: '';
-  position: absolute;
-  top: -50px;
-  right: -50px;
-  width: 300px;
-  height: 300px;
-  background: radial-gradient(circle, rgba(196, 147, 63, 0.08) 0%, transparent 70%);
-  pointer-events: none;
 }
 
 .hero-branding {
@@ -119,7 +141,7 @@ body {
 }
 
 .hero-logo-img {
-  width: 150px;
+  width: 140px;
   height: auto;
   filter: drop-shadow(0 4px 12px rgba(15, 23, 42, 0.1));
 }
@@ -130,7 +152,7 @@ body {
 
 .brand-title {
   font-family: var(--font-heading);
-  font-size: 3.8rem;
+  font-size: 3.6rem;
   font-weight: 800;
   line-height: 1;
   color: var(--primary-navy);
@@ -145,7 +167,7 @@ body {
   display: flex;
   align-items: center;
   gap: 16px;
-  margin: 12px 0 8px 0;
+  margin: 10px 0 6px 0;
 }
 
 .divider-pillar::before,
@@ -195,13 +217,14 @@ body {
   border: 1px solid var(--border-light);
   padding: 28px;
   position: relative;
+  margin-bottom: 24px;
 }
 
 .section-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 .section-title-wrapper {
@@ -234,18 +257,38 @@ body {
   font-weight: 400;
 }
 
-.accordion-chevron {
-  display: none;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: var(--text-dark);
+/* Filtros por Departamento de Carreras */
+.carreras-filter-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  overflow-x: auto;
+  padding-bottom: 6px;
 }
 
-/* Grilla de Tarjetas de Carreras */
+.filter-tab {
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 1px solid var(--border-light);
+  background-color: var(--bg-main);
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all var(--transition-fast);
+}
+
+.filter-tab.active, .filter-tab:hover {
+  background-color: var(--primary-navy);
+  color: #FFFFFF;
+  border-color: var(--primary-navy);
+}
+
+/* Grilla de 18 Tarjetas de Carreras */
 .carreras-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 16px;
   margin-bottom: 24px;
 }
@@ -254,7 +297,7 @@ body {
   background: var(--bg-surface);
   border: 1px solid var(--border-light);
   border-radius: var(--radius-md);
-  padding: 20px 14px;
+  padding: 18px 14px;
   text-decoration: none;
   color: var(--text-dark);
   display: flex;
@@ -273,9 +316,9 @@ body {
 }
 
 .carrera-card .card-icon {
-  width: 42px;
-  height: 42px;
-  margin-bottom: 12px;
+  width: 38px;
+  height: 38px;
+  margin-bottom: 10px;
   color: var(--primary-navy);
   transition: transform var(--transition-fast);
 }
@@ -287,16 +330,22 @@ body {
 
 .carrera-card .card-title {
   font-family: var(--font-heading);
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   font-weight: 700;
   line-height: 1.25;
   color: var(--primary-navy);
   margin-bottom: 4px;
 }
 
+.carrera-card .card-dept {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
 .carrera-card .card-arrow {
   position: absolute;
-  right: 12px;
+  right: 10px;
   top: 50%;
   transform: translateY(-50%);
   color: #94A3B8;
@@ -310,7 +359,60 @@ body {
   transform: translateY(-50%) translateX(3px);
 }
 
-/* Barra Inferior de Características/Garantías */
+/* --- Sección Materiales Útiles del Estudiante --- */
+.student-resources-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.resource-box {
+  background-color: var(--bg-main);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  text-decoration: none;
+  color: var(--text-dark);
+  transition: all var(--transition-fast);
+}
+
+.resource-box:hover {
+  background-color: #FFFFFF;
+  border-color: var(--primary-navy);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-2px);
+}
+
+.resource-icon-badge {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background-color: #E2E8F0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-navy);
+  flex-shrink: 0;
+}
+
+.resource-box-title {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--primary-navy);
+  margin-bottom: 2px;
+}
+
+.resource-box-desc {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* Barra Inferior de Características */
 .features-strip {
   background-color: var(--bg-main);
   border-radius: var(--radius-md);
@@ -357,11 +459,11 @@ body {
 
 .side-card {
   border-radius: var(--radius-lg);
-  padding: 24px;
+  padding: 22px;
   text-decoration: none;
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 16px;
   position: relative;
   transition: all var(--transition-normal);
   border: 1px solid transparent;
@@ -403,6 +505,21 @@ body {
   color: var(--card-green-text);
 }
 
+/* Tarjeta Materiales Estudiantiles (Naranja Novedades) */
+.side-card.horarios {
+  background-color: var(--card-orange-bg);
+  border-color: #FFE0B2;
+}
+
+.side-card.horarios .side-card-icon {
+  background-color: #FFCC80;
+  color: var(--card-orange-text);
+}
+
+.side-card.horarios .side-card-title {
+  color: var(--card-orange-text);
+}
+
 /* Tarjeta CTA Subí tus documentos (Dorado Lleno) */
 .side-card.cta-upload {
   background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-gold-dark) 100%);
@@ -424,8 +541,8 @@ body {
 }
 
 .side-card-icon {
-  width: 54px;
-  height: 54px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -434,8 +551,8 @@ body {
 }
 
 .side-card-icon svg {
-  width: 28px;
-  height: 28px;
+  width: 26px;
+  height: 26px;
 }
 
 .side-card-content {
@@ -444,7 +561,7 @@ body {
 
 .side-card-title {
   font-family: var(--font-heading);
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   font-weight: 700;
   margin-bottom: 4px;
 }
@@ -460,12 +577,13 @@ body {
   opacity: 0.8;
 }
 
-/* --- Footer Institucional --- */
+/* --- Footer Institucional & Mención a La Caravana --- */
 .site-footer {
   background-color: var(--primary-navy-dark);
   color: var(--bg-surface);
-  padding: 30px 20px;
+  padding: 35px 20px 20px 20px;
   margin-top: 40px;
+  border-top: 3px solid var(--accent-gold);
 }
 
 .footer-content {
@@ -481,12 +599,12 @@ body {
 .footer-brand {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
 }
 
 .footer-logo-icon {
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
   color: var(--accent-gold);
 }
 
@@ -518,20 +636,31 @@ body {
   color: var(--accent-gold);
 }
 
-.footer-badge {
+/* Credit Badge para Estudiantes Independientes + La Caravana */
+.footer-credits-bar {
+  max-width: 1240px;
+  margin: 25px auto 0 auto;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: space-between;
   font-size: 0.78rem;
   color: #94A3B8;
-  max-width: 250px;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 
-.footer-badge-icon {
-  width: 20px;
-  height: 20px;
-  color: var(--accent-gold);
-  flex-shrink: 0;
+.caravana-credit {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.caravana-footer-logo {
+  height: 26px;
+  width: auto;
+  border-radius: 4px;
 }
 
 /* --- Navegación Inferior Móvil (Bottom Nav Bar) --- */
@@ -575,7 +704,7 @@ body {
   height: 22px;
 }
 
-/* --- Modal de Subida de Documentos --- */
+/* --- Modal de Subida --- */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -748,7 +877,14 @@ body {
 
 @media (max-width: 768px) {
   body {
-    padding-bottom: 65px; /* Espacio para el Bottom Nav Bar */
+    padding-bottom: 65px;
+  }
+
+  .caravana-top-banner {
+    font-size: 0.75rem;
+    flex-direction: column;
+    gap: 4px;
+    text-align: center;
   }
 
   .mobile-top-bar {
@@ -774,11 +910,11 @@ body {
 
   .carreras-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
+    gap: 10px;
   }
 
-  .accordion-chevron {
-    display: block;
+  .student-resources-grid {
+    grid-template-columns: 1fr;
   }
 
   .features-strip {
@@ -798,6 +934,11 @@ body {
   .footer-links {
     flex-wrap: wrap;
     justify-content: center;
+  }
+
+  .footer-credits-bar {
+    flex-direction: column;
+    text-align: center;
   }
 
   .mobile-bottom-nav {

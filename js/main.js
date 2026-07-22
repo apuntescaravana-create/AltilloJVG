@@ -1,5 +1,5 @@
 /**
- * AltilloJVG - Main UI Interactions Script
+ * AltilloJVG - Main UI Interactions & Category Filtering Script
  * Instituto Superior del Profesorado "Joaquín V. González"
  */
 
@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     openUploadModalBtn.addEventListener('click', (e) => {
       e.preventDefault();
       uploadModal.classList.add('active');
-      document.body.style.overflow = 'hidden'; // Prevent background scrolling
+      document.body.style.overflow = 'hidden';
     });
   }
 
@@ -25,7 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Close Modal clicking on backdrop
   if (uploadModal) {
     uploadModal.addEventListener('click', (e) => {
       if (e.target === uploadModal) {
@@ -34,7 +33,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Escape Key to close modal
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && uploadModal && uploadModal.classList.contains('active')) {
       closeModal();
@@ -48,15 +46,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Mobile Accordion Toggle for Carreras
-  const toggleCarrerasBtn = document.getElementById('toggleCarrerasBtn');
-  const carrerasGrid = document.getElementById('carrerasGrid');
+  // Filter Tabs for Carreras
+  const filterTabs = document.querySelectorAll('.filter-tab');
+  const carreraCards = document.querySelectorAll('.carrera-card');
 
-  if (toggleCarrerasBtn && carrerasGrid) {
-    toggleCarrerasBtn.addEventListener('click', () => {
-      const isExpanded = carrerasGrid.style.display !== 'none';
-      carrerasGrid.style.display = isExpanded ? 'none' : 'grid';
-      toggleCarrerasBtn.style.transform = isExpanded ? 'rotate(180deg)' : 'rotate(0deg)';
+  filterTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      filterTabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+
+      const filterValue = tab.getAttribute('data-filter');
+
+      carreraCards.forEach(card => {
+        const cardDept = card.getAttribute('data-dept');
+        if (filterValue === 'all' || cardDept === filterValue) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
     });
-  }
+  });
 });
