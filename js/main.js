@@ -93,6 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
       else if (idx === 2) openTramitesModal();
       else if (idx === 3) openBecasModal();
       else if (idx === 4) openDerechosModal();
+      else if (idx === 5) openLibrosGuiaModal();
     });
   });
 
@@ -247,6 +248,47 @@ document.addEventListener('DOMContentLoaded', () => {
               ${item.garantía ? `<p style="font-size:0.8rem; color:#005F8C; margin-bottom:2px;"><strong>Garantía Estudiantil:</strong> ${item.garantía}</p>` : ''}
               ${item.procedimiento ? `<p style="font-size:0.8rem; color:#0B2545;"><strong>Procedimiento:</strong> ${item.procedimiento}</p>` : ''}
               ${item.motivo ? `<p style="font-size:0.8rem; color:#C65100;"><strong>Causa Normativa:</strong> ${item.motivo}</p>` : ''}
+            </div>`;
+        });
+
+        html += `</div></div>`;
+      });
+    }
+
+    html += `</div>`;
+    infoModalBody.innerHTML = html;
+    infoModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  // 6. Open "Cómo NO conseguir libros piratas" Modal
+  function openLibrosGuiaModal() {
+    if (!infoModal) return;
+    infoModalTitle.innerHTML = "📚 Cómo <em>no</em> conseguir libros piratas";
+    
+    let html = `<p style="margin-bottom:16px; color:#475569; font-size:0.88rem; line-height:1.4;">
+      Guía colaborativa de metabuscadores abiertos, bibliotecas digitales y trucos de búsqueda académica para estudiantes del Joaquín V. González:
+    </p><div style="display:flex; flex-direction:column; gap:18px;">`;
+
+    if (typeof JVG_LIBROS_GUIA !== 'undefined') {
+      JVG_LIBROS_GUIA.forEach(sec => {
+        html += `
+          <div style="border:1px solid #CBD5E1; border-radius:12px; overflow:hidden; background:#FFFFFF;">
+            <div style="background:${sec.color}; color:#FFFFFF; padding:10px 16px; font-weight:700; font-size:0.95rem; display:flex; align-items:center; gap:8px;">
+              <span>${sec.icono}</span> ${sec.categoria}
+            </div>
+            <div style="padding:14px; display:flex; flex-direction:column; gap:10px;">`;
+
+        sec.sitios.forEach(item => {
+          html += `
+            <div style="background:#FAFDFF; border-left:4px solid ${sec.color}; padding:10px 12px; border-radius:6px; display:flex; flex-direction:column; gap:4px;">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <h5 style="color:#0B2545; font-size:0.92rem; font-weight:700;">${item.nombre}</h5>
+                ${item.link && item.link !== '#' ? `<a href="${item.link}" target="_blank" rel="noopener" style="font-size:0.75rem; background:#009BE3; color:#fff; padding:4px 8px; border-radius:4px; text-decoration:none; font-weight:600;">Visitar →</a>` : ''}
+              </div>
+              <p style="font-size:0.82rem; color:#475569;">${item.descripcion}</p>
+              ${item.consejo ? `<p style="font-size:0.78rem; color:#005F8C; font-weight:600;">💡 Tip: ${item.consejo}</p>` : ''}
+              ${item.ejemplo ? `<code style="font-size:0.78rem; background:#E2E8F0; color:#0F172A; padding:4px 8px; border-radius:4px; font-family:monospace; display:inline-block; margin-top:4px;">${item.ejemplo}</code>` : ''}
             </div>`;
         });
 
