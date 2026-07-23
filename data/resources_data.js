@@ -56,11 +56,38 @@ const JVG_OFFICIAL_RESOURCES = {
     { carrera: "Profesorado de Informática", plan: "Plan de Estudios N° 1262/15", dept: "Dpto. Informática", link: "http://institutojvgonzalez.buenosaires.edu.ar/carreras/informatica/" }
   ],
 
-  horarios: [
-    { turno: "Turno Mañana", horario: "07:45 hs a 12:15 hs", descripcion: "Cursada de 1° a 4° año en sede central Ayacucho 632." },
-    { turno: "Turno Tarde", horario: "13:00 hs a 17:30 hs", descripcion: "Cursada de materias específicas y talleres de práctica." },
-    { turno: "Turno Noche", horario: "17:45 hs a 22:15 hs", descripcion: "Cursada nocturna para estudiantes trabajadores." },
-    { turno: "Asignación de Aulas por Departamento", horario: "Cuadro Actualizado 2026", descripcion: "Consultá la grilla de aulas asignadas a cada departamento y cátedra." }
+  // Horarios de Cursada y Aulas organizados por día (documentos descargables)
+  horariosPorDia: [
+    {
+      dia: "Lunes",
+      descripcion: "Grilla horaria de cursada y asignación de salones para los días Lunes.",
+      link: "http://institutojvgonzalez.buenosaires.edu.ar/horarios/lunes.pdf"
+    },
+    {
+      dia: "Martes",
+      descripcion: "Grilla horaria de cursada y asignación de salones para los días Martes.",
+      link: "http://institutojvgonzalez.buenosaires.edu.ar/horarios/martes.pdf"
+    },
+    {
+      dia: "Miércoles",
+      descripcion: "Grilla horaria de cursada y asignación de salones para los días Miércoles.",
+      link: "http://institutojvgonzalez.buenosaires.edu.ar/horarios/miercoles.pdf"
+    },
+    {
+      dia: "Jueves",
+      descripcion: "Grilla horaria de cursada y asignación de salones para los días Jueves.",
+      link: "http://institutojvgonzalez.buenosaires.edu.ar/horarios/jueves.pdf"
+    },
+    {
+      dia: "Viernes",
+      descripcion: "Grilla horaria de cursada y asignación de salones para los días Viernes.",
+      link: "http://institutojvgonzalez.buenosaires.edu.ar/horarios/viernes.pdf"
+    },
+    {
+      dia: "Sábado",
+      descripcion: "Grilla horaria de cursada y asignación de salones para los días Sábado.",
+      link: "http://institutojvgonzalez.buenosaires.edu.ar/horarios/sabado.pdf"
+    }
   ],
 
   tramites: [

@@ -137,20 +137,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function openHorariosModal() {
     if (!infoModal) return;
-    infoModalTitle.textContent = "⏰ Horarios de Cursada y Asignación de Aulas";
+    infoModalTitle.textContent = "📅 Horarios de Cursada y Asignación de Aulas";
     
-    let html = `<p style="margin-bottom:16px; color:#64748B;">Turnos institucionales y salones en sede central:</p><div style="display:flex; flex-direction:column; gap:12px;">`;
+    let html = `<p style="margin-bottom:16px; color:#64748B;">Seleccioná el día para descargar el documento oficial de horarios y salones:</p><div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:12px;">`;
     
-    if (typeof JVG_OFFICIAL_RESOURCES !== 'undefined') {
-      JVG_OFFICIAL_RESOURCES.horarios.forEach(item => {
+    if (typeof JVG_OFFICIAL_RESOURCES !== 'undefined' && JVG_OFFICIAL_RESOURCES.horariosPorDia) {
+      JVG_OFFICIAL_RESOURCES.horariosPorDia.forEach(item => {
         html += `
-          <div style="background:#FFF3E0; border:1px solid #FFE0B2; padding:14px; border-radius:10px;">
-            <h4 style="color:#C65100; font-size:0.95rem; margin-bottom:4px;">${item.turno} (${item.horario})</h4>
-            <p style="font-size:0.83rem; color:#475569;">${item.descripcion}</p>
+          <div style="background:#FFF3E0; border:1px solid #FFE0B2; padding:14px; border-radius:10px; display:flex; flex-direction:column; justify-content:space-between;">
+            <div>
+              <h4 style="color:#C65100; font-size:1rem; margin-bottom:4px;">📅 Horarios del ${item.dia}</h4>
+              <p style="font-size:0.8rem; color:#475569; margin-bottom:10px;">${item.descripcion}</p>
+            </div>
+            <a href="${item.link}" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; justify-content:center; gap:6px; background:#C65100; color:#fff; padding:7px 12px; border-radius:6px; text-decoration:none; font-size:0.8rem; font-weight:600;">
+              Descargar Grilla ${item.dia} (PDF) ↓
+            </a>
           </div>`;
       });
     }
-    html += `</div>`;
+    html += `</div>
+      <div style="margin-top:16px; text-align:center;">
+        <a href="http://institutojvgonzalez.buenosaires.edu.ar/estudiantes/horarios/" target="_blank" rel="noopener" style="font-size:0.82rem; color:#009BE3; text-decoration:none; font-weight:600;">
+          Ver sección de Horarios en la Web Oficial del Instituto →
+        </a>
+      </div>`;
     infoModalBody.innerHTML = html;
     infoModal.classList.add('active');
     document.body.style.overflow = 'hidden';
