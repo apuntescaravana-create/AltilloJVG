@@ -92,6 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
       else if (idx === 1) openFinalesModal();
       else if (idx === 2) openTramitesModal();
       else if (idx === 3) openBecasModal();
+      else if (idx === 4) openDerechosModal();
     });
   });
 
@@ -214,6 +215,45 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>`;
       });
     }
+    html += `</div>`;
+    infoModalBody.innerHTML = html;
+    infoModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  // 5. Open Derechos Estudiantiles Modal
+  function openDerechosModal() {
+    if (!infoModal) return;
+    infoModalTitle.textContent = "⚖️ Conocé tus Derechos Estudiantiles (Guía Oficial JVG)";
+    
+    let html = `<p style="margin-bottom:16px; color:#475569; font-size:0.88rem; line-height:1.4;">
+      Resumen normativo basado en el ROI, Resoluciones del Consejo Directivo y reglamentos del Instituto Superior del Profesorado Joaquín V. González:
+    </p><div style="display:flex; flex-direction:column; gap:18px;">`;
+
+    if (typeof JVG_DERECHOS_ESTUDIANTILES !== 'undefined') {
+      JVG_DERECHOS_ESTUDIANTILES.forEach(sec => {
+        html += `
+          <div style="border:1px solid #CBD5E1; border-radius:12px; overflow:hidden; background:#FFFFFF;">
+            <div style="background:${sec.color}; color:#FFFFFF; padding:10px 16px; font-weight:700; font-size:0.95rem; display:flex; align-items:center; gap:8px;">
+              <span>${sec.icono}</span> ${sec.categoria}
+            </div>
+            <div style="padding:14px; display:flex; flex-direction:column; gap:10px;">`;
+
+        sec.items.forEach(item => {
+          html += `
+            <div style="background:#FAFDFF; border-left:4px solid ${sec.color}; padding:10px 12px; border-radius:4px;">
+              <h5 style="color:#0B2545; font-size:0.9rem; font-weight:700; margin-bottom:4px;">${item.titulo}</h5>
+              ${item.requisito ? `<p style="font-size:0.8rem; color:#475569; margin-bottom:4px;"><strong>Requisito / Regla:</strong> ${item.requisito}</p>` : ''}
+              ${item.garantía ? `<p style="font-size:0.8rem; color:#005F8C; margin-bottom:2px;"><strong>Garantía Estudiantil:</strong> ${item.garantía}</p>` : ''}
+              ${item.procedimiento ? `<p style="font-size:0.8rem; color:#0B2545;"><strong>Procedimiento:</strong> ${item.procedimiento}</p>` : ''}
+              ${item.motivo ? `<p style="font-size:0.8rem; color:#C65100;"><strong>Causa Normativa:</strong> ${item.motivo}</p>` : ''}
+            </div>`;
+        });
+
+        html += `</div></div>`;
+      });
+    }
+
     html += `</div>`;
     infoModalBody.innerHTML = html;
     infoModal.classList.add('active');

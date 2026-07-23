@@ -1,0 +1,1 @@
+Error: No se pudo procesar el archivo 'http://institutojvgonzalez.buenosaires.edu.ar/cartelera/docs/preguntas_frecuentes-v2.pdf'. Por favor, instala las dependencias de 'markitdown' (pip install magika) o 'pypdf' para habilitar los extractores avanzados.
