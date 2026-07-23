@@ -85,15 +85,20 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.resource-box').forEach((box, idx) => {
     box.addEventListener('click', (e) => {
       e.preventDefault();
-      if (idx === 0) {
+      if (box.classList.contains('box-aulas') || idx === 0) {
         if (typeof window.openAulasModal === 'function') window.openAulasModal();
         else openHorariosModal();
+      } else if (box.classList.contains('box-finales') || idx === 1) {
+        openFinalesModal();
+      } else if (box.classList.contains('box-tramites') || idx === 2) {
+        openTramitesModal();
+      } else if (box.classList.contains('box-becas') || idx === 3) {
+        openBecasModal();
+      } else if (box.classList.contains('box-derechos') || idx === 4) {
+        openDerechosModal();
+      } else if (box.classList.contains('box-libros') || idx === 5) {
+        openLibrosGuiaModal();
       }
-      else if (idx === 1) openFinalesModal();
-      else if (idx === 2) openTramitesModal();
-      else if (idx === 3) openBecasModal();
-      else if (idx === 4) openDerechosModal();
-      else if (idx === 5) openLibrosGuiaModal();
     });
   });
 
