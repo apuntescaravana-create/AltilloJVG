@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <h4 style="color:#0B2545; font-size:0.95rem; margin-bottom:4px;">${item.titulo}</h4>
             <p style="font-size:0.83rem; color:#64748B; margin-bottom:8px;">${item.descripcion}</p>
             <a href="${item.link}" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:6px; background:#009BE3; color:#fff; padding:6px 12px; border-radius:6px; text-decoration:none; font-size:0.78rem; font-weight:600;">
-              Descargar PDF / Ver Documento →
+              Ver en Sitio Oficial JVG →
             </a>
           </div>`;
       });
@@ -122,9 +122,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function openPlanesModal() {
     if (!infoModal) return;
-    infoModalTitle.textContent = "🎓 Planes de Estudio por Carrera";
+    infoModalTitle.textContent = "🎓 Planes de Estudio y Departamentos";
     
-    let html = `<p style="margin-bottom:16px; color:#64748B;">Planes de estudio y resoluciones oficiales de los 18 Profesorados del Joaquín:</p><div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:10px;">`;
+    let html = `<p style="margin-bottom:16px; color:#64748B;">Acceso directo a las páginas oficiales de cada Departamento del Joaquín V. González:</p><div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:10px;">`;
     
     if (typeof JVG_OFFICIAL_RESOURCES !== 'undefined') {
       JVG_OFFICIAL_RESOURCES.planes.forEach(item => {
@@ -143,28 +143,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function openHorariosModal() {
     if (!infoModal) return;
-    infoModalTitle.textContent = "📅 Horarios de Cursada y Asignación de Aulas";
+    infoModalTitle.textContent = "📅 Cartelera Oficial de Horarios y Aulas";
     
-    let html = `<p style="margin-bottom:16px; color:#64748B;">Seleccioná el día para descargar el documento oficial de horarios y salones:</p><div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:12px;">`;
-    
-    if (typeof JVG_OFFICIAL_RESOURCES !== 'undefined' && JVG_OFFICIAL_RESOURCES.horariosPorDia) {
-      JVG_OFFICIAL_RESOURCES.horariosPorDia.forEach(item => {
-        html += `
-          <div style="background:#FFF3E0; border:1px solid #FFE0B2; padding:14px; border-radius:10px; display:flex; flex-direction:column; justify-content:space-between;">
-            <div>
-              <h4 style="color:#C65100; font-size:1rem; margin-bottom:4px;">📅 Horarios del ${item.dia}</h4>
-              <p style="font-size:0.8rem; color:#475569; margin-bottom:10px;">${item.descripcion}</p>
-            </div>
-            <a href="${item.link}" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; justify-content:center; gap:6px; background:#C65100; color:#fff; padding:7px 12px; border-radius:6px; text-decoration:none; font-size:0.8rem; font-weight:600;">
-              Descargar Grilla ${item.dia} (PDF) ↓
-            </a>
-          </div>`;
-      });
-    }
-    html += `</div>
-      <div style="margin-top:16px; text-align:center;">
-        <a href="http://institutojvgonzalez.buenosaires.edu.ar/cartelera/horarios.php" target="_blank" rel="noopener" style="font-size:0.82rem; color:#009BE3; text-decoration:none; font-weight:600;">
-          Ir a Cartelera Oficial de Horarios en el Sitio del JVG →
+    let html = `<div style="background:#FAFDFF; border:1px solid #BEE3F8; padding:18px; border-radius:10px; margin-bottom:14px;">
+        <h4 style="color:#0B2545; margin-bottom:6px;">Cartelera Institucional JVG</h4>
+        <p style="font-size:0.85rem; color:#64748B; line-height:1.4; margin-bottom:12px;">
+          Descargá las grillas actualizadas por día directamente desde el sitio oficial del Instituto.
+        </p>
+        <a href="http://institutojvgonzalez.buenosaires.edu.ar/cartelera/horarios.php" target="_blank" rel="noopener" style="display:inline-block; background:#009BE3; color:#fff; padding:8px 14px; border-radius:6px; text-decoration:none; font-size:0.82rem; font-weight:600;">
+          Ir a Cartelera Oficial de Horarios JVG →
         </a>
       </div>`;
     infoModalBody.innerHTML = html;
@@ -177,12 +164,12 @@ document.addEventListener('DOMContentLoaded', () => {
     infoModalTitle.textContent = "📅 Mesas de Finales y Parciales";
     infoModalBody.innerHTML = `
       <div style="background:#FAFDFF; border:1px solid #BEE3F8; padding:18px; border-radius:10px;">
-        <h4 style="color:#0B2545; margin-bottom:8px;">Cronograma de Exámenes</h4>
+        <h4 style="color:#0B2545; margin-bottom:8px;">Cronograma de Exámenes Institucional</h4>
         <p style="font-size:0.85rem; color:#64748B; line-height:1.4; margin-bottom:12px;">
-          Las inscripciones a mesas de exámenes finales se realizan a través del sistema de autogestión de alumnos en los períodos estipulados por el calendario académico.
+          Las inscripciones a mesas de exámenes finales y llamados se publican oficialmente en la sección de mesas del Instituto.
         </p>
-        <a href="http://institutojvgonzalez.buenosaires.edu.ar/estudiantes/" target="_blank" rel="noopener" style="display:inline-block; background:#009BE3; color:#fff; padding:8px 14px; border-radius:6px; text-decoration:none; font-size:0.82rem; font-weight:600;">
-          Ir a Calendario Académico JVG →
+        <a href="http://institutojvgonzalez.buenosaires.edu.ar/cartelera/mesas-examenes.php" target="_blank" rel="noopener" style="display:inline-block; background:#009BE3; color:#fff; padding:8px 14px; border-radius:6px; text-decoration:none; font-size:0.82rem; font-weight:600;">
+          Ver Mesas de Exámenes en Cartelera Oficial →
         </a>
       </div>`;
     infoModal.classList.add('active');
@@ -199,8 +186,8 @@ document.addEventListener('DOMContentLoaded', () => {
         html += `
           <div style="background:#FAFDFF; border:1px solid #CBD5E1; padding:14px; border-radius:10px;">
             <h4 style="color:#0B2545; font-size:0.95rem; margin-bottom:4px;">${item.nombre}</h4>
-            <p style="font-size:0.83rem; color:#475569; margin-bottom:4px;"><strong>Pasos:</strong> ${item.pasos}</p>
-            <p style="font-size:0.8rem; color:#64748B;"><strong>Requisito:</strong> ${item.requisito}</p>
+            <p style="font-size:0.83rem; color:#475569; margin-bottom:6px;"><strong>Detalle:</strong> ${item.pasos}</p>
+            ${item.link ? `<a href="${item.link}" target="_blank" rel="noopener" style="display:inline-block; background:#009BE3; color:#fff; padding:5px 10px; border-radius:6px; text-decoration:none; font-size:0.75rem; font-weight:600;">Acceder a Trámite / SIU →</a>` : ''}
           </div>`;
       });
     }
@@ -222,7 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <h4 style="color:#0B2545; font-size:0.95rem; margin-bottom:4px;">${item.nombre}</h4>
             <p style="font-size:0.83rem; color:#64748B; margin-bottom:8px;">${item.descripcion}</p>
             <a href="${item.link}" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:6px; background:#009BE3; color:#fff; padding:6px 12px; border-radius:6px; text-decoration:none; font-size:0.78rem; font-weight:600;">
-              Solicitar Beneficio en Sitio Oficial →
+              Ver Información en Sitio Oficial →
             </a>
           </div>`;
       });
