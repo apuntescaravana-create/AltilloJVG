@@ -98,7 +98,7 @@ body {
 /* --- Header / Banner Principal (Hero) --- */
 .hero-header {
   background: radial-gradient(circle at 50% 30%, #FFFFFF 0%, #E6F5FC 100%);
-  padding: 35px 20px 25px 20px;
+  padding: 30px 20px 25px 20px;
   text-align: center;
   border-bottom: 3px solid var(--primary-cyan);
   position: relative;
@@ -106,55 +106,52 @@ body {
 }
 
 .hero-branding {
-  max-width: 1100px;
+  max-width: 850px;
   margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 24px;
-  position: relative;
 }
 
 .hero-caravana-badge {
   position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
+  right: 25px;
+  top: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(8px);
-  padding: 8px 16px;
-  border-radius: 16px;
-  border: 1.5px solid rgba(0, 155, 227, 0.2);
-  box-shadow: 0 4px 14px rgba(0, 155, 227, 0.12);
+  padding: 6px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(0, 155, 227, 0.22);
+  box-shadow: 0 4px 12px rgba(0, 155, 227, 0.1);
   transition: var(--transition-fast);
+  z-index: 10;
 }
 
 .hero-caravana-badge:hover {
-  transform: translateY(calc(-50% - 2px));
-  box-shadow: 0 6px 18px rgba(0, 155, 227, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 155, 227, 0.2);
 }
 
 .hero-caravana-img {
-  height: 60px;
+  height: 44px;
   width: auto;
   object-fit: contain;
 }
 
-@media (max-width: 960px) {
+@media (max-width: 1120px) {
   .hero-caravana-badge {
     position: relative;
     right: auto;
     top: auto;
-    transform: none;
-    margin-top: 12px;
-  }
-  .hero-caravana-badge:hover {
-    transform: translateY(-2px);
+    margin: 14px auto 0 auto;
+    display: inline-flex;
   }
 }
+
 
 
 .hero-logo-img {
