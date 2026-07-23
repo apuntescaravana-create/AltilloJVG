@@ -6,8 +6,8 @@
   <title>AltilloJVG | Repositorio Digital del Instituto Joaquín V. González</title>
   <meta name="description" content="Plataforma colaborativa y repositorio digital para alumnos del Instituto Superior del Profesorado Joaquín V. González. Resúmenes, parciales, normativas y planes de estudio impulsados por estudiantes independientes y La Caravana.">
 
-  <!-- Estilos y Fuentes con Cache Buster v=5 -->
-  <link rel="stylesheet" href="css/styles.css?v=5">
+  <!-- Estilos y Fuentes con Cache Buster v=6 -->
+  <link rel="stylesheet" href="css/styles.css?v=6">
   <link rel="icon" type="image/svg+xml" href="assets/logo-owl.svg">
 </head>
 <body>
@@ -93,8 +93,8 @@
                 </svg>
               </div>
               <div>
-                <h4 class="resource-box-title">Horarios de Cursada y Aulas</h4>
-                <p class="resource-box-desc">Distribución por turnos (Mañana, Tarde, Noche) y asignación de salones.</p>
+                <h4 class="resource-box-title">Buscador de Aulas y Cursadas</h4>
+                <p class="resource-box-desc">Consultá por Carrera, Día o Materia dónde y cuándo cursás. (768 clases en base de datos)</p>
               </div>
             </a>
 
@@ -404,8 +404,8 @@
             </svg>
           </div>
           <div class="side-card-content">
-            <h3 class="side-card-title">Horarios de Aulas</h3>
-            <p class="side-card-desc">Consultá la asignación de salones y turnos de cursada.</p>
+            <h3 class="side-card-title">Buscador de Aulas</h3>
+            <p class="side-card-desc">Consultá salones, materias y horarios (Base de datos 768 clases).</p>
           </div>
           <svg class="side-card-arrow" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
@@ -597,9 +597,110 @@
     </div>
   </div>
 
+  <!-- ==========================================================================
+       8. MODAL INTERACTIVO DE BUSCADOR DE AULAS Y CURSADAS (BETA)
+       ========================================================================== -->
+  <div class="modal-overlay" id="aulasModal">
+    <div class="modal-container" style="max-width: 900px; width: 95%;">
+      <div class="modal-header">
+        <h3 class="modal-header-title">
+          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5m0 0h4m-4 0v-4m0 4h4"/>
+          </svg>
+          Buscador de Aulas y Cursadas (768 clases en base de datos)
+        </h3>
+        <button class="modal-close-btn" id="closeAulasModalBtn">&times;</button>
+      </div>
+
+      <div class="modal-body" style="max-height: 80vh; overflow-y: auto;">
+        
+        <!-- Pestañas de Modos de Búsqueda -->
+        <div style="display:flex; gap:10px; margin-bottom:18px; border-bottom:2px solid #E2E8F0; padding-bottom:10px; flex-wrap:wrap;">
+          <button id="tabCarreraBtn" class="btn-tab active" style="padding:8px 16px; border-radius:20px; border:none; background:#009BE3; color:#fff; font-weight:700; cursor:pointer; font-size:0.85rem;">
+            🎓 Por Carrera y Día
+          </button>
+          <button id="tabMateriaBtn" class="btn-tab" style="padding:8px 16px; border-radius:20px; border:1px solid #CBD5E1; background:#F8FAFC; color:#0F172A; font-weight:600; cursor:pointer; font-size:0.85rem;">
+            🔍 Buscar Materia Específica
+          </button>
+          <button id="tabDiaBtn" class="btn-tab" style="padding:8px 16px; border-radius:20px; border:1px solid #CBD5E1; background:#F8FAFC; color:#0F172A; font-weight:600; cursor:pointer; font-size:0.85rem;">
+            📅 Ver Distribución General por Día
+          </button>
+        </div>
+
+        <!-- Modo 1: Por Carrera y Día -->
+        <div id="viewModeCarrera" style="display:flex; gap:14px; margin-bottom:16px; flex-wrap:wrap;">
+          <div style="flex:1; min-width:220px;">
+            <label class="form-label">Carrera / Profesorado</label>
+            <select id="filterCarrera" class="form-select">
+              <option value="">-- Seleccioná una Carrera --</option>
+            </select>
+          </div>
+          <div style="width:200px;">
+            <label class="form-label">Día de Cursada</label>
+            <select id="filterDia" class="form-select">
+              <option value="">Todos los días</option>
+              <option value="Lunes">Lunes</option>
+              <option value="Martes">Martes</option>
+              <option value="Miércoles">Miércoles</option>
+              <option value="Jueves">Jueves</option>
+              <option value="Viernes">Viernes</option>
+              <option value="Sábado">Sábado</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Modo 2: Buscar Materia Específica -->
+        <div id="viewModeMateria" style="display:none; gap:14px; margin-bottom:16px; flex-wrap:wrap;">
+          <div style="flex:1; min-width:240px;">
+            <label class="form-label">Escribí el nombre de la Materia</label>
+            <input type="text" id="searchMateriaInput" class="form-input" placeholder="Ej: Historia Medieval, Didáctica, Derecho...">
+          </div>
+          <div style="flex:1; min-width:240px;">
+            <label class="form-label">o Seleccioná de la lista</label>
+            <select id="selectMateriaQuick" class="form-select">
+              <option value="">-- Seleccioná una Materia --</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Modo 3: Distribución General por Día -->
+        <div id="viewModeDia" style="display:none; gap:14px; margin-bottom:16px;">
+          <div style="width:280px;">
+            <label class="form-label">Seleccioná un Día de la Semana</label>
+            <select id="filterDiaOnly" class="form-select">
+              <option value="">Ver todos los días</option>
+              <option value="Lunes">Lunes</option>
+              <option value="Martes">Martes</option>
+              <option value="Miércoles">Miércoles</option>
+              <option value="Jueves">Jueves</option>
+              <option value="Viernes">Viernes</option>
+              <option value="Sábado">Sábado</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Banner Informativo & Link Oficial -->
+        <div style="background:#FAFDFF; border:1px solid #BEE3F8; padding:12px 16px; border-radius:10px; margin-bottom:16px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+          <span id="resultsCounter" style="font-weight:700; color:#0B2545; font-size:0.9rem;">0 clases encontradas</span>
+          <a href="http://institutojvgonzalez.buenosaires.edu.ar/cartelera/horarios.php" target="_blank" rel="noopener" style="font-size:0.82rem; color:#009BE3; font-weight:700; text-decoration:none;">
+            📥 Descargar Grillas PDF en Cartelera Oficial JVG →
+          </a>
+        </div>
+
+        <!-- Resultados de las Aulas -->
+        <div id="aulasResults">
+          <!-- Tarjetas inyectadas por aulas_search.js -->
+        </div>
+
+      </div>
+    </div>
+  </div>
+
   <!-- Scripts JavaScript -->
   <script src="data/resources_data.js"></script>
+  <script src="data/aulas_data.js"></script>
   <script src="js/main.js"></script>
   <script src="js/upload_form.js"></script>
+  <script src="js/aulas_search.js"></script>
 </body>
 </html>

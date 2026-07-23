@@ -75,14 +75,20 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       if (card.classList.contains('normativa')) openNormativasModal();
       else if (card.classList.contains('planes')) openPlanesModal();
-      else if (card.classList.contains('horarios')) openHorariosModal();
+      else if (card.classList.contains('horarios')) {
+        if (typeof window.openAulasModal === 'function') window.openAulasModal();
+        else openHorariosModal();
+      }
     });
   });
 
   document.querySelectorAll('.resource-box').forEach((box, idx) => {
     box.addEventListener('click', (e) => {
       e.preventDefault();
-      if (idx === 0) openHorariosModal();
+      if (idx === 0) {
+        if (typeof window.openAulasModal === 'function') window.openAulasModal();
+        else openHorariosModal();
+      }
       else if (idx === 1) openFinalesModal();
       else if (idx === 2) openTramitesModal();
       else if (idx === 3) openBecasModal();
@@ -157,8 +163,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     html += `</div>
       <div style="margin-top:16px; text-align:center;">
-        <a href="http://institutojvgonzalez.buenosaires.edu.ar/estudiantes/horarios/" target="_blank" rel="noopener" style="font-size:0.82rem; color:#009BE3; text-decoration:none; font-weight:600;">
-          Ver sección de Horarios en la Web Oficial del Instituto →
+        <a href="http://institutojvgonzalez.buenosaires.edu.ar/cartelera/horarios.php" target="_blank" rel="noopener" style="font-size:0.82rem; color:#009BE3; text-decoration:none; font-weight:600;">
+          Ir a Cartelera Oficial de Horarios en el Sitio del JVG →
         </a>
       </div>`;
     infoModalBody.innerHTML = html;
