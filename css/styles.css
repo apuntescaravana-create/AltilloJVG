@@ -106,13 +106,56 @@ body {
 }
 
 .hero-branding {
-  max-width: 900px;
+  max-width: 1100px;
   margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 24px;
+  position: relative;
 }
+
+.hero-caravana-badge {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(8px);
+  padding: 8px 16px;
+  border-radius: 16px;
+  border: 1.5px solid rgba(0, 155, 227, 0.2);
+  box-shadow: 0 4px 14px rgba(0, 155, 227, 0.12);
+  transition: var(--transition-fast);
+}
+
+.hero-caravana-badge:hover {
+  transform: translateY(calc(-50% - 2px));
+  box-shadow: 0 6px 18px rgba(0, 155, 227, 0.2);
+}
+
+.hero-caravana-img {
+  height: 60px;
+  width: auto;
+  object-fit: contain;
+}
+
+@media (max-width: 960px) {
+  .hero-caravana-badge {
+    position: relative;
+    right: auto;
+    top: auto;
+    transform: none;
+    margin-top: 12px;
+  }
+  .hero-caravana-badge:hover {
+    transform: translateY(-2px);
+  }
+}
+
 
 .hero-logo-img {
   width: 140px;
