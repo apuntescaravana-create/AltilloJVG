@@ -681,7 +681,14 @@ body {
   height: 20px;
   width: auto;
   opacity: 0.9;
+  transition: opacity 0.25s ease, transform 0.25s ease;
 }
+
+.caravana-footer-logo:hover {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
 
 /* --- Bottom Nav Bar (Mobile) --- */
 .mobile-bottom-nav {

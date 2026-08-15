@@ -9,7 +9,10 @@ export default async function handler(req, res) {
   }
 
   try {
-    const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || "8701466278:AAEpF3fR9LJwXwDQPxS43NB3Aqn0vUrqCgE";
+    const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
+    if (!TELEGRAM_BOT_TOKEN) {
+      return res.status(500).json({ ok: false, error: 'Falta configurar TELEGRAM_BOT_TOKEN.' });
+    }
     const update = req.body || {};
 
     // 1. Manejo de clics en botones inline (Callback Query)

@@ -9,8 +9,15 @@ export default async function handler(req, res) {
   }
 
   try {
-    const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || "8701466278:AAEpF3fR9LJwXwDQPxS43NB3Aqn0vUrqCgE";
-    const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID || "-1004456191597";
+    const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
+    const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
+
+    if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
+      return res.status(500).json({
+        success: false,
+        message: 'Error de configuración en el servidor. Faltan variables de entorno.'
+      });
+    }
 
     const body = req.body || {};
     const carrera = body.carrera || 'No especificada';
