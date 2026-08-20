@@ -13,3 +13,7 @@ Thumbs.db
 # Downloaded PDF schedules
 Aulas/
 
+# Python cache files
+__pycache__/
+*.pyc
+

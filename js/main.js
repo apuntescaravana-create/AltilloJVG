@@ -20,9 +20,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  if (closeUploadModalBtn && uploadModal) {
-    closeUploadModalBtn.addEventListener('click', closeModal);
-  }
+  const closeUploadModalBtn2 = document.getElementById('closeUploadModalBtn2');
+  [closeUploadModalBtn, closeUploadModalBtn2].forEach(btn => {
+    if (btn && uploadModal) {
+      btn.addEventListener('click', closeModal);
+    }
+  });
 
   if (uploadModal) {
     uploadModal.addEventListener('click', (e) => {
