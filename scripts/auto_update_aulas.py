@@ -36,6 +36,7 @@ CARRERA_MAP = {
     "INGLES": "Profesorado de Inglés",
     "FRANCES": "Profesorado de Francés",
     "ITALIANO": "Profesorado de Italiano",
+    "LENGUA Y LITER": "Profesorado de Lengua y Literatura",
     "LENGUA": "Profesorado de Lengua y Literatura",
     "CASTELLANO": "Profesorado de Lengua y Literatura",
     "ECONOMIA": "Profesorado de Economía",
@@ -44,11 +45,29 @@ CARRERA_MAP = {
 }
 
 def normalize_carrera(raw_str):
-    raw_upper = raw_str.upper()
+    def clean_text(s):
+        s = s.upper()
+        replacements = {
+            'Á': 'A', 'É': 'E', 'Í': 'I', 'Ó': 'O', 'Ú': 'U',
+            'Ü': 'U'
+        }
+        for a, b in replacements.items():
+            s = s.replace(a, b)
+        return s
+    
+    clean_str = clean_text(raw_str)
     for key, official in CARRERA_MAP.items():
-        if key in raw_upper:
+        clean_key = clean_text(key)
+        if clean_key in clean_str:
             return official
-    return raw_str.strip()
+    return None
+
+def parse_year_from_text(text):
+    text_clean = str(text or "").upper().strip()
+    match = re.search(r'(\d+)', text_clean)
+    if match:
+        return f"{match.group(1)}° Año"
+    return "General"
 
 def download_aulas_pdfs():
     print(f"[*] Conectando con la cartelera oficial: {BASE_URL}")
@@ -84,8 +103,6 @@ def download_aulas_pdfs():
 
 def parse_pdf_to_records(filepath):
     fname = os.path.basename(filepath).lower()
-    
-    # Determinar turno y día según el nombre del archivo
     turno = "Mañana" if "-tm-" in fname or " tm " in fname else ("Tarde" if "-tt-" in fname or " tt " in fname else "Vespertino/Noche")
     
     dia = "Lunes"
@@ -104,42 +121,99 @@ def parse_pdf_to_records(filepath):
                 if tables:
                     for table in tables:
                         for row in table:
-                            if not row or len(row) < 4:
+                            if not row:
                                 continue
                             
                             cols = [str(c or "").replace("\n", " ").strip() for c in row]
                             col_text = " ".join(cols).upper()
-                            if "PROFESORADO" in col_text or "MATERIA" in col_text or "TURNO" in col_text:
+                            if "PROFESORADO" in col_text or "MATERIAS" in col_text or "TURNO" in col_text or "APELLIDO" in col_text:
                                 continue
+                                
+                            non_empty = [c for c in cols if c]
+                            if not non_empty or len(non_empty) <= 1:
+                                continue
+                                
+                            carrera = ""
+                            anio = "General"
+                            materia = ""
+                            horario = ""
+                            docente = ""
+                            aula = ""
                             
-                            # Detectar año y carrera en la primera columna
-                            col0_is_year = bool(re.match(r'^\d+[°º]?$', cols[0]))
+                            carrera_idx = -1
+                            carrera_normalized = None
                             
-                            if col0_is_year:
-                                anio = f"{cols[0].replace('°','').replace('º','')}° Año"
-                                carrera_raw = cols[1]
-                                materia = cols[2]
-                                horario = cols[3]
-                                docente = cols[4] if len(cols) > 4 else ""
-                                aula = cols[5] if len(cols) > 5 else (cols[4] if len(cols) > 4 else "")
-                                if len(cols) == 5 and re.search(r'\d+|SUM|LAB|AUD|SAY', cols[4].upper()):
-                                    docente = ""
+                            for idx, cell in enumerate(cols):
+                                c_norm = normalize_carrera(cell)
+                                if c_norm:
+                                    carrera_idx = idx
+                                    carrera_normalized = c_norm
+                                    break
+                                    
+                            if carrera_idx == -1:
+                                continue
+                                
+                            carrera = carrera_normalized
+                            
+                            if carrera_idx == 0:
+                                anio = parse_year_from_text(cols[0])
+                                if len(cols) == 4:
+                                    materia = cols[1]
+                                    docente_field = cols[2]
+                                    horario_match = re.search(r'(\d{1,2}[:\.]\d{2}\s*(?:A|a)\s*\d{1,2}[:\.]\d{2})', docente_field)
+                                    if horario_match:
+                                        horario = horario_match.group(1).replace('.', ':')
+                                        docente = docente_field.replace(horario_match.group(1), "").strip()
+                                    else:
+                                        docente = docente_field
+                                    aula = cols[3]
+                                elif len(cols) == 5:
+                                    materia = cols[1]
+                                    horario = cols[2]
+                                    docente = cols[3]
                                     aula = cols[4]
+                                    
+                            elif carrera_idx == 1:
+                                if len(cols) == 5:
+                                    docente = cols[0]
+                                    materia = cols[2]
+                                    anio = parse_year_from_text(cols[3])
+                                    aula = cols[4]
+                                elif len(cols) >= 6:
+                                    anio = parse_year_from_text(cols[0])
+                                    materia = cols[2]
+                                    horario = cols[3]
+                                    docente = cols[4]
+                                    aula = cols[5]
+                                    
+                            elif carrera_idx == 2:
+                                doc_parts = [c for c in cols[0:2] if c]
+                                docente = ", ".join(doc_parts)
+                                materia = cols[3]
+                                anio = parse_year_from_text(cols[4])
+                                aula = cols[5] if len(cols) > 5 else ""
+                                
+                            elif carrera_idx == 3:
+                                doc_parts = [c for c in cols[0:3] if c]
+                                docente = ", ".join(doc_parts)
+                                materia = cols[4]
+                                anio = parse_year_from_text(cols[5])
+                                aula = cols[6] if len(cols) > 6 else ""
+                                
                             else:
-                                prof_raw = cols[0]
-                                anio_match = re.search(r'(\d+)[°º]?', prof_raw)
-                                anio = f"{anio_match.group(1)}° Año" if anio_match else "General"
-                                carrera_raw = prof_raw
-                                materia = cols[1]
-                                horario = cols[2]
-                                docente = cols[3] if len(cols) > 4 else ""
-                                aula = cols[4] if len(cols) > 4 else cols[3]
+                                materia = cols[carrera_idx + 1] if len(cols) > carrera_idx + 1 else ""
+                                aula = cols[-1] if len(cols) > carrera_idx + 2 else ""
+                                
+                            materia = materia.strip()
+                            docente = docente.strip()
+                            aula = aula.strip()
                             
-                            carrera = normalize_carrera(carrera_raw)
-                            
-                            if not materia or not horario or "HOJA" in materia.upper():
+                            if re.match(r'^[-·\s]+$', aula) or not aula:
+                                aula = "A designar"
+                                
+                            if not carrera or carrera == docente or len(carrera) < 4:
                                 continue
-
+                                
                             local_records.append({
                                 "carrera": carrera,
                                 "anio": anio,
@@ -171,6 +245,8 @@ def parse_pdf_to_records(filepath):
                             anio_match = re.search(r'(\d+)[°º]?', prof_raw)
                             anio = f"{anio_match.group(1)}° Año" if anio_match else "General"
                             carrera = normalize_carrera(prof_raw)
+                            if not carrera:
+                                continue
 
                             local_records.append({
                                 "carrera": carrera,
