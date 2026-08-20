@@ -1399,8 +1399,23 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
 
       const submitBtn = document.getElementById('submitBtn');
-      const formData = new FormData(uploadForm);
+      const file = fileInput.files[0];
+      const link = document.getElementById('inputLink').value.trim();
 
+      // Validación: debe proveer al menos uno
+      if (!file && !link) {
+        alert('⚠️ Por favor, subí un archivo o pegá un enlace de descarga (Google Drive, etc.) para continuar.');
+        return;
+      }
+
+      // Validación: límite de tamaño de archivo para Vercel Serverless (4MB)
+      if (file && file.size > 4 * 1024 * 1024) {
+        const fileSizeMB = (file.size / (1024 * 1024)).toFixed(2);
+        alert(`⚠️ El archivo pesa ${fileSizeMB} MB y supera el límite de subida directa (4 MB).\n\nPor favor, subilo a tu Google Drive / OneDrive y pegá el enlace de descarga en el campo correspondiente.`);
+        return;
+      }
+
+      const formData = new FormData(uploadForm);
       formData.append('carrera', selectCarrera.value);
       formData.append('anio', selectAnio.value);
       formData.append('materia', selectMateria.value);
@@ -1417,15 +1432,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const result = await response.json();
 
-        alert(result.message || '¡Gracias! Tu material fue recibido y enviado al grupo de aprobación de La Caravana.');
-        uploadForm.reset();
-        document.getElementById('uploadModal').classList.remove('active');
-        document.body.style.overflow = '';
+        if (response.ok && result.success) {
+          alert(result.message || '🎉 ¡Gracias! Tu material fue recibido y enviado al grupo de aprobación de La Caravana.');
+          uploadForm.reset();
+          fileSelectText.textContent = "Arrastrá tu archivo o hacé clic aquí";
+          document.getElementById('uploadModal').classList.remove('active');
+          document.body.style.overflow = '';
+        } else {
+          alert('❌ Error al subir: ' + (result.message || 'Ocurrió un problema en el servidor. Intenta de nuevo.'));
+        }
       } catch (err) {
-        alert('¡Documento enviado con éxito! Tu aporte se procesará y aparecerá publicado tras la revisión en Telegram.');
-        uploadForm.reset();
-        document.getElementById('uploadModal').classList.remove('active');
-        document.body.style.overflow = '';
+        console.error(err);
+        alert('❌ Error de conexión: No se pudo conectar con el servidor de subida. Por favor, intentá de nuevo más tarde.');
       } finally {
         submitBtn.disabled = false;
         submitBtn.textContent = 'Subir Material al Repositorio';

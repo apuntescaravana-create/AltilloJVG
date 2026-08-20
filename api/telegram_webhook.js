@@ -27,14 +27,16 @@ export default async function handler(req, res) {
       const messageId = message.message_id;
 
       let responseNotice = '¡Acción procesada!';
+      const isDocument = !!message.document;
+      const rawText = message.text || message.caption || '';
       let newText = '';
 
       if (data.startsWith('approve_')) {
         responseNotice = '✅ ¡Documento aprobado y publicado!';
-        newText = `${message.text}\n\n🎉 *ESTADO:* ✅ *APROBADO Y PUBLICADO*\n👤 *Por:* ${userFirstName}\n📅 *Fecha:* ${new Date().toLocaleDateString('es-AR')}`;
+        newText = `${rawText}\n\n🎉 *ESTADO:* ✅ *APROBADO Y PUBLICADO*\n👤 *Por:* ${userFirstName}\n📅 *Fecha:* ${new Date().toLocaleDateString('es-AR')}`;
       } else if (data.startsWith('reject_')) {
         responseNotice = '❌ Documento rechazado.';
-        newText = `${message.text}\n\n🚫 *ESTADO:* ❌ *RECHAZADO*\n👤 *Por:* ${userFirstName}\n📅 *Fecha:* ${new Date().toLocaleDateString('es-AR')}`;
+        newText = `${rawText}\n\n🚫 *ESTADO:* ❌ *RECHAZADO*\n👤 *Por:* ${userFirstName}\n📅 *Fecha:* ${new Date().toLocaleDateString('es-AR')}`;
       }
 
       // Responder al click del usuario para quitar la animación de carga en Telegram
@@ -48,16 +50,24 @@ export default async function handler(req, res) {
         })
       });
 
-      // Editar el mensaje en Telegram para quitar los botones y mostrar el estado final
-      await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/editMessageText`, {
+      // Editar el mensaje en Telegram (usando editMessageCaption si es un documento)
+      const editEndpoint = isDocument ? 'editMessageCaption' : 'editMessageText';
+      const editPayload = {
+        chat_id: chatId,
+        message_id: messageId,
+        parse_mode: 'Markdown'
+      };
+
+      if (isDocument) {
+        editPayload.caption = newText;
+      } else {
+        editPayload.text = newText;
+      }
+
+      await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/${editEndpoint}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          chat_id: chatId,
-          message_id: messageId,
-          text: newText,
-          parse_mode: 'Markdown'
-        })
+        body: JSON.stringify(editPayload)
       });
     }
 
