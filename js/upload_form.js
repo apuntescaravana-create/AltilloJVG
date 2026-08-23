@@ -1394,7 +1394,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // URL de tu Google Apps Script Web App (dejar vacío si se desea subir directamente a Telegram < 4MB)
-  const GOOGLE_APPS_SCRIPT_URL = "";
+  const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwN_rJDF4CTIwg2ut-WhurViMlLSXkJ2TcRTgem4WTQgjYRvbbIIP5UB2AZG-1LaRKj/exec";
 
   // Helper para convertir archivo a Base64
   function getBase64(file) {
