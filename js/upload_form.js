@@ -1,6 +1,7 @@
 /**
  * AltilloJVG - Cascading Dropdowns & File Upload Logic (1° a 6° Año)
  * Instituto Superior del Profesorado "Joaquín V. González"
+ * [Vercel Staging Trigger]
  */
 
 const CURRICULUM_DATA = {
