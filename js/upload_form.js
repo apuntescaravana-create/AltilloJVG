@@ -1261,7 +1261,7 @@ const CURRICULUM_DATA = {
     ],
     "3° Año": [
       "CURRICULUM (1° CUATR.)",
-      "EPISTEMOLOGIA DE LAS CIENCIAS SOCIALES",
+    "EPISTEMOLOGIA DE LAS CIENCIAS SOCIALES",
       "HISTORIA SOCIAL DE LA EDUCACION",
       "PROBLEMAS DIDACTICOS I (1° CUATR.)",
       "SISTEMA Y POLITICA EDUCATIVA",
@@ -1296,13 +1296,71 @@ document.addEventListener('DOMContentLoaded', () => {
   const fileInput = document.getElementById('fileInput');
   const fileSelectText = document.getElementById('fileSelectText');
 
+  // Generar el mapa unificado de materias combinando el estático (CURRICULUM_DATA) y el dinámico (de las aulas)
+  function getMergedCurriculum() {
+    const merged = {};
+
+    // 1. Clonar el CURRICULUM_DATA estático
+    for (const carrera in CURRICULUM_DATA) {
+      merged[carrera] = {};
+      for (const anio in CURRICULUM_DATA[carrera]) {
+        merged[carrera][anio] = new Set(CURRICULUM_DATA[carrera][anio]);
+      }
+    }
+
+    // 2. Incorporar las materias dinámicas de la base de datos de aulas reales (AULAS_DATABASE)
+    if (typeof AULAS_DATABASE !== 'undefined' && Array.isArray(AULAS_DATABASE)) {
+      AULAS_DATABASE.forEach(record => {
+        let carrera = record.carrera;
+        let anio = record.anio || "General";
+        let materia = record.materia;
+
+        if (!carrera || !materia) return;
+        
+        // Normalizar nombres de año para que coincidan con las claves de CURRICULUM_DATA
+        let normalizedAnio = anio.replace('º', '°').trim();
+        if (normalizedAnio.startsWith("5°")) {
+          normalizedAnio = "5° Año (Nivel Superior / Tramo Superior)";
+        } else if (normalizedAnio.startsWith("6°")) {
+          normalizedAnio = "6° Año (Nivel Superior / Tramo Superior)";
+        }
+
+        // Si la carrera no existe en el mapa estático, la agregamos
+        if (!merged[carrera]) {
+          merged[carrera] = {};
+        }
+
+        // Si el año no existe en esa carrera, lo agregamos
+        if (!merged[carrera][normalizedAnio]) {
+          merged[carrera][normalizedAnio] = new Set();
+        }
+
+        // Agregamos la materia
+        merged[carrera][normalizedAnio].add(materia.toUpperCase());
+      });
+    }
+
+    // 3. Convertir los Sets a Arrays ordenados
+    const finalCurriculum = {};
+    for (const carrera in merged) {
+      finalCurriculum[carrera] = {};
+      for (const anio in merged[carrera]) {
+        finalCurriculum[carrera][anio] = Array.from(merged[carrera][anio]).sort();
+      }
+    }
+
+    return finalCurriculum;
+  }
+
+  const ACTIVE_CURRICULUM = getMergedCurriculum();
+
   populateCarreras();
 
   function populateCarreras() {
     if (!selectCarrera) return;
     selectCarrera.innerHTML = '<option value="">-- Seleccioná una Carrera --</option>';
 
-    Object.keys(CURRICULUM_DATA).sort().forEach(carrera => {
+    Object.keys(ACTIVE_CURRICULUM).sort().forEach(carrera => {
       const option = document.createElement('option');
       option.value = carrera;
       option.textContent = carrera;
@@ -1318,12 +1376,12 @@ document.addEventListener('DOMContentLoaded', () => {
     selectMateria.innerHTML = '<option value="">-- Primero seleccioná Año --</option>';
     selectMateria.disabled = true;
 
-    if (!selectedCarrera || !CURRICULUM_DATA[selectedCarrera]) {
+    if (!selectedCarrera || !ACTIVE_CURRICULUM[selectedCarrera]) {
       selectAnio.disabled = true;
       return;
     }
 
-    const anios = Object.keys(CURRICULUM_DATA[selectedCarrera]);
+    const anios = Object.keys(ACTIVE_CURRICULUM[selectedCarrera]);
     anios.forEach(anio => {
       const option = document.createElement('option');
       option.value = anio;
@@ -1341,12 +1399,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     selectMateria.innerHTML = '<option value="">-- Seleccioná la Materia --</option>';
 
-    if (!selectedAnio || !CURRICULUM_DATA[selectedCarrera] || !CURRICULUM_DATA[selectedCarrera][selectedAnio]) {
+    if (!selectedAnio || !ACTIVE_CURRICULUM[selectedCarrera] || !ACTIVE_CURRICULUM[selectedCarrera][selectedAnio]) {
       selectMateria.disabled = true;
       return;
     }
 
-    const materias = CURRICULUM_DATA[selectedCarrera][selectedAnio];
+    const materias = ACTIVE_CURRICULUM[selectedCarrera][selectedAnio];
     materias.forEach(materia => {
       const option = document.createElement('option');
       option.value = materia;
