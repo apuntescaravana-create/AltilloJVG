@@ -1393,6 +1393,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // URL de tu Google Apps Script Web App (dejar vacío si se desea subir directamente a Telegram < 4MB)
+  const GOOGLE_APPS_SCRIPT_URL = "";
+
+  // Helper para convertir archivo a Base64
+  function getBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+    });
+  }
+
   // Handle Form Submit
   if (uploadForm) {
     uploadForm.addEventListener('submit', async (e) => {
