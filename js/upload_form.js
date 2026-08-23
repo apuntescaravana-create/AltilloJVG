@@ -1352,7 +1352,8 @@ document.addEventListener('DOMContentLoaded', () => {
     return finalCurriculum;
   }
 
-  const ACTIVE_CURRICULUM = getMergedCurriculum();
+  window.ACTIVE_CURRICULUM = getMergedCurriculum();
+  const ACTIVE_CURRICULUM = window.ACTIVE_CURRICULUM;
 
   populateCarreras();
 
