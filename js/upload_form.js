@@ -1400,7 +1400,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const submitBtn = document.getElementById('submitBtn');
       const file = fileInput.files[0];
-      const link = document.getElementById('inputLink').value.trim();
+      let link = document.getElementById('inputLink').value.trim();
 
       // Validación: debe proveer al menos uno
       if (!file && !link) {
@@ -1408,23 +1408,70 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      // Validación: límite de tamaño de archivo para Vercel Serverless (4MB)
-      if (file && file.size > 4 * 1024 * 1024) {
+      // Si hay un archivo grande (> 4MB) y no hay Google Apps Script configurado, mostrar error
+      if (file && file.size > 4 * 1024 * 1024 && !GOOGLE_APPS_SCRIPT_URL) {
         const fileSizeMB = (file.size / (1024 * 1024)).toFixed(2);
         alert(`⚠️ El archivo pesa ${fileSizeMB} MB y supera el límite de subida directa (4 MB).\n\nPor favor, subilo a tu Google Drive / OneDrive y pegá el enlace de descarga en el campo correspondiente.`);
         return;
       }
 
-      const formData = new FormData(uploadForm);
-      formData.append('carrera', selectCarrera.value);
-      formData.append('anio', selectAnio.value);
-      formData.append('materia', selectMateria.value);
-      formData.append('tipo', document.getElementById('selectTipo').value);
+      // Si el archivo supera el límite de Google Apps Script (50MB)
+      if (file && file.size > 50 * 1024 * 1024) {
+        const fileSizeMB = (file.size / (1024 * 1024)).toFixed(2);
+        alert(`⚠️ El archivo pesa ${fileSizeMB} MB y supera el límite máximo permitido por Google Apps Script (50 MB).\n\nPor favor, compartí un enlace de descarga alternativo.`);
+        return;
+      }
 
       submitBtn.disabled = true;
       submitBtn.textContent = 'Subiendo documento...';
 
+      let driveLink = "";
+
       try {
+        // Si hay un archivo y está configurado Google Apps Script, subir a Google Drive primero
+        if (file && GOOGLE_APPS_SCRIPT_URL) {
+          submitBtn.textContent = 'Subiendo a Google Drive de La Caravana...';
+          const base64Data = await getBase64(file);
+          const rawBase64 = base64Data.split(',')[1];
+
+          const gasResponse = await fetch(GOOGLE_APPS_SCRIPT_URL, {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+              'Content-Type': 'text/plain' // Para evitar CORS preflight OPTIONS en Google Apps Script
+            },
+            body: JSON.stringify({
+              fileBase64: rawBase64,
+              fileName: file.name,
+              mimeType: file.type
+            })
+          });
+
+          const gasResult = await gasResponse.json();
+          if (gasResult.success && gasResult.link) {
+            driveLink = gasResult.link;
+          } else {
+            throw new Error(gasResult.error || 'No se pudo obtener el enlace de Google Drive.');
+          }
+        }
+
+        submitBtn.textContent = 'Enviando notificación al bot...';
+
+        const formData = new FormData();
+        formData.append('carrera', selectCarrera.value);
+        formData.append('anio', selectAnio.value);
+        formData.append('materia', selectMateria.value);
+        formData.append('tipo', document.getElementById('selectTipo').value);
+
+        // Si subimos a Drive, enviamos el link de Drive generado al backend.
+        // Si no subimos a Drive (porque no hay GAS config), enviamos el archivo directamente si pesa < 4MB.
+        if (driveLink) {
+          formData.append('link', driveLink);
+        } else {
+          if (link) formData.append('link', link);
+          if (file) formData.append('file', file);
+        }
+
         const response = await fetch('/api/upload', {
           method: 'POST',
           body: formData
@@ -1443,7 +1490,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       } catch (err) {
         console.error(err);
-        alert('❌ Error de conexión: No se pudo conectar con el servidor de subida. Por favor, intentá de nuevo más tarde.');
+        alert('❌ Error en el proceso de subida: ' + (err.message || 'No se pudo conectar con el servidor. Por favor, intentá de nuevo.'));
       } finally {
         submitBtn.disabled = false;
         submitBtn.textContent = 'Subir Material al Repositorio';
