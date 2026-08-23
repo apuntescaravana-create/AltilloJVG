@@ -578,7 +578,6 @@
             </select>
           </div>
 
-          <!-- Desplegable 4: Tipo de Material -->
           <div class="form-group">
             <label for="selectTipo" class="form-label">Tipo de Material *</label>
             <select id="selectTipo" class="form-select" required>
@@ -592,24 +591,17 @@
             </select>
           </div>
 
-          <!-- Campo de Archivo (Opcional si se provee enlace) -->
+          <!-- Campo de Archivo -->
           <div class="form-group">
-            <label class="form-label">Subir Archivo (Máx. 4MB para Telegram)</label>
+            <label class="form-label">Archivo PDF / Documento *</label>
             <div class="file-dropzone" id="fileDropzone">
               <svg class="file-dropzone-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
               </svg>
               <p class="file-dropzone-text" id="fileSelectText">Arrastrá tu archivo o hacé clic aquí</p>
-              <p class="file-hint">Formato PDF, DOCX, PNG</p>
-              <input type="file" id="fileInput" name="file" accept=".pdf,.docx,.doc,.txt,.png,.jpg" style="display: none;">
+              <p class="file-hint">Formato PDF, DOCX, PNG (Máx. 50MB)</p>
+              <input type="file" id="fileInput" name="file" accept=".pdf,.docx,.doc,.txt,.png,.jpg" style="display: none;" required>
             </div>
-          </div>
-
-          <!-- Campo de Enlace alternativo (Opcional si se sube archivo) -->
-          <div class="form-group">
-            <label for="inputLink" class="form-label">O pegar enlace de descarga (Google Drive, OneDrive, etc.)</label>
-            <input type="url" id="inputLink" name="link" placeholder="https://drive.google.com/..." class="form-select" style="text-align: left; padding: 10px; border: 1.5px solid #CBD5E1; border-radius: 8px;">
-            <p class="file-hint">Obligatorio si el archivo supera los 4MB o si compartís una carpeta de apuntes.</p>
           </div>
 
           <button type="submit" class="btn-submit" id="submitBtn">

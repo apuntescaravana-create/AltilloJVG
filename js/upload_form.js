@@ -1414,25 +1414,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const submitBtn = document.getElementById('submitBtn');
       const file = fileInput.files[0];
-      let link = document.getElementById('inputLink').value.trim();
 
-      // Validación: debe proveer al menos uno
-      if (!file && !link) {
-        alert('⚠️ Por favor, subí un archivo o pegá un enlace de descarga (Google Drive, etc.) para continuar.');
+      // Validación: el archivo es obligatorio
+      if (!file) {
+        alert('⚠️ Por favor, seleccioná un archivo para continuar.');
         return;
       }
 
       // Si hay un archivo grande (> 4MB) y no hay Google Apps Script configurado, mostrar error
-      if (file && file.size > 4 * 1024 * 1024 && !GOOGLE_APPS_SCRIPT_URL) {
+      if (file.size > 4 * 1024 * 1024 && !GOOGLE_APPS_SCRIPT_URL) {
         const fileSizeMB = (file.size / (1024 * 1024)).toFixed(2);
-        alert(`⚠️ El archivo pesa ${fileSizeMB} MB y supera el límite de subida directa (4 MB).\n\nPor favor, subilo a tu Google Drive / OneDrive y pegá el enlace de descarga en el campo correspondiente.`);
+        alert(`⚠️ El archivo pesa ${fileSizeMB} MB y supera el límite de subida directa sin configurar Drive (4 MB).\n\nPor favor, pedile a los administradores que configuren la URL de Google Apps Script.`);
         return;
       }
 
       // Si el archivo supera el límite de Google Apps Script (50MB)
-      if (file && file.size > 50 * 1024 * 1024) {
+      if (file.size > 50 * 1024 * 1024) {
         const fileSizeMB = (file.size / (1024 * 1024)).toFixed(2);
-        alert(`⚠️ El archivo pesa ${fileSizeMB} MB y supera el límite máximo permitido por Google Apps Script (50 MB).\n\nPor favor, compartí un enlace de descarga alternativo.`);
+        alert(`⚠️ El archivo pesa ${fileSizeMB} MB y supera el límite máximo permitido (50 MB).\n\nPor favor, intentá comprimir el PDF o subir un archivo más liviano.`);
         return;
       }
 
@@ -1443,7 +1442,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       try {
         // Si hay un archivo y está configurado Google Apps Script, subir a Google Drive primero
-        if (file && GOOGLE_APPS_SCRIPT_URL) {
+        if (GOOGLE_APPS_SCRIPT_URL) {
           submitBtn.textContent = 'Subiendo a Google Drive de La Caravana...';
           const base64Data = await getBase64(file);
           const rawBase64 = base64Data.split(',')[1];
@@ -1482,8 +1481,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (driveLink) {
           formData.append('link', driveLink);
         } else {
-          if (link) formData.append('link', link);
-          if (file) formData.append('file', file);
+          formData.append('file', file);
         }
 
         const response = await fetch('/api/upload', {
