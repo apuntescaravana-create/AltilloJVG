@@ -36,12 +36,19 @@ export default async function handler(req) {
     const tipo = formData.get('tipo') || 'Apunte';
     const link = formData.get('link') || '';
     const file = formData.get('file'); // Objeto File de la Web API
+    const nombrePersonalizado = formData.get('nombre') || '';
 
     const docId = `AP-${Date.now()}`;
     const timestampStr = new Date().toLocaleDateString('es-AR');
 
     // Construcción del mensaje descriptivo para los administradores en Telegram
-    let captionText = `📚 *¡Nuevo Aporte Recibido en AltilloJVG!*\n\n🎓 *Carrera:* ${carrera}\n📅 *Año:* ${anio}\n📖 *Materia:* ${materia}\n📝 *Tipo:* ${tipo}\n🆔 *ID:* ${docId}\n📅 *Fecha:* ${timestampStr}`;
+    let captionText = `📚 *¡Nuevo Aporte Recibido en AltilloJVG!*\n\n🎓 *Carrera:* ${carrera}\n📅 *Año:* ${anio}\n📖 *Materia:* ${materia}\n📝 *Tipo:* ${tipo}`;
+    
+    if (nombrePersonalizado) {
+      captionText += `\n🏷️ *Título:* ${nombrePersonalizado}`;
+    }
+    
+    captionText += `\n🆔 *ID:* ${docId}\n📅 *Fecha:* ${timestampStr}`;
 
     if (link) {
       captionText += `\n🔗 *Enlace:* [Ver material en la nube](${link})`;

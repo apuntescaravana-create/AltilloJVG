@@ -40,6 +40,7 @@ export default async function handler(req, res) {
         const anioMatch = rawText.match(/Año:\*?\s*([^\n\r]+)/i);
         const materiaMatch = rawText.match(/Materia:\*?\s*([^\n\r]+)/i);
         const tipoMatch = rawText.match(/Tipo:\*?\s*([^\n\r]+)/i);
+        const nombreMatch = rawText.match(/Título:\*?\s*([^\n\r]+)/i);
 
         const carrera = carreraMatch ? carreraMatch[1].trim() : 'Desconocida';
         const anio = anioMatch ? anioMatch[1].trim() : 'Sin año';
@@ -54,7 +55,7 @@ export default async function handler(req, res) {
           link = textLinkEntity.url;
         }
 
-        const nombre = `${tipo} de ${materia}`;
+        const nombre = nombreMatch ? nombreMatch[1].trim() : `${tipo} de ${materia}`;
 
         // 2. Guardar en Supabase usando llamadas REST nativas
         const SUPABASE_URL = process.env.SUPABASE_URL;

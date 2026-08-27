@@ -85,21 +85,21 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  document.querySelectorAll('.resource-box').forEach((box, idx) => {
+  document.querySelectorAll('.resource-box').forEach((box) => {
     box.addEventListener('click', (e) => {
       e.preventDefault();
-      if (box.classList.contains('box-aulas') || idx === 0) {
+      if (box.classList.contains('box-aulas')) {
         if (typeof window.openAulasModal === 'function') window.openAulasModal();
         else openHorariosModal();
-      } else if (box.classList.contains('box-finales') || idx === 1) {
+      } else if (box.classList.contains('box-finales')) {
         openFinalesModal();
-      } else if (box.classList.contains('box-tramites') || idx === 2) {
+      } else if (box.classList.contains('box-tramites')) {
         openTramitesModal();
-      } else if (box.classList.contains('box-becas') || idx === 3) {
+      } else if (box.classList.contains('box-becas')) {
         openBecasModal();
-      } else if (box.classList.contains('box-derechos') || idx === 4) {
+      } else if (box.classList.contains('box-derechos')) {
         openDerechosModal();
-      } else if (box.classList.contains('box-libros') || idx === 5) {
+      } else if (box.classList.contains('box-libros')) {
         openLibrosGuiaModal();
       }
     });

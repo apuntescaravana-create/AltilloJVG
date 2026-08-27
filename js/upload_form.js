@@ -1413,8 +1413,25 @@ document.addEventListener('DOMContentLoaded', () => {
       selectMateria.appendChild(option);
     });
 
-    selectMateria.disabled = false;
   });
+
+  // Mostrar u ocultar el desplegable de examen condicionalmente
+  const selectTipo = document.getElementById('selectTipo');
+  const groupDetalleExamen = document.getElementById('groupDetalleExamen');
+  const selectDetalleExamen = document.getElementById('selectDetalleExamen');
+
+  if (selectTipo && groupDetalleExamen && selectDetalleExamen) {
+    selectTipo.addEventListener('change', () => {
+      if (selectTipo.value === 'Examen') {
+        groupDetalleExamen.style.display = 'block';
+        selectDetalleExamen.required = true;
+      } else {
+        groupDetalleExamen.style.display = 'none';
+        selectDetalleExamen.required = false;
+        selectDetalleExamen.value = '';
+      }
+    });
+  }
 
   // File Dropzone Interaction
   if (fileDropzone && fileInput) {
@@ -1533,7 +1550,19 @@ document.addEventListener('DOMContentLoaded', () => {
         formData.append('carrera', selectCarrera.value);
         formData.append('anio', selectAnio.value);
         formData.append('materia', selectMateria.value);
-        formData.append('tipo', document.getElementById('selectTipo').value);
+        
+        // Obtener el tipo de material final (si es Examen, usar la especificación)
+        let tipoFinal = selectTipo.value;
+        if (tipoFinal === 'Examen' && selectDetalleExamen) {
+          tipoFinal = selectDetalleExamen.value;
+        }
+        formData.append('tipo', tipoFinal);
+
+        // Enviar título/tema personalizado si el usuario lo ingresó
+        const inputNombre = document.getElementById('inputNombre');
+        if (inputNombre && inputNombre.value.trim()) {
+          formData.append('nombre', inputNombre.value.trim());
+        }
 
         // Si subimos a Drive, enviamos el link de Drive generado al backend.
         // Si no subimos a Drive (porque no hay GAS config), enviamos el archivo directamente si pesa < 4MB.
@@ -1553,6 +1582,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (response.ok && result.success) {
           alert(result.message || '🎉 ¡Gracias! Tu material fue recibido y enviado al grupo de aprobación de La Caravana.');
           uploadForm.reset();
+          if (groupDetalleExamen) {
+            groupDetalleExamen.style.display = 'none';
+            selectDetalleExamen.required = false;
+          }
           fileSelectText.textContent = "Arrastrá tu archivo o hacé clic aquí";
           document.getElementById('uploadModal').classList.remove('active');
           document.body.style.overflow = '';
