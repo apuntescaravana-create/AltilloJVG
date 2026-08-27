@@ -18,10 +18,16 @@ export default async function handler(req, res) {
   const SUPABASE_URL = process.env.SUPABASE_URL;
   const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
   const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'caravana_admin';
+  const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 
-  if (!SUPABASE_URL || !SUPABASE_ANON_KEY || !SUPABASE_SERVICE_ROLE_KEY) {
-    return res.status(500).json({ error: 'Supabase credentials not configured in Vercel.' });
+  if (!SUPABASE_URL || !SUPABASE_ANON_KEY || !SUPABASE_SERVICE_ROLE_KEY || !ADMIN_PASSWORD) {
+    return res.status(500).json({ error: 'Falta configurar variables de entorno en el servidor.' });
+  }
+
+  // Si envían la cabecera de contraseña (ej. desde el panel admin), validar que sea correcta
+  const passwordHeader = req.headers['x-admin-password'];
+  if (passwordHeader && passwordHeader !== ADMIN_PASSWORD) {
+    return res.status(401).json({ error: 'No autorizado. Contraseña incorrecta.' });
   }
 
   // ==========================================
