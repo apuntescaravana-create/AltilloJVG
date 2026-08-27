@@ -3,6 +3,7 @@
  * GET /api/materials?carrera=...&anio=...&materia=...
  * PUT /api/materials (Admin Only - Edit record)
  * DELETE /api/materials?id=... (Admin Only - Delete record)
+ * [Vercel Env Reload V4]
  */
 
 export default async function handler(req, res) {
