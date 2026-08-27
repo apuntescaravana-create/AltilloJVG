@@ -1,7 +1,7 @@
 /**
  * Serverless Function - Fetch materials from Supabase
  * GET /api/materials?carrera=...&anio=...&materia=...
- * [Vercel Env Reload V2]
+ * [Vercel Env Reload V3]
  */
 
 export default async function handler(req, res) {
