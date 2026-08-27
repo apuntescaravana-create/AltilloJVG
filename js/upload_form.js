@@ -1413,6 +1413,7 @@ document.addEventListener('DOMContentLoaded', () => {
       selectMateria.appendChild(option);
     });
 
+    selectMateria.disabled = false;
   });
 
   // Mostrar u ocultar el desplegable de examen condicionalmente

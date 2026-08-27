@@ -83,8 +83,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 5. Poblar filtro de carreras desde la base de datos de aulas
   function populateCareerFilter() {
-    if (typeof window.AULAS_DATABASE !== 'undefined') {
-      const careers = [...new Set(window.AULAS_DATABASE.map(item => item.carrera))].sort();
+    if (typeof AULAS_DATABASE !== 'undefined') {
+      const careers = [...new Set(AULAS_DATABASE.map(item => item.carrera))].sort();
       filterCarrera.innerHTML = '<option value="">-- Todos --</option>';
       careers.forEach(career => {
         const option = document.createElement('option');
