@@ -329,4 +329,44 @@ document.addEventListener('DOMContentLoaded', () => {
       alert('❌ Error al conectar con el servidor.');
     }
   });
+
+  // Botón para sincronizar aulas oficiales via GitHub Actions
+  const syncAulasBtn = document.getElementById('syncAulasBtn');
+  if (syncAulasBtn) {
+    syncAulasBtn.addEventListener('click', async () => {
+      const confirmSync = confirm(
+        '¿Estás seguro de que querés actualizar la base de datos de aulas?\n\n' +
+        'Esto iniciará un bot en los servidores de GitHub que descargará los PDFs oficiales del Joaquín, ' +
+        'los parseará y actualizará la base de datos del Altillo de forma automática (demora aprox. 2 minutos).'
+      );
+
+      if (!confirmSync) return;
+
+      syncAulasBtn.disabled = true;
+      syncAulasBtn.textContent = '⏳ Iniciando actualización...';
+
+      try {
+        const res = await fetch('/api/sync_aulas', {
+          method: 'POST',
+          headers: {
+            'x-admin-password': adminPassword
+          }
+        });
+
+        const result = await res.json();
+
+        if (res.ok && result.success) {
+          alert('✅ ' + result.message);
+        } else {
+          alert('❌ Error: ' + (result.error || 'No se pudo iniciar la sincronización. Asegurate de tener configurado GITHUB_PAT en Vercel.'));
+        }
+      } catch (err) {
+        console.error(err);
+        alert('❌ Error al conectar con el servidor.');
+      } finally {
+        syncAulasBtn.disabled = false;
+        syncAulasBtn.textContent = '🔄 Actualizar Aulas desde Web Oficial';
+      }
+    });
+  }
 });
