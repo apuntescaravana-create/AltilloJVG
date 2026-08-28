@@ -3,12 +3,8 @@ Script para generar los archivos oficiales de "Mapa de Carrera Personal" (.xlsx)
 con la estética, marca de agua e identidad de:
 La Caravana + Estudiantes Independientes (Lista 90) - AltilloJVG
 
-Soporta indistintamente:
-- 'SI' (sin tilde)
-- 'SÍ' (con tilde)
-- 'si' o 'sí' (minúsculas)
-- Casillas de verificación (TRUE / VERDADERO)
-- Dropdown nativo SI / NO
+Incluye menú desplegable nativo (Dropdown) con opciones 'SI' / 'NO'
+para que las y los estudiantes no tengan que escribir nada a mano.
 """
 import os
 import openpyxl
@@ -80,6 +76,12 @@ def build_mapa_filosofia():
     ws = wb.active
     ws.title = "Mapa de Carrera"
 
+    # Hoja de Opciones para Menú Desplegable (Hidden)
+    ws_opt = wb.create_sheet(title="Opciones")
+    ws_opt["A1"] = "SI"
+    ws_opt["A2"] = "NO"
+    ws_opt.sheet_state = 'hidden'
+
     # Paleta de Colores
     navy_fill = PatternFill(start_color="0B2545", end_color="0B2545", fill_type="solid")
     cyan_fill = PatternFill(start_color="0284C7", end_color="0284C7", fill_type="solid")
@@ -122,8 +124,8 @@ def build_mapa_filosofia():
     # 2. Encabezados de Columnas
     headers = [
         ("A3", "Asignatura / Materia", 38),
-        ("B3", "¿Cursada Regular? (SI / NO)", 20),
-        ("C3", "¿Final Aprobado? (SI / NO)", 20),
+        ("B3", "¿Cursada Regular? (Elegir SI/NO)", 22),
+        ("C3", "¿Final Aprobado? (Elegir SI/NO)", 22),
         ("D3", "Correlativas para Cursar", 32),
         ("E3", "¿Podés Cursar?", 18),
         ("F3", "¿Podés Rendir Final?", 20),
@@ -142,6 +144,7 @@ def build_mapa_filosofia():
 
     current_row = 4
     materia_row_map = {}
+    subject_rows = []
 
     # 3. Llenado de Materias por Año
     for anio_label, materias in FILOSOFIA_DATA:
@@ -158,6 +161,7 @@ def build_mapa_filosofia():
         for mat_name, correlativas in materias:
             materia_row_map[mat_name] = current_row
             r = current_row
+            subject_rows.append(r)
             row_fill = light_gray_fill if (r % 2 == 0) else PatternFill(fill_type=None)
             
             # Col A: Nombre
@@ -190,7 +194,7 @@ def build_mapa_filosofia():
             is_reg = f'OR(B{r}="SI",B{r}="SÍ",B{r}=TRUE)'
             is_fin = f'OR(C{r}="SI",C{r}="SÍ",C{r}=TRUE)'
 
-            # Col E: ¿Podés Cursar? (Fórmula condicional inteligente)
+            # Col E: ¿Podés Cursar? (Fórmula condicional)
             if not correlativas:
                 ws[f"E{r}"] = f'=IF({is_reg},"CURSADA REGULAR","¡HABILITADA!")'
             else:
@@ -233,10 +237,17 @@ def build_mapa_filosofia():
     last_data_row = current_row - 1
     total_materias = len(materia_row_map)
 
-    # 4. Desplegable nativo para Columnas B y C (SI / NO)
-    dv = DataValidation(type="list", formula1='"SI,NO"', allow_blank=True)
+    # 4. Menú Desplegable Nativo (Dropdown) con SI / NO para cada celda
+    dv = DataValidation(type="list", formula1="=Opciones!$A$1:$A$2", allow_blank=True)
+    dv.error ='Elegí una opción de la lista'
+    dv.errorTitle = 'Opción no válida'
+    dv.prompt = 'Elegí SI o NO'
+    dv.promptTitle = 'Estado de Materia'
     ws.add_data_validation(dv)
-    dv.add(f"B4:C{last_data_row}")
+
+    for r in subject_rows:
+        dv.add(f"B{r}")
+        dv.add(f"C{r}")
 
     # 5. Panel Lateral de Estadísticas y Avance
     ws.column_dimensions["I"].width = 30
@@ -248,7 +259,6 @@ def build_mapa_filosofia():
     ws["I3"].fill = navy_fill
     ws["I3"].alignment = Alignment(horizontal="center", vertical="center")
 
-    # Fórmulas de conteo que aceptan S* (SI, SÍ, si, sí) y TRUE booleano
     count_reg_formula = f'=COUNTIF(B4:B{last_data_row}, "S*") + COUNTIF(B4:B{last_data_row}, TRUE)'
     count_fin_formula = f'=COUNTIF(C4:C{last_data_row}, "S*") + COUNTIF(C4:C{last_data_row}, TRUE)'
 
@@ -291,23 +301,24 @@ def build_mapa_filosofia():
     r_idx += 1
 
     instructions = [
-        "1. Seleccioná 'SI' o 'SÍ' en la columna B cuando tengas la cursada regular aprobada.",
-        "2. Seleccioná 'SI' o 'SÍ' en la columna C cuando hayas aprobado el examen final.",
-        "3. Las columnas E y F te dirán automáticamente si estás en condiciones de cursar o rendir cada materia.",
-        "4. El panel de la derecha calcula tus porcentajes en tiempo real.",
-        "5. ¡Guardá una copia en tu Google Drive personal para no perder tus avances!"
+        "1. Hacé clic en la celda y elegí 'SI' o 'NO' desde el menú desplegable.",
+        "2. Columna B: Marcá 'SI' si tenés la cursada regular aprobada.",
+        "3. Columna C: Marcá 'SI' si aprobaste el final o promocionaste.",
+        "4. Las columnas E y F te informan automáticamente qué podés cursar o rendir.",
+        "5. El panel lateral calcula tu avance y porcentaje de carrera en tiempo real.",
+        "6. Guardá una copia en tu Google Drive personal para conservar tus progresos."
     ]
     for inst in instructions:
         ws.merge_cells(f"I{r_idx}:J{r_idx}")
         ws[f"I{r_idx}"] = inst
         ws[f"I{r_idx}"].font = font_regular
         ws[f"I{r_idx}"].alignment = Alignment(vertical="center", wrap_text=True)
-        ws.row_dimensions[r_idx].height = 28
+        ws.row_dimensions[r_idx].height = 26
         r_idx += 1
 
     out_file = os.path.join(OUTPUT_DIR, "Mapa_de_Carrera_Filosofia.xlsx")
     wb.save(out_file)
-    print(f"[+] Archivo regenerado con soporte universal SI/SÍ: {out_file}")
+    print(f"[+] Archivo regenerado con menú desplegable nativo: {out_file}")
 
 if __name__ == "__main__":
     build_mapa_filosofia()
