@@ -623,8 +623,151 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ==========================================================================
-  // SECCIÓN 3: TABLÓN DE NOTICIAS
+  // SECCIÓN 3: TABLÓN DE NOTICIAS & GESTIÓN DE CATEGORÍAS
   // ==========================================================================
+  const DEFAULT_CATEGORIES = ['Importante', 'Aviso', 'Gremial', 'Urgente'];
+
+  // Elementos de Categorías
+  const btnManageCategories = document.getElementById('btnManageCategories');
+  const categoriesModal = document.getElementById('categoriesModal');
+  const closeCategoriesModalBtn = document.getElementById('closeCategoriesModalBtn');
+  const closeCategoriesBtn2 = document.getElementById('closeCategoriesBtn2');
+  const addCategoryForm = document.getElementById('addCategoryForm');
+  const newCategoryInput = document.getElementById('newCategoryInput');
+  const categoriesListContainer = document.getElementById('categoriesListContainer');
+
+  // Elementos de Edición de Noticia
+  const editNewsModal = document.getElementById('editNewsModal');
+  const closeEditNewsModalBtn = document.getElementById('closeEditNewsModalBtn');
+  const cancelEditNewsBtn = document.getElementById('cancelEditNewsBtn');
+  const editNewsForm = document.getElementById('editNewsForm');
+  const editNewsId = document.getElementById('editNewsId');
+  const editNewsTitulo = document.getElementById('editNewsTitulo');
+  const editNewsCategoria = document.getElementById('editNewsCategoria');
+  const editNewsContenido = document.getElementById('editNewsContenido');
+  const editNewsFijado = document.getElementById('editNewsFijado');
+  const editNewsTimeNotice = document.getElementById('editNewsTimeNotice');
+
+  function getCategories() {
+    try {
+      const saved = localStorage.getItem('altillojvg_news_categories');
+      if (saved) return JSON.parse(saved);
+    } catch (e) {}
+    return [...DEFAULT_CATEGORIES];
+  }
+
+  function saveCategories(cats) {
+    localStorage.setItem('altillojvg_news_categories', JSON.stringify(cats));
+    populateCategorySelects();
+    renderCategoriesList();
+  }
+
+  function populateCategorySelects() {
+    const cats = getCategories();
+    [newsCategoria, editNewsCategoria].forEach(sel => {
+      if (!sel) return;
+      const currentVal = sel.value;
+      sel.innerHTML = '';
+      cats.forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c;
+        opt.textContent = c;
+        sel.appendChild(opt);
+      });
+      if (currentVal && cats.includes(currentVal)) {
+        sel.value = currentVal;
+      }
+    });
+  }
+
+  function renderCategoriesList() {
+    if (!categoriesListContainer) return;
+    const cats = getCategories();
+    let html = '';
+
+    cats.forEach((cat, index) => {
+      html += `
+        <div class="px-4 py-3 flex justify-between items-center bg-white hover:bg-gray-50">
+          <span class="font-bold text-sm text-brand-navy">${escapeHtml(cat)}</span>
+          <div class="space-x-1.5">
+            <button type="button" onclick="renameCategory(${index})" class="px-2.5 py-1 bg-yellow-50 hover:bg-yellow-100 text-yellow-800 rounded-lg text-xs font-bold transition">
+              ✏️ Renombrar
+            </button>
+            <button type="button" onclick="deleteCategory(${index})" class="px-2.5 py-1 bg-red-50 hover:bg-red-100 text-red-700 rounded-lg text-xs font-bold transition" ${cats.length <= 1 ? 'disabled style="opacity:0.4"' : ''}>
+              🗑️
+            </button>
+          </div>
+        </div>
+      `;
+    });
+
+    categoriesListContainer.innerHTML = html;
+  }
+
+  window.renameCategory = function(index) {
+    const cats = getCategories();
+    const current = cats[index];
+    const newName = prompt(`Ingresá el nuevo nombre para la categoría "${current}":`, current);
+    if (!newName || !newName.trim()) return;
+    const cleanName = newName.trim();
+    if (cats.includes(cleanName) && cleanName !== current) {
+      alert('Ya existe una categoría con ese nombre.');
+      return;
+    }
+    cats[index] = cleanName;
+    saveCategories(cats);
+  };
+
+  window.deleteCategory = function(index) {
+    const cats = getCategories();
+    if (cats.length <= 1) {
+      alert('Debe quedar al menos una categoría.');
+      return;
+    }
+    const cat = cats[index];
+    if (!confirm(`¿Estás seguro de eliminar la categoría "${cat}"?`)) return;
+    cats.splice(index, 1);
+    saveCategories(cats);
+  };
+
+  if (btnManageCategories) {
+    btnManageCategories.addEventListener('click', () => {
+      renderCategoriesList();
+      if (categoriesModal) categoriesModal.classList.remove('hidden');
+    });
+  }
+
+  function closeCategoriesModal() {
+    if (categoriesModal) categoriesModal.classList.add('hidden');
+  }
+
+  if (closeCategoriesModalBtn) closeCategoriesModalBtn.addEventListener('click', closeCategoriesModal);
+  if (closeCategoriesBtn2) closeCategoriesBtn2.addEventListener('click', closeCategoriesModal);
+  if (categoriesModal) {
+    categoriesModal.addEventListener('click', (e) => {
+      if (e.target === categoriesModal) closeCategoriesModal();
+    });
+  }
+
+  if (addCategoryForm) {
+    addCategoryForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const val = newCategoryInput.value.trim();
+      if (!val) return;
+      const cats = getCategories();
+      if (cats.includes(val)) {
+        alert('Esa categoría ya existe.');
+        return;
+      }
+      cats.push(val);
+      saveCategories(cats);
+      newCategoryInput.value = '';
+    });
+  }
+
+  // Cargar categorías en los selectores
+  populateCategorySelects();
+
   async function loadNews() {
     if (!newsListContainer) return;
     newsListContainer.innerHTML = `
@@ -675,26 +818,164 @@ document.addEventListener('DOMContentLoaded', () => {
       if (item.categoria === 'Urgente') badgeClass = 'bg-red-100 text-red-800';
 
       html += `
-        <div class="p-6 flex justify-between items-start gap-4 hover:bg-gray-50 transition">
+        <div class="p-6 flex justify-between items-start gap-4 hover:bg-gray-50 transition border-b border-gray-100">
           <div class="space-y-1.5 flex-1">
             <div class="flex items-center gap-2 flex-wrap">
               <span class="px-2.5 py-0.5 rounded-full text-xs font-bold ${badgeClass}">
                 ${item.categoria}
               </span>
-              ${isPinned ? '<span class="bg-amber-50 text-amber-800 text-xs px-2 py-0.5 rounded-full font-bold border border-amber-300">📌 Fijado</span>' : ''}
+              ${isPinned ? '<span class="bg-amber-50 text-amber-800 text-xs px-2 py-0.5 rounded-full font-bold border border-amber-300">📌 Fijado al inicio</span>' : ''}
               <span class="text-xs text-gray-400">${fecha}</span>
             </div>
             <h4 class="text-base font-bold text-brand-navy">${item.titulo}</h4>
             <p class="text-sm text-gray-600 whitespace-pre-line leading-relaxed">${item.contenido}</p>
             <div class="text-xs text-gray-400 pt-1 font-medium">Publicado por: ${item.autor}</div>
           </div>
-          <button onclick="deleteNewsItem(${item.id})" class="px-3 py-1.5 bg-red-50 hover:bg-red-100 text-red-700 rounded-lg text-xs font-bold transition">
-            🗑️ Eliminar
-          </button>
+          <div class="flex items-center gap-2 whitespace-nowrap">
+            <button onclick="togglePinNews(${item.id})" class="px-2.5 py-1.5 rounded-lg text-xs font-bold transition ${isPinned ? 'bg-amber-100 hover:bg-amber-200 text-amber-900' : 'bg-gray-100 hover:bg-gray-200 text-gray-700'}">
+              ${isPinned ? '📍 Desfijar' : '📌 Fijar'}
+            </button>
+            <button onclick="openEditNewsModal(${item.id})" class="px-2.5 py-1.5 bg-blue-50 hover:bg-blue-100 text-brand-cyan rounded-lg text-xs font-bold transition">
+              ✏️ Editar
+            </button>
+            <button onclick="deleteNewsItem(${item.id})" class="px-2.5 py-1.5 bg-red-50 hover:bg-red-100 text-red-700 rounded-lg text-xs font-bold transition">
+              🗑️
+            </button>
+          </div>
         </div>
       `;
     });
     if (newsListContainer) newsListContainer.innerHTML = html;
+  }
+
+  // Toggle Pinned / Desfijar en 1 click
+  window.togglePinNews = async function(id) {
+    try {
+      const res = await fetch('/api/news', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-admin-password': adminPassword
+        },
+        body: JSON.stringify({ id, toggleFijadoOnly: true })
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        loadNews();
+      } else {
+        alert('❌ ' + (data.error || 'Error al cambiar estado de fijado.'));
+      }
+    } catch (e) {
+      console.error(e);
+      alert('❌ Error al conectar con el servidor.');
+    }
+  };
+
+  // Abrir Modal de Edición de Noticia con regla de 30 minutos
+  window.openEditNewsModal = function(id) {
+    const item = allNews.find(n => n.id === id);
+    if (!item) return;
+
+    populateCategorySelects();
+
+    editNewsId.value = item.id;
+    editNewsTitulo.value = item.titulo;
+    editNewsCategoria.value = item.categoria;
+    editNewsContenido.value = item.contenido;
+    editNewsFijado.checked = !!item.fijado;
+
+    // Calcular si pasaron más de 30 minutos desde la creación
+    const createdAt = new Date(item.created_at).getTime();
+    const diffMinutes = (Date.now() - createdAt) / (1000 * 60);
+    const expired = diffMinutes > 30;
+
+    if (expired) {
+      editNewsTitulo.disabled = true;
+      editNewsTitulo.classList.add('bg-gray-100', 'cursor-not-allowed');
+      editNewsContenido.disabled = true;
+      editNewsContenido.classList.add('bg-gray-100', 'cursor-not-allowed');
+
+      editNewsTimeNotice.className = 'p-3 rounded-lg text-xs font-semibold bg-amber-50 text-amber-900 border border-amber-200';
+      editNewsTimeNotice.innerHTML = `
+        🔒 <strong>Texto Bloqueado:</strong> Pasaron más de 30 minutos desde la publicación. 
+        Por seguridad editorial, el título y el cuerpo ya son ineditables (para modificarlos, eliminá el aviso y publicalo nuevamente). 
+        <br>👉 <em>La categoría y la opción de fijar/desfijar siguen siendo 100% editables.</em>
+      `;
+    } else {
+      editNewsTitulo.disabled = false;
+      editNewsTitulo.classList.remove('bg-gray-100', 'cursor-not-allowed');
+      editNewsContenido.disabled = false;
+      editNewsContenido.classList.remove('bg-gray-100', 'cursor-not-allowed');
+
+      const remaining = Math.max(1, Math.round(30 - diffMinutes));
+      editNewsTimeNotice.className = 'p-3 rounded-lg text-xs font-semibold bg-emerald-50 text-emerald-900 border border-emerald-200';
+      editNewsTimeNotice.innerHTML = `
+        ⏳ <strong>Edición habilitada:</strong> Podés modificar el texto libremente durante los primeros 30 minutos (te quedan aprox. <strong>${remaining} minutos</strong>).
+      `;
+    }
+
+    if (editNewsModal) editNewsModal.classList.remove('hidden');
+  };
+
+  function closeEditNewsModal() {
+    if (editNewsModal) editNewsModal.classList.add('hidden');
+  }
+
+  if (closeEditNewsModalBtn) closeEditNewsModalBtn.addEventListener('click', closeEditNewsModal);
+  if (cancelEditNewsBtn) cancelEditNewsBtn.addEventListener('click', closeEditNewsModal);
+  if (editNewsModal) {
+    editNewsModal.addEventListener('click', (e) => {
+      if (e.target === editNewsModal) closeEditNewsModal();
+    });
+  }
+
+  // Guardar Edición de Noticia
+  if (editNewsForm) {
+    editNewsForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('btnSaveNewsChanges');
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = 'Guardando...';
+      }
+
+      const payload = {
+        id: parseInt(editNewsId.value),
+        titulo: editNewsTitulo.value.trim(),
+        categoria: editNewsCategoria.value,
+        contenido: editNewsContenido.value.trim(),
+        fijado: editNewsFijado.checked
+      };
+
+      try {
+        const res = await fetch('/api/news', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-admin-password': adminPassword
+          },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await res.json();
+        if (res.ok) {
+          alert('✅ Aviso actualizado con éxito.');
+          closeEditNewsModal();
+          loadNews();
+        } else {
+          alert('❌ ' + (data.error || 'No se pudo actualizar el aviso.'));
+        }
+      } catch (err) {
+        console.error(err);
+        alert('❌ Error al conectar con el servidor.');
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = 'Guardar Cambios';
+        }
+      }
+    });
   }
 
   if (newsForm) {
@@ -810,5 +1091,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function escapeQuote(str) {
     return String(str || '').replace(/'/g, "\\'");
+  }
+
+  function escapeHtml(text) {
+    if (!text) return '';
+    return String(text)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
   }
 });

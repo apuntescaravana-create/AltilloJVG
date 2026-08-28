@@ -123,37 +123,87 @@ export default async function handler(req, res) {
   }
 
   // ==========================================
-  // PUT: Editar Noticia
+  // PUT: Editar Noticia (Regla de 30 min para texto, categoría y fijado libres)
   // ==========================================
   if (req.method === 'PUT') {
-    const { id, titulo, contenido, categoria, autor, fijado } = req.body || {};
-    if (!id || !titulo || !contenido) {
-      return res.status(400).json({ error: 'ID, título y contenido son obligatorios.' });
+    const { id, titulo, contenido, categoria, fijado, toggleFijadoOnly } = req.body || {};
+    if (!id) {
+      return res.status(400).json({ error: 'Falta especificar el ID del aviso.' });
     }
 
     try {
-      const response = await fetch(`${SUPABASE_URL}/rest/v1/news?id=eq.${id}`, {
+      // 1. Obtener la noticia actual
+      const getRes = await fetch(`${SUPABASE_URL}/rest/v1/news?id=eq.${id}`, {
+        headers: {
+          'apikey': SUPABASE_SERVICE_ROLE_KEY,
+          'Authorization': `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`
+        }
+      });
+      if (!getRes.ok) throw new Error('No se pudo encontrar el aviso.');
+      const items = await getRes.json();
+      if (!items || items.length === 0) {
+        return res.status(404).json({ error: 'Aviso no encontrado.' });
+      }
+
+      const existing = items[0];
+
+      // Acción rápida: Toggle directo de fijado/desfijado
+      if (toggleFijadoOnly) {
+        const patchRes = await fetch(`${SUPABASE_URL}/rest/v1/news?id=eq.${id}`, {
+          method: 'PATCH',
+          headers: {
+            'apikey': SUPABASE_SERVICE_ROLE_KEY,
+            'Authorization': `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ fijado: !existing.fijado })
+        });
+        if (!patchRes.ok) throw new Error(await patchRes.text());
+        return res.status(200).json({ 
+          success: true, 
+          message: existing.fijado ? 'Aviso desfijado correctamente.' : 'Aviso fijado al inicio del Tablón.',
+          fijado: !existing.fijado
+        });
+      }
+
+      // 2. Comprobar tiempo transcurrido (regla de 30 minutos para el texto)
+      const createdAt = new Date(existing.created_at).getTime();
+      const diffMinutes = (Date.now() - createdAt) / (1000 * 60);
+
+      const updatePayload = {
+        categoria: categoria ? categoria.trim() : existing.categoria,
+        fijado: fijado !== undefined ? !!fijado : existing.fijado
+      };
+
+      if (titulo && contenido) {
+        const textChanged = (titulo.trim() !== existing.titulo || contenido.trim() !== existing.contenido);
+        if (textChanged) {
+          if (diffMinutes > 30) {
+            return res.status(403).json({
+              error: 'Pasaron más de 30 minutos desde la publicación. El texto ya no puede modificarse. Para cambiar el contenido, eliminá el aviso y publicalo nuevamente.'
+            });
+          }
+          updatePayload.titulo = titulo.trim();
+          updatePayload.contenido = contenido.trim();
+        }
+      }
+
+      const patchRes = await fetch(`${SUPABASE_URL}/rest/v1/news?id=eq.${id}`, {
         method: 'PATCH',
         headers: {
           'apikey': SUPABASE_SERVICE_ROLE_KEY,
           'Authorization': `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-          titulo: titulo.trim(),
-          contenido: contenido.trim(),
-          categoria: categoria || 'Aviso',
-          autor: autor || 'La Caravana + Estudiantes Independientes',
-          fijado: !!fijado
-        })
+        body: JSON.stringify(updatePayload)
       });
 
-      if (!response.ok) {
-        const errorText = await response.text();
+      if (!patchRes.ok) {
+        const errorText = await patchRes.text();
         throw new Error(errorText);
       }
 
-      return res.status(200).json({ success: true, message: 'Noticia actualizada correctamente.' });
+      return res.status(200).json({ success: true, message: 'Aviso actualizado correctamente.' });
     } catch (err) {
       console.error('Error updating news:', err);
       return res.status(500).json({ error: err.message });
