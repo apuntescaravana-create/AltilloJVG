@@ -1,29 +1,52 @@
 /**
- * AltilloJVG - Controlador del Panel de Administración
+ * AltilloJVG - Controlador Completo del Panel de Administración
+ * Pestañas: 
+ * 1. Peticiones de Subida (Aprobación/Rechazo sincronizado con Telegram)
+ * 2. Gestionar Apuntes (Filtros, Edición y Borrado)
+ * 3. Tablón de Noticias (Publicación y Administración de Comunicados)
+ * 4. Actualizador de Aulas (Trigger de GitHub Actions)
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Secciones y Autenticación
   const loginSection = document.getElementById('loginSection');
   const dashboardSection = document.getElementById('dashboardSection');
   const loginForm = document.getElementById('loginForm');
   const adminPasswordInput = document.getElementById('adminPassword');
-  
+  const logoutBtn = document.getElementById('logoutBtn');
+
+  // Pestañas
+  const tabSubmissions = document.getElementById('tabSubmissions');
+  const tabApuntes = document.getElementById('tabApuntes');
+  const tabNoticias = document.getElementById('tabNoticias');
+
+  const sectionSubmissions = document.getElementById('sectionSubmissions');
+  const sectionApuntes = document.getElementById('sectionApuntes');
+  const sectionNoticias = document.getElementById('sectionNoticias');
+
+  const pendingBadgeCount = document.getElementById('pendingBadgeCount');
+  const pendingHeaderBadge = document.getElementById('pendingHeaderBadge');
+  const historyCounterBadge = document.getElementById('historyCounterBadge');
+
+  // Tablas y Contenedores
+  const pendingTableBody = document.getElementById('pendingTableBody');
+  const historyTableBody = document.getElementById('historyTableBody');
+  const materialsTableBody = document.getElementById('materialsTableBody');
+  const totalRecordsBadge = document.getElementById('totalRecordsBadge');
+  const newsListContainer = document.getElementById('newsListContainer');
+  const newsCounterBadge = document.getElementById('newsCounterBadge');
+
+  // Filtros de Apuntes
   const filterCarrera = document.getElementById('filterCarrera');
   const filterAnio = document.getElementById('filterAnio');
   const filterTipo = document.getElementById('filterTipo');
   const searchKeyword = document.getElementById('searchKeyword');
-  
-  const materialsTableBody = document.getElementById('materialsTableBody');
-  const totalRecordsBadge = document.getElementById('totalRecordsBadge');
-  
-  const logoutBtn = document.getElementById('logoutBtn');
-  
-  // Modal Edición
+
+  // Modal Edición de Apuntes
   const editModal = document.getElementById('editModal');
   const closeEditModalBtn = document.getElementById('closeEditModalBtn');
   const cancelEditBtn = document.getElementById('cancelEditBtn');
   const editForm = document.getElementById('editForm');
-  
   const editId = document.getElementById('editId');
   const editCarrera = document.getElementById('editCarrera');
   const editAnio = document.getElementById('editAnio');
@@ -32,10 +55,23 @@ document.addEventListener('DOMContentLoaded', () => {
   const editNombre = document.getElementById('editNombre');
   const editLink = document.getElementById('editLink');
 
+  // Formulario de Noticias
+  const newsForm = document.getElementById('newsForm');
+  const newsTitulo = document.getElementById('newsTitulo');
+  const newsCategoria = document.getElementById('newsCategoria');
+  const newsContenido = document.getElementById('newsContenido');
+  const newsFijado = document.getElementById('newsFijado');
+
+  // Botón Sincronizar Aulas
+  const syncAulasBtn = document.getElementById('syncAulasBtn');
+
+  // Variables de Estado
   let allMaterials = [];
+  let allSubmissions = { pending: [], history: [] };
+  let allNews = [];
   let adminPassword = localStorage.getItem('altillojvg_admin_pass') || '';
 
-  // 1. Verificar sesión activa al cargar
+  // 1. Inicialización de Sesión
   if (adminPassword) {
     showDashboard();
   } else {
@@ -48,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
     adminPassword = adminPasswordInput.value.trim();
     if (!adminPassword) return;
 
-    const ok = await testConnectionAndLoad();
+    const ok = await testConnection();
     if (ok) {
       localStorage.setItem('altillojvg_admin_pass', adminPassword);
       showDashboard();
@@ -66,7 +102,6 @@ document.addEventListener('DOMContentLoaded', () => {
     showLogin();
   });
 
-  // 4. Mostrar Secciones
   function showLogin() {
     loginSection.classList.remove('hidden');
     dashboardSection.classList.add('hidden');
@@ -75,13 +110,46 @@ document.addEventListener('DOMContentLoaded', () => {
   function showDashboard() {
     loginSection.classList.add('hidden');
     dashboardSection.classList.remove('hidden');
-    
-    // Inicializar filtros y cargar datos
     populateCareerFilter();
-    loadMaterials();
+    switchTab('submissions');
   }
 
-  // 5. Poblar filtro de carreras desde la base de datos de aulas
+  // 4. Conmutación de Pestañas
+  function switchTab(tabName) {
+    // Resetear estilos de botones de pestañas
+    [tabSubmissions, tabApuntes, tabNoticias].forEach(btn => {
+      btn.classList.remove('border-brand-navy', 'text-brand-navy');
+      btn.classList.add('border-transparent', 'text-gray-500');
+    });
+
+    // Ocultar todas las secciones
+    sectionSubmissions.classList.add('hidden');
+    sectionApuntes.classList.add('hidden');
+    sectionNoticias.classList.add('hidden');
+
+    if (tabName === 'submissions') {
+      tabSubmissions.classList.add('border-brand-navy', 'text-brand-navy');
+      tabSubmissions.classList.remove('border-transparent', 'text-gray-500');
+      sectionSubmissions.classList.remove('hidden');
+      loadSubmissions();
+    } else if (tabName === 'apuntes') {
+      tabApuntes.classList.add('border-brand-navy', 'text-brand-navy');
+      tabApuntes.classList.remove('border-transparent', 'text-gray-500');
+      sectionApuntes.classList.remove('hidden');
+      loadMaterials();
+    } else if (tabName === 'noticias') {
+      tabNoticias.classList.add('border-brand-navy', 'text-brand-navy');
+      tabNoticias.classList.remove('border-transparent', 'text-gray-500');
+      sectionNoticias.classList.remove('hidden');
+      loadNews();
+    }
+  }
+
+  tabSubmissions.addEventListener('click', () => switchTab('submissions'));
+  tabApuntes.addEventListener('click', () => switchTab('apuntes'));
+  tabNoticias.addEventListener('click', () => switchTab('noticias'));
+
+  // 5. Poblar Carreras en Filtros
   function populateCareerFilter() {
     if (typeof AULAS_DATABASE !== 'undefined') {
       const careers = [...new Set(AULAS_DATABASE.map(item => item.carrera))].sort();
@@ -95,17 +163,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // 6. Testear conexión cargando datos
-  async function testConnectionAndLoad() {
+  // 6. Test de Conexión
+  async function testConnection() {
     try {
       const res = await fetch('/api/materials', {
-        headers: {
-          'x-admin-password': adminPassword
-        }
+        headers: { 'x-admin-password': adminPassword }
       });
-      if (res.status === 401) return false;
-      if (!res.ok) return false;
-      allMaterials = await res.json();
+      if (res.status === 401 || !res.ok) return false;
       return true;
     } catch (e) {
       console.error(e);
@@ -113,7 +177,215 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // 7. Cargar materiales
+  // ==========================================================================
+  // SECCIÓN 1: PETICIONES DE SUBIDA (SUBMISSIONS)
+  // ==========================================================================
+  window.loadSubmissions = async function() {
+    pendingTableBody.innerHTML = `
+      <tr>
+        <td colspan="6" class="px-6 py-8 text-center text-gray-500 font-medium">
+          Cargando peticiones desde el servidor...
+        </td>
+      </tr>
+    `;
+
+    try {
+      const res = await fetch('/api/submissions', {
+        headers: { 'x-admin-password': adminPassword }
+      });
+
+      if (res.status === 401) {
+        logoutBtn.click();
+        return;
+      }
+
+      if (!res.ok) throw new Error('Error al cargar peticiones.');
+
+      allSubmissions = await res.json();
+      renderSubmissions();
+    } catch (err) {
+      console.error(err);
+      pendingTableBody.innerHTML = `
+        <tr>
+          <td colspan="6" class="px-6 py-8 text-center text-red-500 font-bold">
+            ⚠️ No se pudieron cargar las peticiones. Verificá que la tabla 'submissions' esté creada en Supabase.
+          </td>
+        </tr>
+      `;
+    }
+  };
+
+  function renderSubmissions() {
+    const { pending, history, totalPending } = allSubmissions;
+
+    // Actualizar contadores
+    pendingBadgeCount.textContent = totalPending || 0;
+    pendingHeaderBadge.textContent = `${totalPending || 0} pendientes`;
+    historyCounterBadge.textContent = `${history ? history.length : 0} registros en historial`;
+
+    // 1. Renderizar Pendientes
+    if (!pending || pending.length === 0) {
+      pendingTableBody.innerHTML = `
+        <tr>
+          <td colspan="6" class="px-6 py-10 text-center text-gray-400 font-medium">
+            ✨ ¡Al día! No hay peticiones de subida pendientes de aprobación.
+          </td>
+        </tr>
+      `;
+    } else {
+      let pendingHtml = '';
+      pending.forEach(item => {
+        const fecha = new Date(item.created_at).toLocaleString('es-AR', {
+          dateStyle: 'short',
+          timeStyle: 'short'
+        });
+
+        pendingHtml += `
+          <tr class="hover:bg-amber-50/40 border-b border-gray-100">
+            <td class="px-6 py-4 text-xs text-gray-500 whitespace-nowrap">
+              ${fecha}
+            </td>
+            <td class="px-6 py-4">
+              <div class="font-bold text-brand-navy text-sm">${item.materia}</div>
+              <div class="text-xs text-gray-500">${item.carrera}</div>
+            </td>
+            <td class="px-6 py-4">
+              <span class="inline-block px-2.5 py-0.5 rounded-full text-xs font-bold bg-blue-100 text-blue-800">
+                ${item.tipo}
+              </span>
+              <div class="text-xs text-gray-400 mt-0.5">${item.anio}</div>
+            </td>
+            <td class="px-6 py-4 text-sm font-medium text-gray-800">
+              ${item.nombre}
+            </td>
+            <td class="px-6 py-4 text-center whitespace-nowrap">
+              <a href="${item.link}" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-xs font-bold text-brand-cyan hover:underline">
+                🔗 Ver Archivo
+              </a>
+            </td>
+            <td class="px-6 py-4 text-right space-x-2 whitespace-nowrap">
+              <button onclick="approveSubmission(${item.id}, '${escapeQuote(item.nombre)}')" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold shadow-sm transition">
+                ✅ Aprobar
+              </button>
+              <button onclick="rejectSubmission(${item.id}, '${escapeQuote(item.nombre)}')" class="px-3 py-1.5 bg-rose-100 hover:bg-rose-200 text-rose-700 rounded-lg text-xs font-bold transition">
+                ❌ Rechazar
+              </button>
+            </td>
+          </tr>
+        `;
+      });
+      pendingTableBody.innerHTML = pendingHtml;
+    }
+
+    // 2. Renderizar Historial
+    if (!history || history.length === 0) {
+      historyTableBody.innerHTML = `
+        <tr>
+          <td colspan="6" class="px-6 py-8 text-center text-gray-400 font-medium">
+            No hay registros de aportes procesados aún.
+          </td>
+        </tr>
+      `;
+    } else {
+      let historyHtml = '';
+      history.forEach(item => {
+        const fecha = new Date(item.created_at).toLocaleDateString('es-AR');
+        const esAprobado = item.estado === 'aprobado';
+        const badgeColor = esAprobado ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800';
+        const badgeTexto = esAprobado ? '✅ Aprobado' : '❌ Rechazado';
+
+        historyHtml += `
+          <tr class="hover:bg-gray-50 border-b border-gray-100">
+            <td class="px-6 py-4 text-xs text-gray-500 whitespace-nowrap">${fecha}</td>
+            <td class="px-6 py-4">
+              <div class="font-semibold text-brand-navy text-xs">${item.materia}</div>
+              <div class="text-xs text-gray-400">${item.carrera}</div>
+            </td>
+            <td class="px-6 py-4">
+              <div class="font-medium text-gray-700 text-xs">${item.nombre}</div>
+              <div class="text-xs text-gray-400">${item.tipo} (${item.anio})</div>
+            </td>
+            <td class="px-6 py-4">
+              <span class="inline-block px-2.5 py-0.5 rounded-full text-xs font-bold ${badgeColor}">
+                ${badgeTexto}
+              </span>
+            </td>
+            <td class="px-6 py-4 text-xs text-gray-600 font-medium">
+              ${item.aprobado_por || 'Sistema'}
+            </td>
+            <td class="px-6 py-4 text-center">
+              <a href="${item.link}" target="_blank" rel="noopener" class="text-xs text-brand-cyan hover:underline font-bold">
+                Ver
+              </a>
+            </td>
+          </tr>
+        `;
+      });
+      historyTableBody.innerHTML = historyHtml;
+    }
+  }
+
+  // Aprobar Petición desde Panel
+  window.approveSubmission = async function(id, nombre) {
+    if (!confirm(`¿Confirmás aprobar y publicar el material "${nombre}"?\n\nSe insertará automáticamente en el Altillo y se notificará en Telegram que fue aprobado desde el Panel de Admin.`)) {
+      return;
+    }
+
+    try {
+      const res = await fetch('/api/submissions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-admin-password': adminPassword
+        },
+        body: JSON.stringify({ action: 'approve', id })
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        alert('🎉 ¡Material aprobado y publicado exitosamente!');
+        loadSubmissions();
+      } else {
+        alert('❌ Error al aprobar: ' + (data.error || 'Intente de nuevo.'));
+      }
+    } catch (e) {
+      console.error(e);
+      alert('❌ Error al conectar con el servidor.');
+    }
+  };
+
+  // Rechazar Petición desde Panel
+  window.rejectSubmission = async function(id, nombre) {
+    if (!confirm(`¿Estás seguro de rechazar el material "${nombre}"?\n\nSe actualizará el estado y se sincronizará el mensaje en Telegram.`)) {
+      return;
+    }
+
+    try {
+      const res = await fetch('/api/submissions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-admin-password': adminPassword
+        },
+        body: JSON.stringify({ action: 'reject', id })
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        alert('🚫 Petición rechazada.');
+        loadSubmissions();
+      } else {
+        alert('❌ Error al rechazar: ' + (data.error || 'Intente de nuevo.'));
+      }
+    } catch (e) {
+      console.error(e);
+      alert('❌ Error al conectar con el servidor.');
+    }
+  };
+
+  // ==========================================================================
+  // SECCIÓN 2: GESTIONAR APUNTES PUBLICADOS (EXISTENTE)
+  // ==========================================================================
   async function loadMaterials() {
     materialsTableBody.innerHTML = `
       <tr>
@@ -126,13 +398,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     try {
       const res = await fetch('/api/materials', {
-        headers: {
-          'x-admin-password': adminPassword
-        }
+        headers: { 'x-admin-password': adminPassword }
       });
       
       if (res.status === 401) {
-        alert("⚠️ Sesión expirada o contraseña inválida.");
         logoutBtn.click();
         return;
       }
@@ -140,13 +409,13 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!res.ok) throw new Error('Error al obtener materiales.');
       
       allMaterials = await res.json();
-      renderTable();
+      renderMaterialsTable();
     } catch (err) {
       console.error(err);
       materialsTableBody.innerHTML = `
         <tr>
           <td colspan="5" class="px-6 py-12 text-center text-red-500 font-bold">
-            ⚠️ Error al conectar con la base de datos.
+            ⚠️ Error al conectar con la base de datos de materiales.
           </td>
         </tr>
       `;
@@ -154,8 +423,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // 8. Renderizar Tabla aplicando filtros locales
-  function renderTable() {
+  function renderMaterialsTable() {
     const selectedCarrera = filterCarrera.value;
     const selectedAnio = filterAnio.value;
     const selectedTipo = filterTipo.value;
@@ -228,13 +496,12 @@ document.addEventListener('DOMContentLoaded', () => {
     materialsTableBody.innerHTML = html;
   }
 
-  // Vincular eventos de filtros
-  filterCarrera.addEventListener('change', renderTable);
-  filterAnio.addEventListener('change', renderTable);
-  filterTipo.addEventListener('change', renderTable);
-  searchKeyword.addEventListener('input', renderTable);
+  filterCarrera.addEventListener('change', renderMaterialsTable);
+  filterAnio.addEventListener('change', renderMaterialsTable);
+  filterTipo.addEventListener('change', renderMaterialsTable);
+  searchKeyword.addEventListener('input', renderMaterialsTable);
 
-  // 9. Eliminar material
+  // Eliminar material de Supabase
   window.deleteMaterial = async function(id) {
     const item = allMaterials.find(m => m.id === id);
     if (!item) return;
@@ -246,9 +513,7 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       const res = await fetch(`/api/materials?id=${id}`, {
         method: 'DELETE',
-        headers: {
-          'x-admin-password': adminPassword
-        }
+        headers: { 'x-admin-password': adminPassword }
       });
 
       if (res.ok) {
@@ -264,7 +529,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  // 10. Abrir modal edición
+  // Modal Edición
   window.openEditModal = function(id) {
     const item = allMaterials.find(m => m.id === id);
     if (!item) return;
@@ -280,7 +545,6 @@ document.addEventListener('DOMContentLoaded', () => {
     editModal.classList.remove('hidden');
   };
 
-  // Cerrar modal edición
   function closeEditModal() {
     editModal.classList.add('hidden');
     editForm.reset();
@@ -288,15 +552,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   closeEditModalBtn.addEventListener('click', closeEditModal);
   cancelEditBtn.addEventListener('click', closeEditModal);
-  
   editModal.addEventListener('click', (e) => {
     if (e.target === editModal) closeEditModal();
   });
 
-  // Guardar edición
   editForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-
     const payload = {
       id: parseInt(editId.value),
       anio: editAnio.value,
@@ -330,8 +591,145 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Botón para sincronizar aulas oficiales via GitHub Actions
-  const syncAulasBtn = document.getElementById('syncAulasBtn');
+  // ==========================================================================
+  // SECCIÓN 3: TABLÓN DE NOTICIAS
+  // ==========================================================================
+  async function loadNews() {
+    newsListContainer.innerHTML = `
+      <div class="p-8 text-center text-gray-500 font-medium">
+        Cargando noticias y comunicados...
+      </div>
+    `;
+
+    try {
+      const res = await fetch('/api/news');
+      allNews = await res.json();
+      renderNewsList();
+    } catch (e) {
+      console.error(e);
+      newsListContainer.innerHTML = `
+        <div class="p-8 text-center text-red-500 font-bold">
+          ⚠️ No se pudieron cargar los comunicados del Tablón. Verificá que la tabla 'news' esté creada en Supabase.
+        </div>
+      `;
+    }
+  }
+
+  function renderNewsList() {
+    newsCounterBadge.textContent = `${allNews.length} comunicados`;
+
+    if (!allNews || allNews.length === 0) {
+      newsListContainer.innerHTML = `
+        <div class="p-8 text-center text-gray-400 font-medium">
+          Aún no hay comunicados publicados en el Tablón.
+        </div>
+      `;
+      return;
+    }
+
+    let html = '';
+    allNews.forEach(item => {
+      const fecha = new Date(item.created_at).toLocaleDateString('es-AR');
+      const isPinned = item.fijado;
+      
+      let badgeClass = 'bg-blue-100 text-blue-800';
+      if (item.categoria === 'Importante') badgeClass = 'bg-amber-100 text-amber-800';
+      if (item.categoria === 'Gremial') badgeClass = 'bg-purple-100 text-purple-800';
+      if (item.categoria === 'Urgente') badgeClass = 'bg-red-100 text-red-800';
+
+      html += `
+        <div class="p-6 flex justify-between items-start gap-4 hover:bg-gray-50 transition">
+          <div class="space-y-1.5 flex-1">
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="px-2.5 py-0.5 rounded-full text-xs font-bold ${badgeClass}">
+                ${item.categoria}
+              </span>
+              ${isPinned ? '<span class="bg-amber-50 text-amber-800 text-xs px-2 py-0.5 rounded-full font-bold border border-amber-300">📌 Fijado</span>' : ''}
+              <span class="text-xs text-gray-400">${fecha}</span>
+            </div>
+            <h4 class="text-base font-bold text-brand-navy">${item.titulo}</h4>
+            <p class="text-sm text-gray-600 whitespace-pre-line leading-relaxed">${item.contenido}</p>
+            <div class="text-xs text-gray-400 pt-1 font-medium">Publicado por: ${item.autor}</div>
+          </div>
+          <button onclick="deleteNewsItem(${item.id})" class="px-3 py-1.5 bg-red-50 hover:bg-red-100 text-red-700 rounded-lg text-xs font-bold transition">
+            🗑️ Eliminar
+          </button>
+        </div>
+      `;
+    });
+    newsListContainer.innerHTML = html;
+  }
+
+  // Publicar Noticia
+  newsForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = document.getElementById('btnPublishNews');
+    btn.disabled = true;
+    btn.textContent = 'Publicando...';
+
+    const payload = {
+      titulo: newsTitulo.value.trim(),
+      categoria: newsCategoria.value,
+      contenido: newsContenido.value.trim(),
+      autor: 'La Caravana + Estudiantes Independientes',
+      fijado: newsFijado.checked
+    };
+
+    try {
+      const res = await fetch('/api/news', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-admin-password': adminPassword
+        },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        alert('🎉 ¡Comunicado publicado con éxito en el Tablón!');
+        newsForm.reset();
+        loadNews();
+      } else {
+        alert('❌ Error al publicar noticia: ' + (data.error || 'Intente de nuevo.'));
+      }
+    } catch (err) {
+      console.error(err);
+      alert('❌ Error al conectar con el servidor.');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Publicar Comunicado';
+    }
+  });
+
+  // Eliminar Noticia
+  window.deleteNewsItem = async function(id) {
+    if (!confirm('¿Estás seguro de que querés eliminar este aviso del Tablón?')) {
+      return;
+    }
+
+    try {
+      const res = await fetch(`/api/news?id=${id}`, {
+        method: 'DELETE',
+        headers: { 'x-admin-password': adminPassword }
+      });
+
+      if (res.ok) {
+        alert('✅ Noticia eliminada.');
+        loadNews();
+      } else {
+        const data = await res.json();
+        alert('❌ Error al eliminar noticia: ' + (data.error || 'Intente de nuevo.'));
+      }
+    } catch (e) {
+      console.error(e);
+      alert('❌ Error al conectar con el servidor.');
+    }
+  };
+
+  // ==========================================================================
+  // SECCIÓN 4: BOTÓN ACTUALIZAR AULAS DESDE GITHUB ACTIONS
+  // ==========================================================================
   if (syncAulasBtn) {
     syncAulasBtn.addEventListener('click', async () => {
       const confirmSync = confirm(
@@ -348,9 +746,7 @@ document.addEventListener('DOMContentLoaded', () => {
       try {
         const res = await fetch('/api/sync_aulas', {
           method: 'POST',
-          headers: {
-            'x-admin-password': adminPassword
-          }
+          headers: { 'x-admin-password': adminPassword }
         });
 
         const result = await res.json();
@@ -368,5 +764,9 @@ document.addEventListener('DOMContentLoaded', () => {
         syncAulasBtn.textContent = '🔄 Actualizar Aulas desde Web Oficial';
       }
     });
+  }
+
+  function escapeQuote(str) {
+    return String(str || '').replace(/'/g, "\\'");
   }
 });

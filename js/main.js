@@ -81,6 +81,8 @@ document.addEventListener('DOMContentLoaded', () => {
       else if (card.classList.contains('horarios')) {
         if (typeof window.openAulasModal === 'function') window.openAulasModal();
         else openHorariosModal();
+      } else if (card.classList.contains('mapa-carrera')) {
+        if (typeof window.openMapaCarreraModal === 'function') window.openMapaCarreraModal();
       }
     });
   });
@@ -91,6 +93,8 @@ document.addEventListener('DOMContentLoaded', () => {
       if (box.classList.contains('box-aulas')) {
         if (typeof window.openAulasModal === 'function') window.openAulasModal();
         else openHorariosModal();
+      } else if (box.classList.contains('box-mapa-carrera')) {
+        if (typeof window.openMapaCarreraModal === 'function') window.openMapaCarreraModal();
       } else if (box.classList.contains('box-finales')) {
         openFinalesModal();
       } else if (box.classList.contains('box-tramites')) {

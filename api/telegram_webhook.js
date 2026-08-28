@@ -86,6 +86,19 @@ export default async function handler(req, res) {
               console.error('Error insertando en Supabase:', errTxt);
             } else {
               console.log('Material insertado exitosamente en Supabase.');
+              // Actualizar registro en submissions
+              await fetch(`${SUPABASE_URL}/rest/v1/submissions?telegram_message_id=eq.${messageId}`, {
+                method: 'PATCH',
+                headers: {
+                  'apikey': SUPABASE_SERVICE_ROLE_KEY,
+                  'Authorization': `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                  estado: 'aprobado',
+                  aprobado_por: `Telegram (@${userFirstName})`
+                })
+              });
             }
           } catch (dbError) {
             console.error('Excepción al conectar con Supabase:', dbError);
@@ -94,6 +107,27 @@ export default async function handler(req, res) {
       } else if (data.startsWith('reject_')) {
         responseNotice = '❌ Documento rechazado.';
         newText = `${rawText}\n\n🚫 *ESTADO:* ❌ *RECHAZADO*\n👤 *Por:* ${userFirstName}\n📅 *Fecha:* ${new Date().toLocaleDateString('es-AR')}`;
+
+        const SUPABASE_URL = process.env.SUPABASE_URL;
+        const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+        if (SUPABASE_URL && SUPABASE_SERVICE_ROLE_KEY) {
+          try {
+            await fetch(`${SUPABASE_URL}/rest/v1/submissions?telegram_message_id=eq.${messageId}`, {
+              method: 'PATCH',
+              headers: {
+                'apikey': SUPABASE_SERVICE_ROLE_KEY,
+                'Authorization': `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                estado: 'rechazado',
+                aprobado_por: `Telegram (@${userFirstName})`
+              })
+            });
+          } catch (dbError) {
+            console.error('Error actualizando rechazo en submissions:', dbError);
+          }
+        }
       }
 
       // Responder al click del usuario para quitar la animación de carga en Telegram

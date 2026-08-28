@@ -110,6 +110,39 @@ export default async function handler(req) {
       });
     }
 
+    // Registrar la petición en la base de datos de Supabase para el panel de administración
+    const SUPABASE_URL = process.env.SUPABASE_URL;
+    const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+    const tgMessageId = tgResult.result?.message_id;
+    const tgChatId = tgResult.result?.chat?.id || TELEGRAM_CHAT_ID;
+
+    if (SUPABASE_URL && SUPABASE_SERVICE_ROLE_KEY) {
+      try {
+        await fetch(`${SUPABASE_URL}/rest/v1/submissions`, {
+          method: 'POST',
+          headers: {
+            'apikey': SUPABASE_SERVICE_ROLE_KEY,
+            'Authorization': `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
+            'Content-Type': 'application/json',
+            'Prefer': 'return=minimal'
+          },
+          body: JSON.stringify({
+            carrera: carrera,
+            anio: anio,
+            materia: materia.toUpperCase(),
+            tipo: tipo,
+            nombre: nombrePersonalizado || `${tipo} de ${materia}`,
+            link: link,
+            estado: 'pendiente',
+            telegram_message_id: tgMessageId,
+            telegram_chat_id: tgChatId
+          })
+        });
+      } catch (subErr) {
+        console.error('Error guardando submission en Supabase:', subErr);
+      }
+    }
+
     return new Response(JSON.stringify({
       success: true,
       message: '¡Aporte recibido con éxito! Ha sido enviado al grupo de aprobación de La Caravana.',
