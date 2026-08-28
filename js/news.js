@@ -4,7 +4,7 @@
  * Incorpora:
  * 1. Límite de avisos iniciales (4) con botón expandible: "Para ver todos los avisos publicados, clickeá acá".
  * 2. Límite de longitud de texto por aviso con botones interactivos "Ver más" / "Ver menos".
- * 3. Alternancia de vistas en móviles (Repositorio vs Tablón).
+ * 3. Alternancia nativa y reordenamiento de vistas en celulares (Herramientas, Altillo, Novedades).
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -15,9 +15,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const mobileNavTools = document.getElementById('mobileNavTools');
   const mobileNavAltillo = document.getElementById('mobileNavAltillo');
   const mobileNavNews = document.getElementById('mobileNavNews');
+
+  // Contenedores del Layout
+  const dashboardGrid = document.querySelector('.dashboard-grid');
   const mainRepoView = document.getElementById('mainRepoView');
+  const rightSidebar = document.getElementById('rightSidebar') || document.querySelector('.side-column');
+  const recursosSection = document.getElementById('recursosSection');
+  const carrerasSection = document.getElementById('carrerasSection');
   const mobileTablonView = document.getElementById('mobileTablonView');
   const btnMobileGoTablon = document.getElementById('btnMobileGoTablon');
+  const mobileCtaTablon = document.querySelector('.side-card.cta-tablon-mobile');
 
   // Estado del Tablón
   const INITIAL_LIMIT = 4;
@@ -195,57 +202,118 @@ document.addEventListener('DOMContentLoaded', () => {
     renderNews();
   };
 
-  // 2. Alternancia de Vistas en Celular (Herramientas, Altillo, Novedades)
-  window.switchMobileView = function(view) {
-    document.body.classList.remove('mobile-view-tools', 'mobile-view-altillo', 'mobile-view-news');
+  // ==============================================================================
+  // 2. CONTROLADOR DINÁMICO DE PESTAÑAS MÓVILES (Herramientas, Altillo, Novedades)
+  // Reordena físicamente el DOM en celular para garantizar que el contenido aparezca
+  // inmediatamente arriba y las herramientas abajo, sin depender de caché de CSS.
+  // ==============================================================================
+  window.switchMobileView = function(view, doScroll = true) {
+    if (window.innerWidth > 1024) return; // En pantallas grandes (PC) no se altera el layout de 3 columnas
+
     [mobileNavTools, mobileNavAltillo, mobileNavNews].forEach(btn => {
       if (btn) btn.classList.remove('active');
     });
 
     if (view === 'tools') {
-      document.body.classList.add('mobile-view-tools');
       if (mobileNavTools) mobileNavTools.classList.add('active');
+
+      // 1. Pestaña HERRAMIENTAS:
+      // Herramientas laterales ARRIBA de todo
+      if (rightSidebar && dashboardGrid) {
+        rightSidebar.style.display = 'flex';
+        dashboardGrid.prepend(rightSidebar);
+      }
+      // Información Útil DEBAJO de las herramientas
+      if (mainRepoView && dashboardGrid) {
+        mainRepoView.style.display = 'block';
+        dashboardGrid.append(mainRepoView);
+      }
+      if (recursosSection) recursosSection.style.display = 'block';
+      if (carrerasSection) carrerasSection.style.display = 'none';
+      if (mobileTablonView) mobileTablonView.style.display = 'none';
+      if (mobileCtaTablon) mobileCtaTablon.style.display = 'flex';
+
     } else if (view === 'news') {
-      document.body.classList.add('mobile-view-news');
       if (mobileNavNews) mobileNavNews.classList.add('active');
+
+      // 2. Pestaña NOVEDADES:
+      // Tablón de Novedades ARRIBA de todo
+      if (mobileTablonView && dashboardGrid) {
+        mobileTablonView.style.display = 'block';
+        dashboardGrid.prepend(mobileTablonView);
+      }
+      // Ocultar repositorio de carreras e información útil
+      if (mainRepoView) mainRepoView.style.display = 'none';
+
+      // Herramientas laterales ABAJO de todo
+      if (rightSidebar && dashboardGrid) {
+        rightSidebar.style.display = 'flex';
+        dashboardGrid.append(rightSidebar);
+      }
+      if (mobileCtaTablon) mobileCtaTablon.style.display = 'none';
+
     } else {
-      document.body.classList.add('mobile-view-altillo');
+      // 3. Pestaña ALTILLO (Por defecto en celular):
       if (mobileNavAltillo) mobileNavAltillo.classList.add('active');
+
+      // Carreras y buscador ARRIBA de todo
+      if (mainRepoView && dashboardGrid) {
+        mainRepoView.style.display = 'block';
+        dashboardGrid.prepend(mainRepoView);
+      }
+      if (carrerasSection) carrerasSection.style.display = 'block';
+      if (recursosSection) recursosSection.style.display = 'none';
+      if (mobileTablonView) mobileTablonView.style.display = 'none';
+
+      // Herramientas laterales ABAJO de todo
+      if (rightSidebar && dashboardGrid) {
+        rightSidebar.style.display = 'flex';
+        dashboardGrid.append(rightSidebar);
+      }
+      if (mobileCtaTablon) mobileCtaTablon.style.display = 'flex';
     }
 
-    // Scroll suave hacia la sección para mejor navegación táctil
-    const target = document.querySelector('.main-container');
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // Scroll suave hacia la sección si el usuario hizo clic
+    if (doScroll) {
+      const hero = document.querySelector('.hero-header');
+      if (hero) {
+        window.scrollTo({ top: hero.offsetHeight - 15, behavior: 'smooth' });
+      }
     }
   };
 
+  // Listeners de clics en la barra inferior móvil
   if (mobileNavTools) {
     mobileNavTools.addEventListener('click', (e) => {
       e.preventDefault();
-      switchMobileView('tools');
+      switchMobileView('tools', true);
     });
   }
 
   if (mobileNavAltillo) {
     mobileNavAltillo.addEventListener('click', (e) => {
       e.preventDefault();
-      switchMobileView('altillo');
+      switchMobileView('altillo', true);
     });
   }
 
   if (mobileNavNews) {
     mobileNavNews.addEventListener('click', (e) => {
       e.preventDefault();
-      switchMobileView('news');
+      switchMobileView('news', true);
     });
   }
 
   if (btnMobileGoTablon) {
     btnMobileGoTablon.addEventListener('click', (e) => {
       e.preventDefault();
-      switchMobileView('news');
+      switchMobileView('news', true);
     });
+  }
+
+  // Inicializar en Altillo si estamos en celular al cargar la página
+  if (window.innerWidth <= 1024) {
+    switchMobileView('altillo', false);
   }
 
   function escapeHtml(text) {
