@@ -12,7 +12,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const tablonFeedMobile = document.getElementById('tablonFeedMobile');
   
   // Elementos de navegación en celular
-  const mobileNavRepo = document.getElementById('mobileNavRepo');
+  const mobileNavTools = document.getElementById('mobileNavTools');
+  const mobileNavAltillo = document.getElementById('mobileNavAltillo');
   const mobileNavNews = document.getElementById('mobileNavNews');
   const mainRepoView = document.getElementById('mainRepoView');
   const mobileTablonView = document.getElementById('mobileTablonView');
@@ -194,26 +195,42 @@ document.addEventListener('DOMContentLoaded', () => {
     renderNews();
   };
 
-  // 2. Alternancia de Vistas en Celular (Repositorio vs Tablón de Novedades)
+  // 2. Alternancia de Vistas en Celular (Herramientas, Altillo, Novedades)
   window.switchMobileView = function(view) {
-    if (view === 'news') {
-      if (mainRepoView) mainRepoView.style.display = 'none';
-      if (mobileTablonView) mobileTablonView.style.display = 'block';
+    document.body.classList.remove('mobile-view-tools', 'mobile-view-altillo', 'mobile-view-news');
+    [mobileNavTools, mobileNavAltillo, mobileNavNews].forEach(btn => {
+      if (btn) btn.classList.remove('active');
+    });
+
+    if (view === 'tools') {
+      document.body.classList.add('mobile-view-tools');
+      if (mobileNavTools) mobileNavTools.classList.add('active');
+    } else if (view === 'news') {
+      document.body.classList.add('mobile-view-news');
       if (mobileNavNews) mobileNavNews.classList.add('active');
-      if (mobileNavRepo) mobileNavRepo.classList.remove('active');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
-      if (mainRepoView) mainRepoView.style.display = 'block';
-      if (mobileTablonView) mobileTablonView.style.display = 'none';
-      if (mobileNavRepo) mobileNavRepo.classList.add('active');
-      if (mobileNavNews) mobileNavNews.classList.remove('active');
+      document.body.classList.add('mobile-view-altillo');
+      if (mobileNavAltillo) mobileNavAltillo.classList.add('active');
+    }
+
+    // Scroll suave hacia la sección para mejor navegación táctil
+    const target = document.querySelector('.main-container');
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
 
-  if (mobileNavRepo) {
-    mobileNavRepo.addEventListener('click', (e) => {
+  if (mobileNavTools) {
+    mobileNavTools.addEventListener('click', (e) => {
       e.preventDefault();
-      switchMobileView('repo');
+      switchMobileView('tools');
+    });
+  }
+
+  if (mobileNavAltillo) {
+    mobileNavAltillo.addEventListener('click', (e) => {
+      e.preventDefault();
+      switchMobileView('altillo');
     });
   }
 

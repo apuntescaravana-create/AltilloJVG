@@ -957,9 +957,122 @@ body {
   }
 }
 
+/* ==============================================================================
+   ORQUESTACIÓN DE LAS 3 VISTAS EXCLUSIVAS PARA CELULAR (<= 1024px)
+   1. Herramientas: Sidebar Tools arriba + Información Útil abajo
+   2. Altillo: Carreras arriba + Sidebar Tools abajo
+   3. Novedades: Tablón de Novedades arriba + Sidebar Tools abajo
+   ============================================================================== */
 @media (max-width: 1024px) {
+  .mobile-top-bar {
+    display: none !important;
+  }
+
   .dashboard-grid {
-    grid-template-columns: 1fr;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 18px !important;
+  }
+
+  .tablon-column-desktop {
+    display: none !important;
+  }
+
+  /* -------------------------------------------------------------
+     PESTAÑA 2: ALTILLO (POR DEFECTO EN MÓVIL)
+     Arriba: Carreras y buscador de apuntes.
+     Abajo: Herramientas laterales.
+     Ocultos: Información Útil, Tablón.
+     ------------------------------------------------------------- */
+  body:not(.mobile-view-tools):not(.mobile-view-news) #recursosSection,
+  body.mobile-view-altillo #recursosSection {
+    display: none !important;
+  }
+
+  body:not(.mobile-view-tools):not(.mobile-view-news) #carrerasSection,
+  body.mobile-view-altillo #carrerasSection {
+    display: block !important;
+  }
+
+  body:not(.mobile-view-tools):not(.mobile-view-news) #mainRepoView,
+  body.mobile-view-altillo #mainRepoView {
+    order: 1 !important;
+    display: block !important;
+  }
+
+  body:not(.mobile-view-tools):not(.mobile-view-news) .side-column,
+  body.mobile-view-altillo .side-column {
+    order: 2 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    margin-top: 10px;
+  }
+
+  body:not(.mobile-view-tools):not(.mobile-view-news) #mobileTablonView,
+  body.mobile-view-altillo #mobileTablonView {
+    display: none !important;
+  }
+
+  /* -------------------------------------------------------------
+     PESTAÑA 1: HERRAMIENTAS
+     Arriba: Tarjetas laterales (Normativa, Planes, Aulas, Mapa, Subir)
+     Abajo: Información Útil para el Estudiante (grilla de trámites y derechos)
+     Ocultos: Carreras, Tablón.
+     ------------------------------------------------------------- */
+  body.mobile-view-tools .side-column {
+    order: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    margin-bottom: 12px;
+  }
+
+  body.mobile-view-tools #mainRepoView {
+    order: 2 !important;
+    display: block !important;
+  }
+
+  body.mobile-view-tools #recursosSection {
+    display: block !important;
+  }
+
+  body.mobile-view-tools #carrerasSection {
+    display: none !important;
+  }
+
+  body.mobile-view-tools #mobileTablonView {
+    display: none !important;
+  }
+
+  /* -------------------------------------------------------------
+     PESTAÑA 3: NOVEDADES
+     Arriba: Tablón de Novedades en vivo
+     Abajo: Herramientas laterales
+     Ocultos: Carreras, Información Útil.
+     ------------------------------------------------------------- */
+  body.mobile-view-news #mobileTablonView {
+    order: 1 !important;
+    display: block !important;
+    margin-bottom: 10px;
+  }
+
+  body.mobile-view-news .side-column {
+    order: 2 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    margin-top: 10px;
+  }
+
+  body.mobile-view-news #rightSidebar .side-card.cta-tablon-mobile {
+    display: none !important;
+  }
+
+  body.mobile-view-news #mainRepoView {
+    display: none !important;
+  }
+
+  body.mobile-view-news #recursosSection,
+  body.mobile-view-news #carrerasSection {
+    display: none !important;
   }
 
   .carreras-grid {
@@ -969,11 +1082,11 @@ body {
 
 @media (max-width: 768px) {
   body {
-    padding-bottom: 65px;
+    padding-bottom: 75px;
   }
 
   .mobile-top-bar {
-    display: flex;
+    display: none !important;
   }
 
   .hero-header {
