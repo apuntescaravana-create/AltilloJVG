@@ -970,54 +970,88 @@ body {
   }
 
   .dashboard-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+  }
+
+  /* Las herramientas grandes van arriba cuando están visibles (en Herramientas) */
+  #rightSidebar {
+    order: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    margin-bottom: 14px !important;
+  }
+
+  #mainRepoView {
+    order: 2 !important;
     display: block !important;
   }
 
-  /* Las herramientas se muestran en bloquecitos compactos tipo grilla de 2 columnas */
-  .side-column {
+  /* Asegurar que las tarjetas grandes mantengan título y descripción completa en móvil */
+  .side-card {
+    padding: 14px 16px !important;
+    border-radius: 14px !important;
+  }
+
+  .side-card-desc {
+    display: block !important;
+    font-size: 0.78rem !important;
+    line-height: 1.4 !important;
+    margin-top: 3px !important;
+  }
+
+  .side-card-arrow {
+    display: block !important;
+  }
+
+  /* Grilla de Herramientas Compactas al final (para Altillo y Novedades) */
+  .mobile-compact-tools {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  }
+
+  .compact-tools-grid {
     display: grid !important;
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 8px !important;
-    margin: 16px 0 !important;
-    padding: 0 !important;
   }
 
-  .side-card {
+  .compact-tool-chip {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
     padding: 10px 12px !important;
-    border-radius: 12px !important;
-    display: flex !important;
-    align-items: center !important;
-    gap: 10px !important;
-    min-height: 48px !important;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05) !important;
-  }
-
-  .side-card-icon {
-    width: 32px !important;
-    height: 32px !important;
-    min-width: 32px !important;
-    border-radius: 8px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-  }
-
-  .side-card-icon svg {
-    width: 17px !important;
-    height: 17px !important;
-  }
-
-  .side-card-title {
+    background: #F8FAFC !important;
+    border: 1.5px solid #E2E8F0 !important;
+    border-radius: 10px !important;
     font-size: 0.8rem !important;
     font-weight: 700 !important;
-    line-height: 1.2 !important;
-    margin: 0 !important;
+    color: #1E293B !important;
+    text-decoration: none !important;
+    transition: all 0.15s ease !important;
   }
 
-  /* Ocultar descripción y flechas para que sean bloquecitos limpios */
-  .side-card-desc,
-  .side-card-arrow {
-    display: none !important;
+  .compact-tool-chip:active {
+    transform: scale(0.97) !important;
+    background: #F1F5F9 !important;
+  }
+
+  .compact-tool-chip svg {
+    flex-shrink: 0 !important;
+    color: #0284C7 !important;
+  }
+
+  .compact-tool-chip.chip-upload svg {
+    color: #D99B26 !important;
+  }
+
+  .compact-tool-chip.chip-mapa svg {
+    color: #B45309 !important;
   }
 
   .carreras-grid {
