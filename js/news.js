@@ -156,10 +156,21 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       let badgeBg = '#E0F2FE';
-      let badgeColor = '#0284C7';
-      if (item.categoria === 'Importante') { badgeBg = '#FEF3C7'; badgeColor = '#B45309'; }
-      if (item.categoria === 'Gremial') { badgeBg = '#F3E8FF'; badgeColor = '#7E22CE'; }
-      if (item.categoria === 'Urgente') { badgeBg = '#FEE2E2'; badgeColor = '#B91C1C'; }
+      let badgeColor = '#0369A1';
+      let borderLeft = '4px solid #0284C7';
+      if (item.categoria === 'Importante') {
+        badgeBg = '#FEF3C7';
+        badgeColor = '#B45309';
+        borderLeft = '4px solid #F59E0B';
+      } else if (item.categoria === 'Gremial') {
+        badgeBg = '#F3E8FF';
+        badgeColor = '#7E22CE';
+        borderLeft = '4px solid #8B5CF6';
+      } else if (item.categoria === 'Urgente') {
+        badgeBg = '#FEE2E2';
+        badgeColor = '#B91C1C';
+        borderLeft = '4px solid #EF4444';
+      }
 
       const rawText = item.contenido || '';
       const isLongText = rawText.length > TEXT_CHAR_LIMIT;
@@ -188,26 +199,26 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       html += `
-        <article class="tablon-card" style="background:#FFFFFF; border:1px solid #E2E8F0; border-radius:14px; padding:16px; margin-bottom:14px; box-shadow:0 2px 8px rgba(0,0,0,0.04); transition:transform 0.2s ease;">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:6px;">
+        <article class="tablon-card ${item.fijado ? 'pinned-notice' : ''}" style="border-left: ${borderLeft} !important;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:6px;">
             <div style="display:flex; align-items:center; gap:6px;">
-              <span style="background:${badgeBg}; color:${badgeColor}; font-size:0.7rem; font-weight:800; padding:2px 8px; border-radius:20px; text-transform:uppercase;">
+              <span style="background:${badgeBg}; color:${badgeColor}; font-size:0.68rem; font-weight:800; padding:3px 8px; border-radius:14px; text-transform:uppercase; letter-spacing:0.5px;">
                 ${escapeHtml(item.categoria)}
               </span>
-              ${item.fijado ? '<span style="background:#FEF3C7; color:#92400E; font-size:0.68rem; font-weight:800; padding:2px 7px; border-radius:20px; border:1px solid #FCD34D;">📌 FIJADO</span>' : ''}
+              ${item.fijado ? '<span style="background:#FFFBEB; color:#B45309; font-size:0.68rem; font-weight:800; padding:2px 8px; border-radius:14px; border:1px solid #FCD34D;">📌 DESTACADO</span>' : ''}
             </div>
-            <span style="font-size:0.72rem; color:#94A3B8; font-weight:600;">${fecha}</span>
+            <span style="font-size:0.72rem; color:#8C7E72; font-weight:600;">${fecha}</span>
           </div>
 
-          <h4 style="font-size:0.95rem; font-weight:800; color:#0B2545; line-height:1.35; margin-bottom:8px;">
+          <h4 style="font-size:0.96rem; font-weight:800; color:#1E293B; line-height:1.4; margin-bottom:8px;">
             ${escapeHtml(item.titulo)}
           </h4>
 
           ${textHtml}
 
-          <div style="border-top:1px solid #F1F5F9; padding-top:8px; display:flex; justify-content:space-between; align-items:center;">
-            <span style="font-size:0.72rem; color:#64748B; font-weight:600;">
-              ✍️ ${escapeHtml(item.autor || 'La Caravana')}
+          <div style="border-top:1px solid #F3ECE2; padding-top:8px; display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-size:0.72rem; color:#786450; font-weight:600; display:flex; align-items:center; gap:4px;">
+              ✍️ <span>${escapeHtml(item.autor || 'La Caravana')}</span>
             </span>
           </div>
         </article>
@@ -218,15 +229,15 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!isExpanded) {
         html += `
           <div style="text-align: center; margin-top: 12px; margin-bottom: 8px;">
-            <button type="button" onclick="toggleFeedLimit('${viewType}')" style="width: 100%; background: #F8FAFC; hover: background: #F1F5F9; color: #475569; font-weight: 700; font-size: 0.8rem; padding: 10px 14px; border-radius: 10px; border: 1.5px solid #E2E8F0; cursor: pointer; transition: all 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
-              📄 Para ver todos los avisos publicados (${newsList.length}), clickeá acá
+            <button type="button" onclick="toggleFeedLimit('${viewType}')" class="tablon-expand-btn">
+              📋 Para ver todos los avisos publicados (${newsList.length}), clickeá acá
             </button>
           </div>
         `;
       } else {
         html += `
           <div style="text-align: center; margin-top: 12px; margin-bottom: 8px;">
-            <button type="button" onclick="toggleFeedLimit('${viewType}')" style="width: 100%; background: #F1F5F9; color: #475569; font-weight: 700; font-size: 0.78rem; padding: 8px 12px; border-radius: 10px; border: 1px solid #CBD5E1; cursor: pointer;">
+            <button type="button" onclick="toggleFeedLimit('${viewType}')" class="tablon-expand-btn">
               ▲ Mostrar menos avisos
             </button>
           </div>

@@ -6,8 +6,8 @@
   <title>AltilloJVG | Repositorio Digital del Instituto Joaquín V. González</title>
   <meta name="description" content="Plataforma colaborativa y repositorio digital para alumnos del Instituto Superior del Profesorado Joaquín V. González. Resúmenes, parciales, normativas y derechos estudiantiles impulsados por estudiantes independientes y La Caravana.">
 
-  <!-- Estilos y Fuentes con Cache Buster v=80 -->
-  <link rel="stylesheet" href="css/styles.css?v=80">
+  <!-- Estilos y Fuentes con Cache Buster v=90 -->
+  <link rel="stylesheet" href="css/styles.css?v=90">
   <link rel="icon" type="image/svg+xml" href="assets/logo-owl.svg">
 </head>
 <body>
@@ -56,15 +56,18 @@
 
       <!-- COLUMNA IZQUIERDA: Tablón de Novedades (Desktop) -->
       <aside class="tablon-column-desktop" id="desktopTablonColumn">
-        <div class="section-card" style="padding: 22px; position: sticky; top: 20px;">
-          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; border-bottom: 2px solid #F1F5F9; padding-bottom: 12px;">
-            <h3 style="font-size: 1.05rem; font-weight: 800; color: #0B2545; display: flex; align-items: center; gap: 8px;">
-              📢 Tablón de Novedades
+        <div class="tablon-board-frame" style="padding: 20px; position: sticky; top: 20px;">
+          <div class="tablon-header-plaque">
+            <h3 class="tablon-board-title">
+              <span class="pin-icon">📌</span> TABLÓN DE NOVEDADES
             </h3>
-            <span style="font-size: 0.68rem; background: #0284C7; color: #FFF; font-weight: 800; padding: 2px 7px; border-radius: 12px;">EN VIVO</span>
+            <div class="tablon-live-indicator">
+              <span class="live-dot"></span>
+              <span>EN VIVO</span>
+            </div>
           </div>
-          <p style="font-size: 0.78rem; color: #64748B; margin-bottom: 14px; line-height: 1.45;">
-            Avisos de cursadas, fechas clave y comunicados de La Caravana + Estudiantes Independientes.
+          <p class="tablon-board-desc">
+            Avisos de cursadas, fechas clave y comunicados oficiales de La Caravana + Estudiantes Independientes.
           </p>
           <div id="tablonFeedDesktop">
             <!-- Cargado dinámicamente por js/news.js -->
@@ -410,18 +413,24 @@
 
         <!-- SECCIÓN 3: Vista Móvil Tablón de Novedades -->
         <section id="mobileTablonView" style="display: none; margin-top: 10px;">
-          <div class="section-card" style="padding: 20px;">
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; border-bottom: 2px solid #F1F5F9; padding-bottom: 12px;">
-              <h3 style="font-size: 1.15rem; font-weight: 800; color: #0B2545; display: flex; align-items: center; gap: 8px;">
-                📢 Tablón de Novedades
+          <div class="tablon-board-frame" style="padding: 16px;">
+            <div class="tablon-header-plaque">
+              <h3 class="tablon-board-title">
+                <span class="pin-icon">📌</span> TABLÓN DE NOVEDADES
               </h3>
-              <button type="button" onclick="switchMobileView('altillo')" style="font-size: 0.78rem; color: #0284C7; font-weight: 700; background: #F0F9FF; border: 1px solid #BAE6FD; padding: 4px 10px; border-radius: 8px; cursor: pointer;">
-                ← Volver a Apuntes
+              <div class="tablon-live-indicator">
+                <span class="live-dot"></span>
+                <span>EN VIVO</span>
+              </div>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; gap: 8px;">
+              <p class="tablon-board-desc" style="margin: 0; font-size: 0.74rem;">
+                Avisos y comunicados oficiales en vivo.
+              </p>
+              <button type="button" onclick="switchMobileView('altillo')" style="flex-shrink: 0; font-size: 0.74rem; color: #5C4328; font-weight: 700; background: #F6EDE0; border: 1px solid #C8B29B; padding: 4px 10px; border-radius: 8px; cursor: pointer;">
+                ← Apuntes
               </button>
             </div>
-            <p style="font-size: 0.82rem; color: #64748B; margin-bottom: 16px; line-height: 1.45;">
-              Avisos de cursadas, fechas clave y comunicados oficiales de La Caravana + Estudiantes Independientes.
-            </p>
             <div id="tablonFeedMobile">
               <!-- Cargado por js/news.js -->
             </div>
@@ -1004,8 +1013,8 @@
   <script src="js/upload_form.js?v=10"></script>
   <script src="js/aulas_search.js?v=10"></script>
   <script src="js/materiales_explorer.js?v=10"></script>
-  <script src="js/mapa_carrera.js?v=80"></script>
-  <script src="js/news.js?v=80"></script>
+  <script src="js/mapa_carrera.js?v=90"></script>
+  <script src="js/news.js?v=90"></script>
 
   <!-- Controlador Inmediato de Vistas Móviles (Herramientas, Altillo, Novedades) -->
   <script>

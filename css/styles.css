@@ -4,7 +4,7 @@
    ========================================================================== */
 
 /* --- Google Fonts --- */
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
 
 /* --- Design Tokens & CSS Variables --- */
 :root {
@@ -1221,3 +1221,123 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
+/* ==============================================================================
+   ESTILOS EXCLUSIVOS DEL TABLÓN DE NOVEDADES (Cartelera Universitaria)
+   ============================================================================== */
+.tablon-board-frame {
+  background: linear-gradient(150deg, #FCF8F2 0%, #F6EFE6 100%) !important;
+  border: 2px solid #E2D3C0 !important;
+  border-radius: 18px !important;
+  box-shadow: 0 4px 20px rgba(120, 85, 50, 0.08), inset 0 0 25px rgba(220, 195, 160, 0.15) !important;
+  position: relative !important;
+}
+
+/* Placa superior estilo rótulo institucional de cartelera */
+.tablon-header-plaque {
+  background: linear-gradient(135deg, #0B2545 0%, #153761 100%);
+  border: 1.5px solid rgba(217, 155, 38, 0.4);
+  border-radius: 14px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 3px 10px rgba(11, 37, 69, 0.2);
+  margin-bottom: 12px;
+}
+
+.tablon-board-title {
+  font-family: 'Bebas Neue', 'Impact', sans-serif !important;
+  font-size: 1.6rem !important;
+  letter-spacing: 2px !important;
+  color: #FFFFFF !important;
+  margin: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4) !important;
+  line-height: 1 !important;
+}
+
+.tablon-board-title .pin-icon {
+  font-size: 1.25rem;
+  filter: drop-shadow(0 2px 3px rgba(0,0,0,0.3));
+}
+
+/* Indicador EN VIVO con LED pulsante */
+.tablon-live-indicator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(2, 132, 199, 0.25);
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  padding: 4px 9px;
+  border-radius: 20px;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #38BDF8;
+}
+
+.tablon-live-indicator .live-dot {
+  width: 7px;
+  height: 7px;
+  background-color: #22C55E;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #22C55E;
+  animation: livePulse 1.8s infinite ease-in-out;
+}
+
+@keyframes livePulse {
+  0%, 100% { transform: scale(1); opacity: 1; box-shadow: 0 0 6px #22C55E; }
+  50% { transform: scale(1.35); opacity: 0.6; box-shadow: 0 0 12px #22C55E; }
+}
+
+.tablon-board-desc {
+  font-size: 0.78rem !important;
+  color: #786450 !important;
+  margin-bottom: 16px !important;
+  line-height: 1.45 !important;
+}
+
+/* Tarjetas de Avisos estilo Comunicado / Post-it clavado */
+.tablon-card {
+  background: #FFFFFF !important;
+  border: 1px solid #EADBCE !important;
+  border-radius: 12px !important;
+  padding: 16px 18px !important;
+  margin-bottom: 14px !important;
+  box-shadow: 0 4px 14px rgba(110, 75, 40, 0.07), 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+  position: relative !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.tablon-card:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 18px rgba(110, 75, 40, 0.12), 0 2px 5px rgba(0, 0, 0, 0.06) !important;
+}
+
+/* Chincheta visual en los avisos destacados */
+.tablon-card.pinned-notice {
+  border-top: 3px solid #D99B26 !important;
+}
+
+/* Botón expandir avisos estilo letrero */
+.tablon-expand-btn {
+  width: 100%;
+  background: #F8F3EB !important;
+  border: 1.5px dashed #C8B29B !important;
+  color: #5C4328 !important;
+  font-weight: 700 !important;
+  font-size: 0.8rem !important;
+  padding: 10px 14px !important;
+  border-radius: 10px !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+}
+
+.tablon-expand-btn:hover {
+  background: #F0E6D8 !important;
+  border-color: #B3997F !important;
+}
+
