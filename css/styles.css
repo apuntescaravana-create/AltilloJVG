@@ -975,21 +975,79 @@ body {
     gap: 16px !important;
   }
 
-  /* Las herramientas grandes van arriba cuando están visibles (en Herramientas) */
+  /* --------------------------------------------------------------------------
+     REGLA CRÍTICA: En celular las herramientas grandes (#rightSidebar)
+     están OCULTAS POR DEFECTO en todas partes.
+     ÚNICA Y EXCLUSIVAMENTE se muestran en la pestaña Herramientas (body.tab-tools).
+     -------------------------------------------------------------------------- */
   #rightSidebar {
-    order: 1 !important;
+    display: none !important;
+  }
+
+  /* 1. PESTAÑA HERRAMIENTAS: Único lugar donde aparecen en grande */
+  body.tab-tools #rightSidebar {
     display: flex !important;
     flex-direction: column !important;
     gap: 12px !important;
     margin-bottom: 14px !important;
+    order: 1 !important;
   }
 
-  #mainRepoView {
+  body.tab-tools #mainRepoView {
     order: 2 !important;
     display: block !important;
   }
 
-  /* Asegurar que las tarjetas grandes mantengan título y descripción completa en móvil */
+  body.tab-tools #recursosSection {
+    display: block !important;
+  }
+
+  body.tab-tools #carrerasSection,
+  body.tab-tools #mobileTablonView,
+  body.tab-tools #compactToolsBottom {
+    display: none !important;
+  }
+
+  /* 2. PESTAÑA ALTILLO (Por defecto en celular): Carreras arriba, bloquecitos abajo */
+  body.tab-altillo #carrerasSection,
+  body:not(.tab-tools):not(.tab-news) #carrerasSection {
+    display: block !important;
+  }
+
+  body.tab-altillo #compactToolsBottom,
+  body:not(.tab-tools):not(.tab-news) #compactToolsBottom {
+    display: block !important;
+  }
+
+  body.tab-altillo #rightSidebar,
+  body:not(.tab-tools):not(.tab-news) #rightSidebar,
+  body.tab-altillo #recursosSection,
+  body:not(.tab-tools):not(.tab-news) #recursosSection,
+  body.tab-altillo #mobileTablonView,
+  body:not(.tab-tools):not(.tab-news) #mobileTablonView {
+    display: none !important;
+  }
+
+  /* 3. PESTAÑA NOVEDADES: Tablón arriba, bloquecitos abajo */
+  body.tab-news #mobileTablonView {
+    display: block !important;
+  }
+
+  body.tab-news #compactToolsBottom {
+    display: block !important;
+  }
+
+  body.tab-news .compact-tablon-btn {
+    display: none !important;
+  }
+
+  body.tab-news #rightSidebar,
+  body.tab-news #recursosSection,
+  body.tab-news #carrerasSection {
+    display: none !important;
+  }
+
+  /* Asegurar que las tarjetas grandes mantengan título y descripción completa cuando se muestran en Herramientas */
   .side-card {
     padding: 14px 16px !important;
     border-radius: 14px !important;

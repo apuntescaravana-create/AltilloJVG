@@ -6,8 +6,8 @@
   <title>AltilloJVG | Repositorio Digital del Instituto Joaquín V. González</title>
   <meta name="description" content="Plataforma colaborativa y repositorio digital para alumnos del Instituto Superior del Profesorado Joaquín V. González. Resúmenes, parciales, normativas y derechos estudiantiles impulsados por estudiantes independientes y La Caravana.">
 
-  <!-- Estilos y Fuentes con Cache Buster v=60 -->
-  <link rel="stylesheet" href="css/styles.css?v=60">
+  <!-- Estilos y Fuentes con Cache Buster v=70 -->
+  <link rel="stylesheet" href="css/styles.css?v=70">
   <link rel="icon" type="image/svg+xml" href="assets/logo-owl.svg">
 </head>
 <body>
@@ -1004,8 +1004,8 @@
   <script src="js/upload_form.js?v=10"></script>
   <script src="js/aulas_search.js?v=10"></script>
   <script src="js/materiales_explorer.js?v=10"></script>
-  <script src="js/mapa_carrera.js?v=60"></script>
-  <script src="js/news.js?v=60"></script>
+  <script src="js/mapa_carrera.js?v=70"></script>
+  <script src="js/news.js?v=70"></script>
 
   <!-- Controlador Inmediato de Vistas Móviles (Herramientas, Altillo, Novedades) -->
   <script>
@@ -1028,50 +1028,38 @@
       var chipTablon = document.querySelector('.compact-tablon-btn');
 
       if (view === 'tools') {
+        document.body.className = 'tab-tools';
         if (navTools) navTools.classList.add('active');
 
-        // 1. Pestaña Herramientas:
-        // Herramientas EN GRANDE arriba
-        if (rightSidebar) rightSidebar.style.display = 'flex';
-        // Información Útil abajo
-        if (secRecursos) secRecursos.style.display = 'block';
-
-        // Ocultar lo demás
-        if (secCarreras) secCarreras.style.display = 'none';
-        if (secTablon) secTablon.style.display = 'none';
-        if (compactTools) compactTools.style.display = 'none';
+        if (rightSidebar) rightSidebar.style.setProperty('display', 'flex', 'important');
+        if (secRecursos) secRecursos.style.setProperty('display', 'block', 'important');
+        if (secCarreras) secCarreras.style.setProperty('display', 'none', 'important');
+        if (secTablon) secTablon.style.setProperty('display', 'none', 'important');
+        if (compactTools) compactTools.style.setProperty('display', 'none', 'important');
 
       } else if (view === 'news') {
+        document.body.className = 'tab-news';
         if (navNews) navNews.classList.add('active');
 
-        // 2. Pestaña Novedades:
-        // Tablón arriba de todo
-        if (secTablon) secTablon.style.display = 'block';
+        if (secTablon) secTablon.style.setProperty('display', 'block', 'important');
+        if (compactTools) compactTools.style.setProperty('display', 'block', 'important');
+        if (chipTablon) chipTablon.style.setProperty('display', 'none', 'important');
 
-        // Herramientas en chiquito abajo
-        if (compactTools) compactTools.style.display = 'block';
-        if (chipTablon) chipTablon.style.display = 'none';
-
-        // Ocultar lo demás
-        if (rightSidebar) rightSidebar.style.display = 'none';
-        if (secRecursos) secRecursos.style.display = 'none';
-        if (secCarreras) secCarreras.style.display = 'none';
+        if (rightSidebar) rightSidebar.style.setProperty('display', 'none', 'important');
+        if (secRecursos) secRecursos.style.setProperty('display', 'none', 'important');
+        if (secCarreras) secCarreras.style.setProperty('display', 'none', 'important');
 
       } else {
-        // 3. Pestaña Altillo (por defecto):
+        document.body.className = 'tab-altillo';
         if (navAltillo) navAltillo.classList.add('active');
 
-        // Carreras arriba de todo
-        if (secCarreras) secCarreras.style.display = 'block';
+        if (secCarreras) secCarreras.style.setProperty('display', 'block', 'important');
+        if (compactTools) compactTools.style.setProperty('display', 'block', 'important');
+        if (chipTablon) chipTablon.style.setProperty('display', 'flex', 'important');
 
-        // Herramientas en chiquito abajo
-        if (compactTools) compactTools.style.display = 'block';
-        if (chipTablon) chipTablon.style.display = 'flex';
-
-        // Ocultar lo demás
-        if (rightSidebar) rightSidebar.style.display = 'none';
-        if (secRecursos) secRecursos.style.display = 'none';
-        if (secTablon) secTablon.style.display = 'none';
+        if (rightSidebar) rightSidebar.style.setProperty('display', 'none', 'important');
+        if (secRecursos) secRecursos.style.setProperty('display', 'none', 'important');
+        if (secTablon) secTablon.style.setProperty('display', 'none', 'important');
       }
 
       if (doScroll) {
