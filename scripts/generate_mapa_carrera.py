@@ -76,12 +76,6 @@ def build_mapa_filosofia():
     ws = wb.active
     ws.title = "Mapa de Carrera"
 
-    # Hoja de Opciones para Menú Desplegable (Hidden)
-    ws_opt = wb.create_sheet(title="Opciones")
-    ws_opt["A1"] = "SI"
-    ws_opt["A2"] = "NO"
-    ws_opt.sheet_state = 'hidden'
-
     # Paleta de Colores
     navy_fill = PatternFill(start_color="0B2545", end_color="0B2545", fill_type="solid")
     cyan_fill = PatternFill(start_color="0284C7", end_color="0284C7", fill_type="solid")
@@ -144,7 +138,6 @@ def build_mapa_filosofia():
 
     current_row = 4
     materia_row_map = {}
-    subject_rows = []
 
     # 3. Llenado de Materias por Año
     for anio_label, materias in FILOSOFIA_DATA:
@@ -161,7 +154,6 @@ def build_mapa_filosofia():
         for mat_name, correlativas in materias:
             materia_row_map[mat_name] = current_row
             r = current_row
-            subject_rows.append(r)
             row_fill = light_gray_fill if (r % 2 == 0) else PatternFill(fill_type=None)
             
             # Col A: Nombre
@@ -237,17 +229,13 @@ def build_mapa_filosofia():
     last_data_row = current_row - 1
     total_materias = len(materia_row_map)
 
-    # 4. Menú Desplegable Nativo (Dropdown) con SI / NO para cada celda
-    dv = DataValidation(type="list", formula1="=Opciones!$A$1:$A$2", allow_blank=True)
-    dv.error ='Elegí una opción de la lista'
-    dv.errorTitle = 'Opción no válida'
-    dv.prompt = 'Elegí SI o NO'
-    dv.promptTitle = 'Estado de Materia'
+    # 4. Menú Desplegable Nativo (Dropdown) con SI / NO para todas las materias
+    # IMPORTANTE: showDropDown = None omite showDropDown="0", permitiendo que Google Sheets y Excel
+    # muestren siempre el botón de menú desplegable.
+    dv = DataValidation(type="list", formula1='"SI,NO"', allow_blank=True)
+    dv.showDropDown = None
+    dv.sqref = f"B5:C{last_data_row}"
     ws.add_data_validation(dv)
-
-    for r in subject_rows:
-        dv.add(f"B{r}")
-        dv.add(f"C{r}")
 
     # 5. Panel Lateral de Estadísticas y Avance
     ws.column_dimensions["I"].width = 30
