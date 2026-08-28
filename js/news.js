@@ -4,27 +4,94 @@
  * Incorpora:
  * 1. Límite de avisos iniciales (4) con botón expandible: "Para ver todos los avisos publicados, clickeá acá".
  * 2. Límite de longitud de texto por aviso con botones interactivos "Ver más" / "Ver menos".
- * 3. Alternancia nativa y reordenamiento de vistas en celulares (Herramientas, Altillo, Novedades).
+ * 3. Alternancia y reordenamiento físico del DOM en celulares (Herramientas, Altillo, Novedades).
  */
+
+// Función global para alternancia de pestañas en celular (disponible inmediatamente)
+window.switchMobileView = function(view, doScroll = true) {
+  if (window.innerWidth > 1024) return; // En PC se mantiene intacto el layout de 3 columnas
+
+  const navTools = document.getElementById('mobileNavTools');
+  const navAltillo = document.getElementById('mobileNavAltillo');
+  const navNews = document.getElementById('mobileNavNews');
+
+  [navTools, navAltillo, navNews].forEach(btn => {
+    if (btn) btn.classList.remove('active');
+  });
+
+  const grid = document.querySelector('.dashboard-grid');
+  const repoView = document.getElementById('mainRepoView');
+  const sidebar = document.getElementById('rightSidebar') || document.querySelector('.side-column');
+  const secRecursos = document.getElementById('recursosSection');
+  const secCarreras = document.getElementById('carrerasSection');
+  const secTablon = document.getElementById('mobileTablonView');
+  const ctaTablon = document.querySelector('.side-card.cta-tablon-mobile');
+
+  if (!grid || !repoView || !sidebar) return;
+
+  if (view === 'tools') {
+    if (navTools) navTools.classList.add('active');
+
+    // 1. PESTAÑA HERRAMIENTAS:
+    // Bloquecitos de herramientas ARRIBA de todo
+    sidebar.style.display = '';
+    grid.prepend(sidebar);
+
+    // Información Útil DEBAJO de las herramientas
+    repoView.style.display = 'block';
+    grid.append(repoView);
+    if (secRecursos) secRecursos.style.display = 'block';
+    if (secCarreras) secCarreras.style.display = 'none';
+    if (secTablon) secTablon.style.display = 'none';
+    if (ctaTablon) ctaTablon.style.display = '';
+
+  } else if (view === 'news') {
+    if (navNews) navNews.classList.add('active');
+
+    // 2. PESTAÑA NOVEDADES:
+    // Tablón de Novedades ARRIBA de todo
+    if (secTablon) {
+      secTablon.style.display = 'block';
+      grid.prepend(secTablon);
+    }
+    // Ocultar repositorio de carreras
+    repoView.style.display = 'none';
+
+    // Bloquecitos de herramientas ABAJO de todo
+    sidebar.style.display = '';
+    grid.append(sidebar);
+    if (ctaTablon) ctaTablon.style.display = 'none';
+
+  } else {
+    // 3. PESTAÑA ALTILLO (Por defecto):
+    if (navAltillo) navAltillo.classList.add('active');
+
+    // Carreras ARRIBA de todo
+    repoView.style.display = 'block';
+    grid.prepend(repoView);
+    if (secCarreras) secCarreras.style.display = 'block';
+    if (secRecursos) secRecursos.style.display = 'none';
+    if (secTablon) secTablon.style.display = 'none';
+
+    // Bloquecitos de herramientas ABAJO de todo
+    sidebar.style.display = '';
+    grid.append(sidebar);
+    if (ctaTablon) ctaTablon.style.display = '';
+  }
+
+  // Scroll suave al inicio del contenido
+  if (doScroll) {
+    const hero = document.querySelector('.hero-header');
+    if (hero) {
+      window.scrollTo({ top: hero.offsetHeight - 15, behavior: 'smooth' });
+    }
+  }
+};
 
 document.addEventListener('DOMContentLoaded', () => {
   const tablonFeedDesktop = document.getElementById('tablonFeedDesktop');
   const tablonFeedMobile = document.getElementById('tablonFeedMobile');
-  
-  // Elementos de navegación en celular
-  const mobileNavTools = document.getElementById('mobileNavTools');
-  const mobileNavAltillo = document.getElementById('mobileNavAltillo');
-  const mobileNavNews = document.getElementById('mobileNavNews');
-
-  // Contenedores del Layout
-  const dashboardGrid = document.querySelector('.dashboard-grid');
-  const mainRepoView = document.getElementById('mainRepoView');
-  const rightSidebar = document.getElementById('rightSidebar') || document.querySelector('.side-column');
-  const recursosSection = document.getElementById('recursosSection');
-  const carrerasSection = document.getElementById('carrerasSection');
-  const mobileTablonView = document.getElementById('mobileTablonView');
   const btnMobileGoTablon = document.getElementById('btnMobileGoTablon');
-  const mobileCtaTablon = document.querySelector('.side-card.cta-tablon-mobile');
 
   // Estado del Tablón
   const INITIAL_LIMIT = 4;
@@ -94,7 +161,6 @@ document.addEventListener('DOMContentLoaded', () => {
       if (item.categoria === 'Gremial') { badgeBg = '#F3E8FF'; badgeColor = '#7E22CE'; }
       if (item.categoria === 'Urgente') { badgeBg = '#FEE2E2'; badgeColor = '#B91C1C'; }
 
-      // Manejo de longitud de texto (Ver más / Ver menos)
       const rawText = item.contenido || '';
       const isLongText = rawText.length > TEXT_CHAR_LIMIT;
       let textHtml = '';
@@ -148,7 +214,6 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
     });
 
-    // Botón para expandir todos los avisos si hay más de INITIAL_LIMIT
     if (newsList.length > INITIAL_LIMIT) {
       if (!isExpanded) {
         html += `
@@ -172,7 +237,6 @@ document.addEventListener('DOMContentLoaded', () => {
     return html;
   }
 
-  // Alternar "Ver más" / "Ver menos" en cada tarjeta
   window.toggleReadMore = function(containerId) {
     const container = document.getElementById(containerId);
     if (!container) return;
@@ -192,7 +256,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  // Alternar límite de avisos mostrados en el feed
   window.toggleFeedLimit = function(viewType) {
     if (viewType === 'desktop') {
       showAllDesktop = !showAllDesktop;
@@ -202,108 +265,6 @@ document.addEventListener('DOMContentLoaded', () => {
     renderNews();
   };
 
-  // ==============================================================================
-  // 2. CONTROLADOR DINÁMICO DE PESTAÑAS MÓVILES (Herramientas, Altillo, Novedades)
-  // Reordena físicamente el DOM en celular para garantizar que el contenido aparezca
-  // inmediatamente arriba y las herramientas abajo, sin depender de caché de CSS.
-  // ==============================================================================
-  window.switchMobileView = function(view, doScroll = true) {
-    if (window.innerWidth > 1024) return; // En pantallas grandes (PC) no se altera el layout de 3 columnas
-
-    [mobileNavTools, mobileNavAltillo, mobileNavNews].forEach(btn => {
-      if (btn) btn.classList.remove('active');
-    });
-
-    if (view === 'tools') {
-      if (mobileNavTools) mobileNavTools.classList.add('active');
-
-      // 1. Pestaña HERRAMIENTAS:
-      // Herramientas laterales ARRIBA de todo
-      if (rightSidebar && dashboardGrid) {
-        rightSidebar.style.display = 'flex';
-        dashboardGrid.prepend(rightSidebar);
-      }
-      // Información Útil DEBAJO de las herramientas
-      if (mainRepoView && dashboardGrid) {
-        mainRepoView.style.display = 'block';
-        dashboardGrid.append(mainRepoView);
-      }
-      if (recursosSection) recursosSection.style.display = 'block';
-      if (carrerasSection) carrerasSection.style.display = 'none';
-      if (mobileTablonView) mobileTablonView.style.display = 'none';
-      if (mobileCtaTablon) mobileCtaTablon.style.display = 'flex';
-
-    } else if (view === 'news') {
-      if (mobileNavNews) mobileNavNews.classList.add('active');
-
-      // 2. Pestaña NOVEDADES:
-      // Tablón de Novedades ARRIBA de todo
-      if (mobileTablonView && dashboardGrid) {
-        mobileTablonView.style.display = 'block';
-        dashboardGrid.prepend(mobileTablonView);
-      }
-      // Ocultar repositorio de carreras e información útil
-      if (mainRepoView) mainRepoView.style.display = 'none';
-
-      // Herramientas laterales ABAJO de todo
-      if (rightSidebar && dashboardGrid) {
-        rightSidebar.style.display = 'flex';
-        dashboardGrid.append(rightSidebar);
-      }
-      if (mobileCtaTablon) mobileCtaTablon.style.display = 'none';
-
-    } else {
-      // 3. Pestaña ALTILLO (Por defecto en celular):
-      if (mobileNavAltillo) mobileNavAltillo.classList.add('active');
-
-      // Carreras y buscador ARRIBA de todo
-      if (mainRepoView && dashboardGrid) {
-        mainRepoView.style.display = 'block';
-        dashboardGrid.prepend(mainRepoView);
-      }
-      if (carrerasSection) carrerasSection.style.display = 'block';
-      if (recursosSection) recursosSection.style.display = 'none';
-      if (mobileTablonView) mobileTablonView.style.display = 'none';
-
-      // Herramientas laterales ABAJO de todo
-      if (rightSidebar && dashboardGrid) {
-        rightSidebar.style.display = 'flex';
-        dashboardGrid.append(rightSidebar);
-      }
-      if (mobileCtaTablon) mobileCtaTablon.style.display = 'flex';
-    }
-
-    // Scroll suave hacia la sección si el usuario hizo clic
-    if (doScroll) {
-      const hero = document.querySelector('.hero-header');
-      if (hero) {
-        window.scrollTo({ top: hero.offsetHeight - 15, behavior: 'smooth' });
-      }
-    }
-  };
-
-  // Listeners de clics en la barra inferior móvil
-  if (mobileNavTools) {
-    mobileNavTools.addEventListener('click', (e) => {
-      e.preventDefault();
-      switchMobileView('tools', true);
-    });
-  }
-
-  if (mobileNavAltillo) {
-    mobileNavAltillo.addEventListener('click', (e) => {
-      e.preventDefault();
-      switchMobileView('altillo', true);
-    });
-  }
-
-  if (mobileNavNews) {
-    mobileNavNews.addEventListener('click', (e) => {
-      e.preventDefault();
-      switchMobileView('news', true);
-    });
-  }
-
   if (btnMobileGoTablon) {
     btnMobileGoTablon.addEventListener('click', (e) => {
       e.preventDefault();
@@ -311,7 +272,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Inicializar en Altillo si estamos en celular al cargar la página
+  // Inicializar en Altillo al cargar la página si es celular
   if (window.innerWidth <= 1024) {
     switchMobileView('altillo', false);
   }

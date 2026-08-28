@@ -6,8 +6,8 @@
   <title>AltilloJVG | Repositorio Digital del Instituto Joaquín V. González</title>
   <meta name="description" content="Plataforma colaborativa y repositorio digital para alumnos del Instituto Superior del Profesorado Joaquín V. González. Resúmenes, parciales, normativas y derechos estudiantiles impulsados por estudiantes independientes y La Caravana.">
 
-  <!-- Estilos y Fuentes con Cache Buster v=40 -->
-  <link rel="stylesheet" href="css/styles.css?v=40">
+  <!-- Estilos y Fuentes con Cache Buster v=50 -->
+  <link rel="stylesheet" href="css/styles.css?v=50">
   <link rel="icon" type="image/svg+xml" href="assets/logo-owl.svg">
 </head>
 <body>
@@ -582,7 +582,7 @@
   <nav class="mobile-bottom-nav">
     <div class="bottom-nav-items" style="display: grid; grid-template-columns: 1fr 1fr 1fr; width: 100%; text-align: center;">
       <!-- Pestaña 1: Herramientas -->
-      <a href="#" class="bottom-nav-item" id="mobileNavTools">
+      <a href="#" class="bottom-nav-item" id="mobileNavTools" onclick="switchMobileView('tools'); return false;">
         <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
           <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
@@ -591,7 +591,7 @@
       </a>
 
       <!-- Pestaña 2: Altillo -->
-      <a href="#" class="bottom-nav-item active" id="mobileNavAltillo">
+      <a href="#" class="bottom-nav-item active" id="mobileNavAltillo" onclick="switchMobileView('altillo'); return false;">
         <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
         </svg>
@@ -599,7 +599,7 @@
       </a>
 
       <!-- Pestaña 3: Novedades -->
-      <a href="#" class="bottom-nav-item" id="mobileNavNews">
+      <a href="#" class="bottom-nav-item" id="mobileNavNews" onclick="switchMobileView('news'); return false;">
         <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"/>
         </svg>
@@ -967,7 +967,7 @@
   <script src="js/upload_form.js?v=10"></script>
   <script src="js/aulas_search.js?v=10"></script>
   <script src="js/materiales_explorer.js?v=10"></script>
-  <script src="js/mapa_carrera.js?v=40"></script>
-  <script src="js/news.js?v=40"></script>
+  <script src="js/mapa_carrera.js?v=50"></script>
+  <script src="js/news.js?v=50"></script>
 </body>
 </html>
