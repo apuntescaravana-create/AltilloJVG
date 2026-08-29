@@ -156,19 +156,19 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       let badgeBg = '#E0F2FE';
-      let badgeColor = '#0369A1';
-      let borderLeft = '4px solid #0284C7';
+      let badgeColor = '#0284C7';
+      let borderLeft = '4px solid #009BE3';
       if (item.categoria === 'Importante') {
         badgeBg = '#FEF3C7';
-        badgeColor = '#B45309';
+        badgeColor = '#D97706';
         borderLeft = '4px solid #F59E0B';
       } else if (item.categoria === 'Gremial') {
         badgeBg = '#F3E8FF';
-        badgeColor = '#7E22CE';
+        badgeColor = '#7C3AED';
         borderLeft = '4px solid #8B5CF6';
       } else if (item.categoria === 'Urgente') {
         badgeBg = '#FEE2E2';
-        badgeColor = '#B91C1C';
+        badgeColor = '#DC2626';
         borderLeft = '4px solid #EF4444';
       }
 
@@ -182,17 +182,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const uniqueId = `news-text-${viewType}-${item.id}`;
 
         textHtml = `
-          <div id="${uniqueId}" style="font-size:0.83rem; color:#334155; line-height:1.55; margin-bottom:10px;">
+          <div id="${uniqueId}" style="font-size:0.84rem; color:#334155; line-height:1.55; margin-bottom:10px;">
             <span class="text-short" style="white-space:pre-line;">${shortSnippet}</span>
             <span class="text-full" style="display:none; white-space:pre-line;">${fullSnippet}</span>
-            <button type="button" onclick="toggleReadMore('${uniqueId}')" class="btn-read-more" style="background:none; border:none; color:#0284C7; font-weight:700; cursor:pointer; font-size:0.8rem; padding:0 4px; text-decoration:underline;">
+            <button type="button" onclick="toggleReadMore('${uniqueId}')" class="btn-read-more" style="background:none; border:none; color:#009BE3; font-weight:700; cursor:pointer; font-size:0.8rem; padding:0 4px; text-decoration:underline;">
               Ver más
             </button>
           </div>
         `;
       } else {
         textHtml = `
-          <p style="font-size:0.83rem; color:#334155; line-height:1.55; white-space:pre-line; margin-bottom:10px;">
+          <p style="font-size:0.84rem; color:#334155; line-height:1.55; white-space:pre-line; margin-bottom:10px;">
             ${escapeHtml(rawText)}
           </p>
         `;
@@ -202,22 +202,22 @@ document.addEventListener('DOMContentLoaded', () => {
         <article class="tablon-card ${item.fijado ? 'pinned-notice' : ''}" style="border-left: ${borderLeft} !important;">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:6px;">
             <div style="display:flex; align-items:center; gap:6px;">
-              <span style="background:${badgeBg}; color:${badgeColor}; font-size:0.68rem; font-weight:800; padding:3px 8px; border-radius:14px; text-transform:uppercase; letter-spacing:0.5px;">
+              <span style="background:${badgeBg}; color:${badgeColor}; font-size:0.7rem; font-weight:700; padding:2px 8px; border-radius:12px; text-transform:uppercase; letter-spacing:0.3px;">
                 ${escapeHtml(item.categoria)}
               </span>
-              ${item.fijado ? '<span style="background:#FFFBEB; color:#B45309; font-size:0.68rem; font-weight:800; padding:2px 8px; border-radius:14px; border:1px solid #FCD34D;">📌 DESTACADO</span>' : ''}
+              ${item.fijado ? '<span style="background:#FFFBEB; color:#B45309; font-size:0.68rem; font-weight:700; padding:2px 8px; border-radius:12px; border:1px solid #FCD34D;">📌 DESTACADO</span>' : ''}
             </div>
-            <span style="font-size:0.72rem; color:#8C7E72; font-weight:600;">${fecha}</span>
+            <span style="font-size:0.74rem; color:#94A3B8; font-weight:500;">${fecha}</span>
           </div>
 
-          <h4 style="font-size:0.96rem; font-weight:800; color:#1E293B; line-height:1.4; margin-bottom:8px;">
+          <h4 style="font-family:var(--font-heading, Outfit, sans-serif); font-size:0.98rem; font-weight:700; color:#0B2545; line-height:1.35; margin-bottom:8px;">
             ${escapeHtml(item.titulo)}
           </h4>
 
           ${textHtml}
 
-          <div style="border-top:1px solid #F3ECE2; padding-top:8px; display:flex; justify-content:space-between; align-items:center;">
-            <span style="font-size:0.72rem; color:#786450; font-weight:600; display:flex; align-items:center; gap:4px;">
+          <div style="border-top:1px solid #F1F5F9; padding-top:8px; display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-size:0.74rem; color:#64748B; font-weight:500; display:flex; align-items:center; gap:4px;">
               ✍️ <span>${escapeHtml(item.autor || 'La Caravana')}</span>
             </span>
           </div>

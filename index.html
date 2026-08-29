@@ -6,8 +6,8 @@
   <title>AltilloJVG | Repositorio Digital del Instituto Joaquín V. González</title>
   <meta name="description" content="Plataforma colaborativa y repositorio digital para alumnos del Instituto Superior del Profesorado Joaquín V. González. Resúmenes, parciales, normativas y derechos estudiantiles impulsados por estudiantes independientes y La Caravana.">
 
-  <!-- Estilos y Fuentes con Cache Buster v=90 -->
-  <link rel="stylesheet" href="css/styles.css?v=90">
+  <!-- Estilos y Fuentes con Cache Buster v=100 -->
+  <link rel="stylesheet" href="css/styles.css?v=100">
   <link rel="icon" type="image/svg+xml" href="assets/logo-owl.svg">
 </head>
 <body>
@@ -56,12 +56,17 @@
 
       <!-- COLUMNA IZQUIERDA: Tablón de Novedades (Desktop) -->
       <aside class="tablon-column-desktop" id="desktopTablonColumn">
-        <div class="tablon-board-frame" style="padding: 20px; position: sticky; top: 20px;">
-          <div class="tablon-header-plaque">
-            <h3 class="tablon-board-title">
-              <span class="pin-icon">📌</span> TABLÓN DE NOVEDADES
-            </h3>
-            <div class="tablon-live-indicator">
+        <div class="tablon-board-frame" style="position: sticky; top: 20px;">
+          <div class="tablon-header-clean">
+            <div class="tablon-title-wrapper">
+              <div class="tablon-icon-badge">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"/>
+                </svg>
+              </div>
+              <h3 class="tablon-title">Tablón de Novedades</h3>
+            </div>
+            <div class="tablon-live-tag">
               <span class="live-dot"></span>
               <span>EN VIVO</span>
             </div>
@@ -413,24 +418,29 @@
 
         <!-- SECCIÓN 3: Vista Móvil Tablón de Novedades -->
         <section id="mobileTablonView" style="display: none; margin-top: 10px;">
-          <div class="tablon-board-frame" style="padding: 16px;">
-            <div class="tablon-header-plaque">
-              <h3 class="tablon-board-title">
-                <span class="pin-icon">📌</span> TABLÓN DE NOVEDADES
-              </h3>
-              <div class="tablon-live-indicator">
-                <span class="live-dot"></span>
-                <span>EN VIVO</span>
+          <div class="tablon-board-frame">
+            <div class="tablon-header-clean">
+              <div class="tablon-title-wrapper">
+                <div class="tablon-icon-badge">
+                  <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"/>
+                  </svg>
+                </div>
+                <h3 class="tablon-title">Tablón de Novedades</h3>
+              </div>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <div class="tablon-live-tag">
+                  <span class="live-dot"></span>
+                  <span>EN VIVO</span>
+                </div>
+                <button type="button" onclick="switchMobileView('altillo')" style="font-size: 0.74rem; color: #0284C7; font-weight: 700; background: #F0F9FF; border: 1px solid #BAE6FD; padding: 4px 9px; border-radius: 8px; cursor: pointer;">
+                  ← Apuntes
+                </button>
               </div>
             </div>
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; gap: 8px;">
-              <p class="tablon-board-desc" style="margin: 0; font-size: 0.74rem;">
-                Avisos y comunicados oficiales en vivo.
-              </p>
-              <button type="button" onclick="switchMobileView('altillo')" style="flex-shrink: 0; font-size: 0.74rem; color: #5C4328; font-weight: 700; background: #F6EDE0; border: 1px solid #C8B29B; padding: 4px 10px; border-radius: 8px; cursor: pointer;">
-                ← Apuntes
-              </button>
-            </div>
+            <p class="tablon-board-desc">
+              Avisos de cursadas, fechas clave y comunicados oficiales en vivo.
+            </p>
             <div id="tablonFeedMobile">
               <!-- Cargado por js/news.js -->
             </div>
@@ -597,15 +607,16 @@
         </div>
       </div>
 
-      <nav class="footer-links">
-        <a href="#">Inicio</a>
-        <span>|</span>
-        <a href="#">Acerca del repositorio</a>
-        <span>|</span>
-        <a href="#">Preguntas frecuentes</a>
-        <span>|</span>
-        <a href="#">Contacto</a>
-      </nav>
+      <div class="footer-contact-wrapper">
+        <a href="https://www.instagram.com/lacaravanajvg/" target="_blank" rel="noopener" class="footer-instagram-btn" title="Contactanos en Instagram @lacaravanajvg">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+          </svg>
+          <span>Contacto: <strong>@lacaravanajvg</strong></span>
+        </a>
+      </div>
     </div>
 
     <!-- Barra de Créditos sutil -->
@@ -1013,8 +1024,8 @@
   <script src="js/upload_form.js?v=10"></script>
   <script src="js/aulas_search.js?v=10"></script>
   <script src="js/materiales_explorer.js?v=10"></script>
-  <script src="js/mapa_carrera.js?v=90"></script>
-  <script src="js/news.js?v=90"></script>
+  <script src="js/mapa_carrera.js?v=100"></script>
+  <script src="js/news.js?v=100"></script>
 
   <!-- Controlador Inmediato de Vistas Móviles (Herramientas, Altillo, Novedades) -->
   <script>
