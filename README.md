@@ -1,122 +1,149 @@
 # AltilloJVG - Repositorio Digital del ISP "Joaquín V. González"
 
-Plataforma colaborativa y repositorio digital de acceso libre para estudiantes y docentes del **Instituto Superior del Profesorado "Joaquín V. González"**.
+Plataforma colaborativa, libre y comunitaria desarrollada por estudiantes independientes y **La Caravana** para el **Instituto Superior del Profesorado "Joaquín V. González"**. 
+
+El proyecto centraliza apuntes clasificados, programas, exámenes, buscadores de aulas, mapas de carrera y comunicados oficiales en un ecosistema web ágil, moderno y 100% gratuito (Zero-Cost Stack).
 
 ---
 
-## 📸 Diseño de la Interfaz
+## 🌟 Características Principales
 
-El frontend ha sido diseñado imitando minuciosamente las maquetas del proyecto:
-- **Estética Institucional**: Paleta de colores HSL basada en azul marino (`#1E3A5F`), dorado (`#C4933F`) y fondos neutros elegantes.
-- **Grilla Adaptativa de Carreras**: Tarjetas dinámicas para los 18 Profesorados y Postítulos del instituto.
-- **Acceso a Normativas y Planes de Estudio**: Secciones de acceso directo destacadas.
-- **Navegación Móvil Integrada**: Menú hamburguesa superior y barra de navegación fija en la parte inferior (*Bottom Navigation Bar*).
-- **Formulario de Carga en Cascada**: Selección dinámica `Carrera` → `Año` → `Materia` → `Tipo de Documento`.
+### 1. 📚 Repositorio Digital de Apuntes
+* **18 Profesorados y Carreras**: Cobertura integral de los planes de estudio del Joaquín (Historia, Filosofía, Letras, Inglés, Física, Matemática, Biología, etc.).
+* **Filtros Dinámicos en Cascada**: Búsqueda inmediata por año de cursada, materia y tipo de material (Resúmenes, Exámenes/Parciales, Trabajos Prácticos, Libros y Guías).
+* **Previsualización y Descarga**: Visualización directa de archivos PDF y documentos almacenados en la nube.
+* **Formulario de Carga Comunitaria**: Formulario interactivo adaptado a celulares con scroll táctil continuo (`max-height: 88vh`), selección de cátedra y carga directa con moderación previa.
+
+### 2. 📌 Tablón de Novedades (Cartelera Universitaria)
+* **Estética de Cartelera Real**: Diseño visual cálido de tablón institucional con tipografía de cartelera (`Bebas Neue`), placa institucional en azul noche con ribetes dorados y baliza LED con animación pulsante "EN VIVO".
+* **Avisos Estilo Post-It / Volante Clavado**: Comunicados categorizados con acentos cromáticos perimetrales:
+  * 🔴 **Urgente**: Fechas límite y avisos críticos.
+  * 🟡 **Importante / Fechas**: Mesas de examen, inscripciones y cronogramas.
+  * 🟣 **Gremial / Centro**: Asambleas, reclamos y resoluciones estudiantiles.
+  * 🔵 **Avisos Generales / Cursada**: Información de aulas, novedades de comisiones y cátedras.
+* **Avisos Fijados**: Distintivo `📌 DESTACADO` para notas de alta prioridad ancladas al inicio.
+* **Lectura Progresiva y Paginación**: Sistema de recorte inteligente de texto ("Ver más" / "Ver menos") y botón expansible para consultar el histórico completo de avisos publicados.
+
+### 3. 🛠️ Herramientas Estudiantiles Integradas
+* **Buscador de Aulas y Cursadas**: Motor de consulta indexado sobre una base de **1.658 clases y comisiones** (turnos mañana, tarde y vespertino) para encontrar salones, docentes y horarios en segundos.
+* **Mapa de Carrera Personal**: Plantillas interactivas en formato Excel descargables directamente a Google Drive para planificar correlatividades, con menús desplegables integrados (`SI`/`NO`) para tildar materias aprobadas y cursadas.
+* **Normativa Institucional**: Acceso directo al Reglamento Orgánico Institucional (ROI), régimen de correlatividades y resoluciones del Consejo Directivo.
+* **Planes de Estudio**: Enlaces centralizados a los planes oficiales de cada profesorado.
+* **Información Útil del Estudiante**: Guías sobre calendario académico, turnos de finales, derechos estudiantiles, régimen de licencias, becas (Progresar, Ciudad) y material bibliográfico.
+
+### 4. 📱 Arquitectura y Navegación Móvil (3 Vistas Dedicadas)
+La interfaz para smartphones (`<= 1024px`) está optimizada con una barra de navegación inferior (*Bottom Navigation Bar*) limpia y nativa:
+1. **Pestaña Herramientas**: Despliega las herramientas en **tarjetas grandes con descripción completa** arriba, seguidas de la sección integral de *Información Útil*.
+2. **Pestaña Altillo**: Cabecera institucional + grilla de las 18 carreras arriba de todo, con accesos compactos a herramientas al pie del scroll.
+3. **Pestaña Novedades**: Acceso directo al Tablón de Novedades en pantalla completa, con bloquecitos de herramientas al pie.
+* **Desktop**: Mantiene un layout clásico de 3 columnas simultáneas (Tablón a la izquierda, Contenido central y Barra de herramientas a la derecha).
 
 ---
 
-## 📁 Estructura del Proyecto
+## 🏗️ Arquitectura Técnica (Zero-Cost Stack)
+
+El proyecto opera sobre una infraestructura sin costos de mantenimiento y con alta disponibilidad:
+
+* **Frontend**: Vanilla JavaScript (ES6+), HTML5 semántico y CSS3 modular (Custom Properties, Flexbox, CSS Grid). Cero dependencias pesadas de frameworks, garantizando carga instantánea en redes móviles lentas.
+* **Hosting**: **Vercel** para despliegue continuo de la rama de producción y entornos de prueba (`beta`).
+* **Base de Datos & Backend**: **Supabase (PostgreSQL)**:
+  * Tabla `aportes`: Almacenamiento y metadatos de apuntes enviados por la comunidad.
+  * Tabla `news`: Publicaciones y comunicados del tablón en tiempo real.
+  * Tabla `categories`: Taxonomía y gestión de etiquetas.
+  * Políticas de Seguridad **RLS (Row Level Security)** para lectura pública y mutaciones protegidas.
+* **Storage**: Supabase Storage Bucket (`apuntes`) con enlaces públicos CDN para descarga inmediata de documentos.
+* **Serverless Functions**: Endpoints API en Node.js (`/api/*`) para moderación, autenticación y gestión de archivos.
+
+---
+
+## 📁 Estructura del Repositorio
 
 ```
 AltilloJVG/
-├── index.html                # Página principal responsiva (Desktop & Mobile)
+├── index.html                   # Interfaz principal (Desktop y Móvil)
 ├── css/
-│   └── styles.css            # Estilos CSS con tokens HSL, Flexbox, Grid y animaciones
+│   └── styles.css               # Sistema de diseño, tokens, grillas y media queries
 ├── js/
-│   ├── main.js               # Interacciones de UI (modal, menú hamburguesa, acordeón)
-│   └── upload_form.js        # Formulario interactivo con desplegables en cascada
+│   ├── main.js                  # Lógica de interfaz, modales y eventos generales
+│   ├── news.js                  # Motor del Tablón de Novedades y lector progresivo
+│   ├── upload_form.js           # Formulario dinámico de subida de apuntes
+│   ├── aulas_search.js          # Buscador reactivo de aulas y horarios
+│   ├── mapa_carrera.js          # Modal y generador de mapas de correlatividades
+│   └── materiales_explorer.js   # Explorador de archivos clasificados por carrera
+├── data/
+│   ├── aulas_data.js            # Base indexada de horarios y aulas (1.658 comisiones)
+│   ├── derechos_data.js         # Articulado y normativas estudiantiles
+│   ├── libros_guia_data.js      # Biblioteca básica de consulta
+│   ├── resources_data.js        # Vínculos y recursos institucionales
+│   └── mapas/                   # Libros de cálculo Excel con validación de datos
 ├── api/
-│   └── upload.js             # Serverless Function (Vercel/Netlify) puente para Telegram & Sheets
+│   ├── news.js                  # CRUD de comunicados y noticias
+│   ├── upload.js                # Procesamiento y subida segura a Storage
+│   └── admin.js                 # Panel de moderación y aprobación de aportes
 ├── assets/
-│   └── logo-owl.svg          # Logotipo vectorial e isologotipo de la lechuza JVG
-├── .env.example              # Plantilla de variables de entorno (Sin claves expuestas)
-└── README.md                 # Documentación del proyecto
+│   ├── logo-owl.svg             # Isologotipo de la lechuza sobre el libro abierto
+│   └── logo-caravana.svg        # Distintivo oficial La Caravana
+├── scripts/
+│   ├── auto_update_aulas.py     # Extractor y procesador de PDFs de aulas oficiales
+│   └── fix_excel_validation.py  # Constructor de listas desplegables para Excel
+└── README.md                    # Documentación técnica y funcional
 ```
 
 ---
 
-## 🛡️ Seguridad y Zero-Cost Stack (Respeto de Privacidad)
+## ⚙️ Configuración del Entorno Local
 
-Este proyecto está construido bajo una arquitectura **Zero-Cost Stack** (100% gratuita y sin servidores de pago):
-
-1. **Frontend**: Publicado en **GitHub Pages** como un sitio web estático ultra rápido.
-2. **Serverless Function**: Desplegada en **Vercel** o **Netlify** (`/api/upload.js`) para actuar de proxy seguro.
-3. **Storage (Archivos < 20MB)**: Enviados a través de la API de un **Bot de Telegram** a un canal o grupo privado.
-4. **Storage (Archivos > 20MB)**: Redirigidos a una carpeta de **Google Drive**.
-5. **Base de Datos**: **Google Sheets** conectado a través de **Stein** (o **SheetDB**).
-
-> ⚠️ **Importante**: Las claves secretas (`TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`, `SHEET_API_URL`) están protegidas en variables de entorno del servidor serverless. Ningún token queda expuesto en el código cliente de GitHub.
-
----
-
-## 📊 Estructura de la Base de Datos (Google Sheets)
-
-Crea una planilla en Google Sheets con las siguientes dos pestañas:
-
-### Pestaña 1: `Aportes`
-| ID | Fecha | Carrera | Año | Materia | Tipo_de_Material | Link_Telegram | Estado |
-|---|---|---|---|---|---|---|---|
-| AP-101 | 2026-07-22 | Historia | 1° Año | Introducción a la Historia | Resumen | https://t.me/... | Aprobado |
-| AP-102 | 2026-07-22 | Lengua y Literatura | 2° Año | Gramática II | Parcial | https://t.me/... | Pendiente |
-
-*El sistema inserta nuevos registros con `Estado = Pendiente`. Cuando el administrador cambie manualmente la celda a `Aprobado`, el archivo se mostrará automáticamente en la web.*
-
-### Pestaña 2: `Carreras_Materias`
-| Carrera | Año | Materia |
-|---|---|---|
-| Profesorado de Historia | 1° Año | Introducción a la Historia |
-| Profesorado de Historia | 1° Año | Historia Antigua |
-| Profesorado de Lengua y Literatura | 1° Año | Gramática I |
-
----
-
-## 🚀 Guía de Despliegue
-
-### 1. Alojar el Frontend en GitHub Pages
-1. Subí esta carpeta a un repositorio público o privado en GitHub.
-2. En GitHub, ve a **Settings** > **Pages**.
-3. Seleccioná la rama `main` y la carpeta `/ (root)`.
-4. Hacé clic en **Save**. ¡Tu sitio estará en vivo!
-
-### 2. Configurar la Serverless Function en Vercel
-1. Conectá el repositorio en [Vercel](https://vercel.com).
-2. En las configuraciones del proyecto, ve a **Environment Variables** e ingresá:
-   - `TELEGRAM_BOT_TOKEN`: Token otorgado por `@BotFather`.
-   - `TELEGRAM_CHAT_ID`: ID del canal/grupo privado.
-   - `SHEET_API_URL`: URL del endpoint de Stein / SheetDB.
-3. Desplegá el proyecto. Vercel detectará automáticamente la carpeta `/api/upload.js`.
-
----
-
-## 📅 Actualización de Aulas y Cursadas (Paso a Paso)
-
-El Buscador de Aulas se basa en una base de datos estática local (`data/aulas_data.js`). Para actualizarla al inicio de cada cuatrimestre o año (cuando cambian los horarios y salones de cursada), se incluye un script automático que no requiere de Inteligencia Artificial ni servicios de pago externos.
-
-### Requisitos Previos (Una sola vez en la PC del administrador)
-Debés tener **Python 3** instalado en tu computadora y la librería de procesamiento de PDFs:
+### 1. Clonar el repositorio
 ```bash
-pip install pdfplumber
+git clone https://github.com/apuntescaravana-create/AltilloJVG.git
+cd AltilloJVG
+```
+
+### 2. Variables de Entorno
+Crea un archivo `.env` en la raíz del proyecto tomando como base `.env.example`:
+```ini
+SUPABASE_URL=https://tu-proyecto.supabase.co
+SUPABASE_SERVICE_ROLE_KEY=tu_service_role_key
+ADMIN_PASSWORD=clave_de_administracion
+```
+*(El archivo `.env` se encuentra protegido en `.gitignore` para salvaguardar credenciales).*
+
+### 3. Servir localmente
+Puedes utilizar cualquier servidor estático local:
+```bash
+# Con Python
+python -m http.server 8000
+
+# Con Node.js (npx)
+npx serve .
+```
+Abre tu navegador en `http://localhost:8000`.
+
+---
+
+## 🔄 Mantenimiento y Actualización de Datos
+
+### Actualización de Horarios y Aulas
+Al comenzar cada cuatrimestre, cuando el instituto publica los nuevos horarios y asignaciones de aulas:
+1. Ejecuta el script de extracción automática:
+   ```bash
+   python scripts/auto_update_aulas.py
+   ```
+2. El script procesa los PDFs de los tres turnos (Mañana, Tarde, Vespertino), valida la coherencia de datos y recompila `data/aulas_data.js`.
+3. Confirma los cambios y realiza el push al repositorio.
+
+### Actualización de Mapas de Carrera
+Los archivos `.xlsx` del mapa de carrera contienen validaciones nativas de datos (`SI,NO`). Para regenerarlos o incorporar nuevas carreras:
+```bash
+python scripts/fix_excel_validation.py
 ```
 
 ---
 
-### Método A: Actualización Automática (Recomendado)
-Este método se conecta al sitio del Joaquín, descarga los PDFs de horarios oficiales más recientes y genera la base de datos automáticamente.
+## 👥 Comunidad y Colaboración
 
-1. Hacé doble clic en el archivo **`actualizar_aulas.bat`** ubicado en la carpeta raíz del proyecto.
-2. El script de Python (`scripts/auto_update_aulas.py`) se ejecutará en una consola de comandos:
-   - Se conectará a la web oficial y descargará los últimos PDFs en la carpeta `/Aulas/` (que está configurada en `.gitignore` para no subir archivos binarios pesados al repositorio).
-   - Procesará los datos de todas las materias, aulas y horarios de los turnos Mañana, Tarde y Noche de 1° a 6° año (Educación Secundaria y Superior).
-   - Recompilará la base de datos y actualizará los archivos `data/aulas_data.js` y `data/aulas_data.json`.
-3. Subí los cambios generados en `data/aulas_data.js` a tu repositorio de GitHub para que la web en vivo se actualice.
+Este espacio es una construcción colectiva e independiente impulsada por **La Caravana + Estudiantes Independientes** del ISP "Joaquín V. González". 
 
----
-
-### Método B: Actualización Manual (Si la web oficial cambia de diseño)
-Si el sitio web del Joaquín cambia su dirección URL o formato y el script automático no encuentra los archivos en la web:
-
-1. Ingresá manualmente al sitio del Joaquín y descargá los PDFs de horarios de aulas (TM, TT, TV).
-2. Guardá los PDFs descargados dentro de la carpeta **`/Aulas/`** del repositorio.
-3. Hacé doble clic en el archivo **`actualizar_aulas.bat`**. Al no detectar PDFs nuevos en la web, el script detectará y procesará automáticamente los archivos locales que guardaste en el paso anterior.
-4. Subí los archivos generados en `/data/` a GitHub.
-
+Si encontrás errores, querés aportar material de tu carrera o sugerir mejoras en la plataforma:
+* Utilizá el botón **"Subí tus documentos"** en la web.
+* Acercate a las mesas de La Caravana en el instituto o participá abriendo un *Pull Request* o *Issue* en el repositorio.
