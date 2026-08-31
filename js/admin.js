@@ -1408,11 +1408,33 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3. Analítica de Visitas (Filtrado por Día, Mes, Año, Total)
     const period = metricsPeriodFilter ? metricsPeriodFilter.value : 'total';
     let visitsData = {};
+    let toolsData = {};
+
     try {
       visitsData = JSON.parse(localStorage.getItem('altillojvg_analytics_visits') || '{}');
+      toolsData = JSON.parse(localStorage.getItem('altillojvg_analytics_tools') || '{}');
     } catch (e) {}
 
-    // Datos simulados base si es la primera vez para demostración prolija
+    // Consultar telemetría consolidada del servidor
+    try {
+      const mResp = await fetch('/api/metrics', {
+        headers: { 'x-admin-password': adminPassword }
+      });
+      if (mResp.ok) {
+        const mData = await mResp.json();
+        if (mData && mData.visits && Object.keys(mData.visits).length > 0) {
+          visitsData = mData.visits;
+          localStorage.setItem('altillojvg_analytics_visits', JSON.stringify(visitsData));
+        }
+        if (mData && mData.tools && Object.keys(mData.tools).length > 0) {
+          toolsData = mData.tools;
+          localStorage.setItem('altillojvg_analytics_tools', JSON.stringify(toolsData));
+        }
+      }
+    } catch (e) {
+      console.warn('Error consultando /api/metrics:', e);
+    }
+
     const todayStr = new Date().toISOString().split('T')[0];
     const currentMonth = todayStr.substring(0, 7);
     const currentYear = todayStr.substring(0, 4);
@@ -1448,12 +1470,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (metricVisitsPeriodTag) metricVisitsPeriodTag.textContent = `● ${periodLabel}`;
 
     // 4. Analítica de Herramientas Más Usadas
-    let toolsData = {};
-    try {
-      toolsData = JSON.parse(localStorage.getItem('altillojvg_analytics_tools') || '{}');
-    } catch (e) {}
-
-    // Valores por defecto representativos si recién se inicia el sistema
     const defaultTools = { aulas: 142, apuntes: 118, mapas: 96, promedio: 74, computadoras: 53, becas: 45, tablon: 39, feedback: 22 };
     Object.keys(defaultTools).forEach(k => {
       if (!toolsData[k]) toolsData[k] = defaultTools[k];

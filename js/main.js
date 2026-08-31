@@ -590,7 +590,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   // ==========================================================================
-  // TELEMETRÍA Y ANALÍTICA LIGERA DE ALTO RENDIMIENTO
+  // TELEMETRÍA Y ANALÍTICA GLOBAL PERSISTENTE
   // ==========================================================================
   function trackVisit() {
     try {
@@ -598,6 +598,13 @@ document.addEventListener('DOMContentLoaded', () => {
       const visits = JSON.parse(localStorage.getItem('altillojvg_analytics_visits') || '{}');
       visits[todayStr] = (visits[todayStr] || 0) + 1;
       localStorage.setItem('altillojvg_analytics_visits', JSON.stringify(visits));
+
+      // Persistencia global en backend
+      fetch('/api/metrics?action=visit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        keepalive: true
+      }).catch(() => {});
     } catch (e) {}
   }
   trackVisit();
@@ -607,6 +614,13 @@ document.addEventListener('DOMContentLoaded', () => {
       const tools = JSON.parse(localStorage.getItem('altillojvg_analytics_tools') || '{}');
       tools[toolKey] = (tools[toolKey] || 0) + 1;
       localStorage.setItem('altillojvg_analytics_tools', JSON.stringify(tools));
+
+      // Persistencia global en backend
+      fetch(`/api/metrics?action=tool&key=${encodeURIComponent(toolKey)}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        keepalive: true
+      }).catch(() => {});
     } catch (e) {}
   };
 });
