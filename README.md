@@ -2,36 +2,54 @@
 
 Plataforma colaborativa, libre y comunitaria desarrollada por estudiantes independientes y **La Caravana** para el **Instituto Superior del Profesorado "Joaquín V. González"**. 
 
-El proyecto centraliza apuntes clasificados, programas, exámenes, buscadores de aulas, mapas de carrera y comunicados oficiales en un ecosistema web ágil, moderno y 100% gratuito (Zero-Cost Stack).
+El proyecto centraliza apuntes clasificados, programas, exámenes, buscadores de aulas, mapas de carrera interactivos, tablón de novedades en vivo, buzón de consultas y recursos estudiantiles en un ecosistema web ágil, moderno y 100% gratuito (Zero-Cost Stack).
 
 ---
 
 ## 🌟 Características Principales
 
 ### 1. 📚 Repositorio Digital de Apuntes
-* **18 Profesorados y Carreras**: Cobertura integral de los planes de estudio del Joaquín (Historia, Filosofía, Letras, Inglés, Física, Matemática, Biología, etc.).
+* **18 Profesorados y Carreras**: Cobertura integral de los planes de estudio del Joaquín (Filosofía, Historia, Lengua y Literatura, Inglés, Matemática, Biología, Física, Química, Geografía, Informática, Psicología, Cs. de la Educación, Cs. Jurídicas, Cs. Políticas, Economía, Cs. de la Administración, Francés e Italiano).
 * **Filtros Dinámicos en Cascada**: Búsqueda inmediata por año de cursada, materia y tipo de material (Resúmenes, Exámenes/Parciales, Trabajos Prácticos, Libros y Guías).
 * **Previsualización y Descarga**: Visualización directa de archivos PDF y documentos almacenados en la nube.
 * **Formulario de Carga Comunitaria**: Formulario interactivo adaptado a celulares con scroll táctil continuo (`max-height: 88vh`), selección de cátedra y carga directa con moderación previa.
 
-### 2. 📌 Tablón de Novedades (Cartelera Universitaria)
-* **Estética de Cartelera Real**: Diseño visual cálido de tablón institucional con tipografía de cartelera (`Bebas Neue`), placa institucional en azul noche con ribetes dorados y baliza LED con animación pulsante "EN VIVO".
-* **Avisos Estilo Post-It / Volante Clavado**: Comunicados categorizados con acentos cromáticos perimetrales:
+### 2. 🗺️ Mapas de Carrera Personales (18 Libros Excel Automatizados)
+* **Plantillas Personalizadas por Profesorado**: Archivos `.xlsx` generados a medida con todas las materias de cada plan de estudio oficial del JVG.
+* **Validación Desplegable Nativa (`SI` / `NO`)**: Cada fila contiene validación desplegable para marcar fácilmente la condición de *Cursada Regular* y *Final Aprobado*.
+* **Cálculo Automático de Avance y Correlatividades**: Fórmulas integradas que calculan el % total de materias completadas y habilitan automáticamente qué materias podés cursar el próximo cuatrimestre.
+* **Denominación Oficial Actualizada**: Asignaturas del Campo de la Formación General correctamente identificadas como **"Lectura, Escritura y Oralidad" (LEO 1 y LEO 2)**.
+* **Integración Directa con Google Drive / Sheets**: Descarga directa en un clic con guía paso a paso para abrirlo y sincronizarlo en Google Drive.
+
+### 3. 📌 Tablón de Novedades & Sistema de Difusión por Email
+* **Estética Institucional Limpia**: Tipografía `Outfit`, cabecera formal con badge celeste y luz LED pulsante "EN VIVO".
+* **Categorización Temática**:
   * 🔴 **Urgente**: Fechas límite y avisos críticos.
   * 🟡 **Importante / Fechas**: Mesas de examen, inscripciones y cronogramas.
   * 🟣 **Gremial / Centro**: Asambleas, reclamos y resoluciones estudiantiles.
   * 🔵 **Avisos Generales / Cursada**: Información de aulas, novedades de comisiones y cátedras.
 * **Avisos Fijados**: Distintivo `📌 DESTACADO` para notas de alta prioridad ancladas al inicio.
 * **Lectura Progresiva y Paginación**: Sistema de recorte inteligente de texto ("Ver más" / "Ver menos") y botón expansible para consultar el histórico completo de avisos publicados.
+* **Suscripción y Desuscripción a Notificaciones por Mail**: Widget integrado en el tablón (Desktop y Móvil) que permite a las y los estudiantes suscribirse para recibir novedades en su correo o darse de baja en cualquier momento de manera inmediata y automatizada.
 
-### 3. 🛠️ Herramientas Estudiantiles Integradas
+### 4. 🛠️ Herramientas Estudiantiles & Información Útil
 * **Buscador de Aulas y Cursadas**: Motor de consulta indexado sobre una base de **1.658 clases y comisiones** (turnos mañana, tarde y vespertino) para encontrar salones, docentes y horarios en segundos.
-* **Mapa de Carrera Personal**: Plantillas interactivas en formato Excel descargables directamente a Google Drive para planificar correlatividades, con menús desplegables integrados (`SI`/`NO`) para tildar materias aprobadas y cursadas.
-* **Normativa Institucional**: Acceso directo al Reglamento Orgánico Institucional (ROI), régimen de correlatividades y resoluciones del Consejo Directivo.
-* **Planes de Estudio**: Enlaces centralizados a los planes oficiales de cada profesorado.
-* **Información Útil del Estudiante**: Guías sobre calendario académico, turnos de finales, derechos estudiantiles, régimen de licencias, becas (Progresar, Ciudad) y material bibliográfico.
+* **Préstamo de Computadoras en Comodato**: Instructivo completo con requisitos institucionales y el modelo textual exacto de carta para presentar en Rectorado solicitando netbooks por 6 meses o 1 año, con botón de copiado al portapapeles.
+* **Trámites y Certificados**: Guías paso a paso para homologaciones, equivalencias y certificados de alumno regular a través del sistema autogestión / SIU.
+* **Boleto Estudiantil Terciario y Becas**: Instructivos detallados para tramitar el beneficio del Boleto SUBE de CABA, Becas Ciudad y Becas PROGRESAR.
+* **Normativa Institucional y Régimen Estudiantil**: Reglamento Orgánico (ROI), correlatividades y resoluciones del Consejo Directivo.
+* **Guía de Recursos Bibliográficos**: Metabuscadores abiertos, bibliotecas universitarias y técnicas de búsqueda académica en PDF.
 
-### 4. 📱 Arquitectura y Navegación Móvil (3 Vistas Dedicadas)
+### 5. 💬 Buzón de Consultas y Sugerencias
+* **Canal Directo con la Administración**: Formulario accesible desde el pie de página, barra lateral y accesos rápidos en celulares para enviar consultas, sugerencias o reportar errores en apuntes y materias.
+* **Bandeja de Entrada en el Panel Admin**: Las consultas llegan en tiempo real al panel administrativo con fecha, nombre, profesorado y tipo de consulta, permitiendo su lectura y depuración.
+
+### 6. ⚖️ Términos, Condiciones y Política de Privacidad
+* **Deslinde Legal Institucional**: Marco legal explícito que aclara que el Altillo es un proyecto estudiantil complementario autogestionado por estudiantes independientes y La Caravana que no reemplaza las vías oficiales del ISP JVG.
+* **Protección y No Venta de Datos**: Compromiso de confidencialidad estricta garantizando que los correos electrónicos se usan exclusivamente para avisos del tablón, sin venta ni cesión a terceros, y con baja voluntaria inmediata.
+* **Ausencia de Financiamiento Externo**: Declaración de sustentabilidad comunitaria sin financiamiento estatal ni publicitario comercial.
+
+### 7. 📱 Arquitectura y Navegación Móvil (3 Vistas Dedicadas)
 La interfaz para smartphones (`<= 1024px`) está optimizada con una barra de navegación inferior (*Bottom Navigation Bar*) limpia y nativa:
 1. **Pestaña Herramientas**: Despliega las herramientas en **tarjetas grandes con descripción completa** arriba, seguidas de la sección integral de *Información Útil*.
 2. **Pestaña Altillo**: Cabecera institucional + grilla de las 18 carreras arriba de todo, con accesos compactos a herramientas al pie del scroll.
@@ -47,12 +65,19 @@ El proyecto opera sobre una infraestructura sin costos de mantenimiento y con al
 * **Frontend**: Vanilla JavaScript (ES6+), HTML5 semántico y CSS3 modular (Custom Properties, Flexbox, CSS Grid). Cero dependencias pesadas de frameworks, garantizando carga instantánea en redes móviles lentas.
 * **Hosting**: **Vercel** para despliegue continuo de la rama de producción y entornos de prueba (`beta`).
 * **Base de Datos & Backend**: **Supabase (PostgreSQL)**:
-  * Tabla `aportes`: Almacenamiento y metadatos de apuntes enviados por la comunidad.
+  * Tabla `materials`: Almacenamiento y metadatos de apuntes catalogados por profesorado.
+  * Tabla `submissions`: Peticiones de subida pendientes de aprobación o rechazo.
   * Tabla `news`: Publicaciones y comunicados del tablón en tiempo real.
-  * Tabla `categories`: Taxonomía y gestión de etiquetas.
+  * Tabla `subscribers`: Lista de difusión de correos suscritos al tablón de avisos.
+  * Tabla `feedback`: Mensajes y consultas recibidas por el buzón estudiantil.
   * Políticas de Seguridad **RLS (Row Level Security)** para lectura pública y mutaciones protegidas.
 * **Storage**: Supabase Storage Bucket (`apuntes`) con enlaces públicos CDN para descarga inmediata de documentos.
-* **Serverless Functions**: Endpoints API en Node.js (`/api/*`) para moderación, autenticación y gestión de archivos.
+* **Serverless Functions**: Endpoints API en Node.js (`/api/*`) con fallback local resiliente en formato JSON:
+  * `GET/POST /api/materials`
+  * `GET/POST /api/news`
+  * `GET/POST/PUT/DELETE /api/subscribers`
+  * `GET/POST/DELETE /api/feedback`
+  * `POST /api/sync_aulas` (Trigger de GitHub Actions)
 
 ---
 
@@ -61,6 +86,7 @@ El proyecto opera sobre una infraestructura sin costos de mantenimiento y con al
 ```
 AltilloJVG/
 ├── index.html                   # Interfaz principal (Desktop y Móvil)
+├── admin.html                   # Panel de administración y moderación
 ├── css/
 │   └── styles.css               # Sistema de diseño, tokens, grillas y media queries
 ├── js/
@@ -68,24 +94,30 @@ AltilloJVG/
 │   ├── news.js                  # Motor del Tablón de Novedades y lector progresivo
 │   ├── upload_form.js           # Formulario dinámico de subida de apuntes
 │   ├── aulas_search.js          # Buscador reactivo de aulas y horarios
-│   ├── mapa_carrera.js          # Modal y generador de mapas de correlatividades
-│   └── materiales_explorer.js   # Explorador de archivos clasificados por carrera
+│   ├── mapa_carrera.js          # Modal y selector de mapas de carrera
+│   ├── materiales_explorer.js   # Explorador de archivos clasificados por carrera
+│   └── admin.js                 # Controlador del panel de administración
 ├── data/
 │   ├── aulas_data.js            # Base indexada de horarios y aulas (1.658 comisiones)
 │   ├── derechos_data.js         # Articulado y normativas estudiantiles
 │   ├── libros_guia_data.js      # Biblioteca básica de consulta
-│   ├── resources_data.js        # Vínculos y recursos institucionales
-│   └── mapas/                   # Libros de cálculo Excel con validación de datos
+│   ├── resources_data.js        # Vínculos y recursos institucionales (trámites, becas, comodato)
+│   └── mapas/                   # 18 planillas Excel (.xlsx) oficiales de correlatividades
 ├── api/
 │   ├── news.js                  # CRUD de comunicados y noticias
-│   ├── upload.js                # Procesamiento y subida segura a Storage
-│   └── admin.js                 # Panel de moderación y aprobación de aportes
+│   ├── subscribers.js           # Alta, baja y gestión de suscriptores al newsletter
+│   ├── feedback.js              # Buzón de consultas y sugerencias
+│   ├── materials.js             # Gestión de apuntes y archivos
+│   ├── submissions.js           # Aprobación y rechazo de peticiones
+│   └── sync_aulas.js            # Desencadenador de workflows de GitHub Actions
 ├── assets/
 │   ├── logo-owl.svg             # Isologotipo de la lechuza sobre el libro abierto
-│   └── logo-caravana.svg        # Distintivo oficial La Caravana
+│   └── la_caravana.png          # Distintivo oficial La Caravana JVG
 ├── scripts/
+│   ├── build_all_career_maps.py # Generador masivo de las 18 planillas Excel con openpyxl
 │   ├── auto_update_aulas.py     # Extractor y procesador de PDFs de aulas oficiales
-│   └── fix_excel_validation.py  # Constructor de listas desplegables para Excel
+│   ├── supabase_setup_v2.sql    # DDL de tablas submissions y news
+│   └── supabase_setup_v3.sql    # DDL de tablas subscribers y feedback
 └── README.md                    # Documentación técnica y funcional
 ```
 
@@ -121,29 +153,4 @@ Abre tu navegador en `http://localhost:8000`.
 
 ---
 
-## 🔄 Mantenimiento y Actualización de Datos
-
-### Actualización de Horarios y Aulas
-Al comenzar cada cuatrimestre, cuando el instituto publica los nuevos horarios y asignaciones de aulas:
-1. Ejecuta el script de extracción automática:
-   ```bash
-   python scripts/auto_update_aulas.py
-   ```
-2. El script procesa los PDFs de los tres turnos (Mañana, Tarde, Vespertino), valida la coherencia de datos y recompila `data/aulas_data.js`.
-3. Confirma los cambios y realiza el push al repositorio.
-
-### Actualización de Mapas de Carrera
-Los archivos `.xlsx` del mapa de carrera contienen validaciones nativas de datos (`SI,NO`). Para regenerarlos o incorporar nuevas carreras:
-```bash
-python scripts/fix_excel_validation.py
-```
-
----
-
-## 👥 Comunidad y Colaboración
-
-Este espacio es una construcción colectiva e independiente impulsada por **La Caravana + Estudiantes Independientes** del ISP "Joaquín V. González". 
-
-Si encontrás errores, querés aportar material de tu carrera o sugerir mejoras en la plataforma:
-* Utilizá el botón **"Subí tus documentos"** en la web.
-* Acercate a las mesas de La Caravana en el instituto o participá abriendo un *Pull Request* o *Issue* en el repositorio.
+Desarrollado con compromiso militante por **Estudiantes Independientes + La Caravana (Lista 90 - El peronismo en el Joaquín)**.

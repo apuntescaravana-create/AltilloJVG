@@ -6,8 +6,8 @@
   <title>AltilloJVG | Repositorio Digital del Instituto Joaquín V. González</title>
   <meta name="description" content="Plataforma colaborativa y repositorio digital para alumnos del Instituto Superior del Profesorado Joaquín V. González. Resúmenes, parciales, normativas y derechos estudiantiles impulsados por estudiantes independientes y La Caravana.">
 
-  <!-- Estilos y Fuentes con Cache Buster v=100 -->
-  <link rel="stylesheet" href="css/styles.css?v=100">
+  <!-- Estilos y Fuentes con Cache Buster v=105 -->
+  <link rel="stylesheet" href="css/styles.css?v=105">
   <link rel="icon" type="image/svg+xml" href="assets/logo-owl.svg">
 </head>
 <body>
@@ -76,6 +76,32 @@
           </p>
           <div id="tablonFeedDesktop">
             <!-- Cargado dinámicamente por js/news.js -->
+          </div>
+
+          <!-- Caja de Suscripción a Novedades (Desktop) -->
+          <div class="tablon-subscribe-box">
+            <div class="tablon-sub-header">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+              </svg>
+              <span>Avisos por Mail</span>
+            </div>
+            <p class="tablon-sub-desc">Recibí las novedades importantes y fechas de examen directamente en tu correo.</p>
+            <form onsubmit="handleSubscription(event, 'subEmailDesktop', 'subMsgDesktop')">
+              <div class="tablon-sub-input-group">
+                <input type="email" id="subEmailDesktop" placeholder="Tu correo electrónico..." required class="tablon-sub-input">
+                <button type="submit" class="tablon-sub-btn">Suscribirme</button>
+              </div>
+            </form>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
+              <button type="button" onclick="handleUnsubscribe('subEmailDesktop', 'subMsgDesktop')" class="tablon-unsub-link">
+                Darse de baja
+              </button>
+              <a href="#" onclick="openTerminosModal(event)" class="tablon-privacy-link">
+                Privacidad de datos
+              </a>
+            </div>
+            <div id="subMsgDesktop" class="sub-feedback-msg" style="display:none;"></div>
           </div>
         </div>
       </aside>
@@ -189,6 +215,21 @@
               <div>
                 <h4 class="resource-box-title" style="color: #0B2545;">Cómo <em>no</em> conseguir libros piratas</h4>
                 <p class="resource-box-desc">Metabuscadores abiertos, bibliotecas digitales y trucos de búsqueda en PDF para estudiantes.</p>
+              </div>
+            </a>
+
+            <!-- 7. Préstamo de Computadoras en Comodato -->
+            <a href="#" class="resource-box box-comodato" style="border: 2px solid #D99B26; background: #FFFDF5;">
+              <div class="resource-icon-badge" style="background: #D99B26; color: #FFFFFF;">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                  <line x1="8" y1="21" x2="16" y2="21"></line>
+                  <line x1="12" y1="17" x2="12" y2="21"></line>
+                </svg>
+              </div>
+              <div>
+                <h4 class="resource-box-title" style="color: #78350F;">Préstamo de Computadoras (Comodato)</h4>
+                <p class="resource-box-desc">Pedí una netbook institucional para tu cursada (requisitos y modelo de carta a Rectorado).</p>
               </div>
             </a>
           </div>
@@ -444,6 +485,32 @@
             <div id="tablonFeedMobile">
               <!-- Cargado por js/news.js -->
             </div>
+
+            <!-- Caja de Suscripción a Novedades (Móvil) -->
+            <div class="tablon-subscribe-box">
+              <div class="tablon-sub-header">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                </svg>
+                <span>Avisos por Mail</span>
+              </div>
+              <p class="tablon-sub-desc">Recibí las novedades importantes y fechas de examen directamente en tu correo.</p>
+              <form onsubmit="handleSubscription(event, 'subEmailMobile', 'subMsgMobile')">
+                <div class="tablon-sub-input-group">
+                  <input type="email" id="subEmailMobile" placeholder="Tu correo electrónico..." required class="tablon-sub-input">
+                  <button type="submit" class="tablon-sub-btn">Suscribirme</button>
+                </div>
+              </form>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
+                <button type="button" onclick="handleUnsubscribe('subEmailMobile', 'subMsgMobile')" class="tablon-unsub-link">
+                  Darse de baja
+                </button>
+                <a href="#" onclick="openTerminosModal(event)" class="tablon-privacy-link">
+                  Privacidad de datos
+                </a>
+              </div>
+              <div id="subMsgMobile" class="sub-feedback-msg" style="display:none;"></div>
+            </div>
           </div>
         </section>
 
@@ -480,6 +547,14 @@
             <a href="#" class="compact-tool-chip chip-upload" onclick="var el = document.getElementById('openUploadModalBtn'); if(el) el.click(); return false;">
               <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
               <span>Subir Apuntes</span>
+            </a>
+            <a href="#" class="compact-tool-chip chip-comodato" onclick="openComodatoModal(); return false;">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+              <span>Pedir Compu</span>
+            </a>
+            <a href="#" class="compact-tool-chip chip-feedback" onclick="openFeedbackModal(); return false;">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
+              <span>Sugerencias</span>
             </a>
           </div>
         </section>
@@ -570,7 +645,41 @@
           </svg>
         </a>
 
-        <!-- 6. CTA: Subí tus documentos (Dorado Destacado) -->
+        <!-- 5. Préstamo de Computadoras en Comodato -->
+        <a href="#" class="side-card comodato" onclick="openComodatoModal(); return false;">
+          <div class="side-card-icon">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+              <line x1="8" y1="21" x2="16" y2="21"></line>
+              <line x1="12" y1="17" x2="12" y2="21"></line>
+            </svg>
+          </div>
+          <div class="side-card-content">
+            <h3 class="side-card-title">Préstamo de Computadoras</h3>
+            <p class="side-card-desc">Netbooks en comodato: requisitos y modelo de carta.</p>
+          </div>
+          <svg class="side-card-arrow" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+          </svg>
+        </a>
+
+        <!-- 6. Buzón de Consultas y Sugerencias -->
+        <a href="#" class="side-card feedback" onclick="openFeedbackModal(); return false;">
+          <div class="side-card-icon">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
+            </svg>
+          </div>
+          <div class="side-card-content">
+            <h3 class="side-card-title">Consultas y Sugerencias</h3>
+            <p class="side-card-desc">Escribinos directamente al equipo de administración.</p>
+          </div>
+          <svg class="side-card-arrow" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+          </svg>
+        </a>
+
+        <!-- 7. CTA: Subí tus documentos (Dorado Destacado) -->
         <div class="side-card cta-upload" id="openUploadModalBtn">
           <div class="side-card-icon">
             <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
@@ -607,7 +716,13 @@
         </div>
       </div>
 
-      <div class="footer-contact-wrapper">
+      <div class="footer-contact-wrapper" style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+        <button type="button" onclick="openFeedbackModal()" class="footer-feedback-btn" title="Escribinos una consulta, sugerencia o corrección">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
+          </svg>
+          <span>Buzón de Consultas y Sugerencias</span>
+        </button>
         <a href="https://www.instagram.com/lacaravanajvg/" target="_blank" rel="noopener" class="footer-instagram-btn" title="Contactanos en Instagram @lacaravanajvg">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
@@ -627,8 +742,12 @@
         </a>
         <span>Creado por <strong>estudiantes independientes + La Caravana</strong> (El peronismo en el Joaquín).</span>
       </div>
-      <div>
+      <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
         <span>AltilloJVG © 2026 - Repositorio Estudiantil</span>
+        <span>•</span>
+        <a href="#" onclick="openTerminosModal(event)" style="color:#CBD5E1; text-decoration:underline; font-size:0.75rem;">
+          Términos, Privacidad y Deslinde Legal
+        </a>
       </div>
     </div>
   </footer>
@@ -1015,17 +1134,114 @@
     </div>
   </div>
 
-  <!-- Scripts JavaScript con Cache Buster v=10 -->
-  <script src="data/resources_data.js?v=10"></script>
-  <script src="data/derechos_data.js?v=10"></script>
-  <script src="data/libros_guia_data.js?v=10"></script>
-  <script src="data/aulas_data.js?v=10"></script>
-  <script src="js/main.js?v=10"></script>
-  <script src="js/upload_form.js?v=10"></script>
-  <script src="js/aulas_search.js?v=10"></script>
-  <script src="js/materiales_explorer.js?v=10"></script>
-  <script src="js/mapa_carrera.js?v=100"></script>
-  <script src="js/news.js?v=100"></script>
+  <!-- ==========================================================================
+       MODAL: BUZÓN DE CONSULTAS Y SUGERENCIAS
+       ========================================================================== -->
+  <div class="modal-overlay" id="feedbackModal">
+    <div class="modal-container" style="max-width: 540px; width: 95%;">
+      <div class="modal-header" style="background: linear-gradient(135deg, #0B2545 0%, #134074 100%);">
+        <h3 class="modal-header-title" style="display: flex; align-items: center; gap: 8px;">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
+          </svg>
+          Buzón de Consultas y Sugerencias
+        </h3>
+        <button class="modal-close-btn" id="closeFeedbackModalBtn">&times;</button>
+      </div>
+      <div class="modal-body" style="padding: 24px;">
+        <p style="font-size: 0.85rem; color: #64748B; line-height: 1.45; margin-bottom: 16px;">
+          ¿Tenés una sugerencia, consulta o encontraste algún error en el Altillo? Dejanos tu mensaje y lo leeremos en el panel de administración.
+        </p>
+        <form id="feedbackForm" style="display: flex; flex-direction: column; gap: 14px;">
+          <div>
+            <label style="font-size: 0.8rem; font-weight: 700; color: #334155; display: block; margin-bottom: 4px;">Tu Nombre o Apodo (Opcional):</label>
+            <input type="text" id="feedbackNombre" placeholder="Ej: Florencia (o anónimo)" style="width: 100%; padding: 9px 12px; border: 1.5px solid #CBD5E1; border-radius: 8px; font-size: 0.85rem;">
+          </div>
+          <div>
+            <label style="font-size: 0.8rem; font-weight: 700; color: #334155; display: block; margin-bottom: 4px;">Carrera / Profesorado:</label>
+            <input type="text" id="feedbackCarrera" placeholder="Ej: Profesorado de Historia" style="width: 100%; padding: 9px 12px; border: 1.5px solid #CBD5E1; border-radius: 8px; font-size: 0.85rem;">
+          </div>
+          <div>
+            <label style="font-size: 0.8rem; font-weight: 700; color: #334155; display: block; margin-bottom: 4px;">Tipo de Mensaje:</label>
+            <select id="feedbackTipo" style="width: 100%; padding: 9px 12px; border: 1.5px solid #CBD5E1; border-radius: 8px; font-size: 0.85rem; font-weight: 600;">
+              <option value="Sugerencia">💡 Sugerencia para la página</option>
+              <option value="Consulta">❓ Consulta estudiantil</option>
+              <option value="Reporte de Error">⚠️ Reportar error en apunte o materia</option>
+              <option value="Otro">💬 Otro</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size: 0.8rem; font-weight: 700; color: #334155; display: block; margin-bottom: 4px;">Mensaje * :</label>
+            <textarea id="feedbackMensaje" rows="4" required placeholder="Escribí aquí tu mensaje detallado..." style="width: 100%; padding: 9px 12px; border: 1.5px solid #CBD5E1; border-radius: 8px; font-size: 0.85rem; resize: vertical;"></textarea>
+          </div>
+          <button type="submit" style="background: linear-gradient(135deg, #0B2545 0%, #009BE3 100%); color: #FFF; font-weight: 700; padding: 12px; border-radius: 10px; border: none; cursor: pointer; font-size: 0.9rem; margin-top: 4px; box-shadow: 0 4px 12px rgba(0,155,227,0.2);">
+            ✉️ Enviar Mensaje
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL: TÉRMINOS Y CONDICIONES / POLÍTICA DE PRIVACIDAD
+       ========================================================================== -->
+  <div class="modal-overlay" id="terminosModal">
+    <div class="modal-container" style="max-width: 680px; width: 95%;">
+      <div class="modal-header" style="background: linear-gradient(135deg, #0B2545 0%, #134074 100%);">
+        <h3 class="modal-header-title" style="display: flex; align-items: center; gap: 8px;">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+          </svg>
+          Términos, Privacidad y Deslinde Legal
+        </h3>
+        <button class="modal-close-btn" id="closeTerminosModalBtn">&times;</button>
+      </div>
+      <div class="modal-body" style="padding: 24px; font-size: 0.83rem; color: #334155; line-height: 1.6;">
+        <div style="background: #F0F9FF; border-left: 4px solid #009BE3; padding: 12px 14px; border-radius: 6px; margin-bottom: 16px;">
+          <strong style="color: #0369A1; display: block; margin-bottom: 2px;">Compromiso con la Comunidad Estudiantil</strong>
+          AltilloJVG es una plataforma comunitaria, autogestionada, 100% gratuita y sin fines de lucro desarrollada por <strong>estudiantes independientes y La Caravana</strong> para el ISP "Joaquín V. González".
+        </div>
+
+        <h4 style="font-size: 0.95rem; font-weight: 700; color: #0B2545; margin-top: 14px; margin-bottom: 4px;">1. Protección y No Venta de Datos Personales</h4>
+        <p>
+          Los correos electrónicos ingresados voluntariamente a través del formulario de notificaciones se utilizan <strong>exclusivamente para enviar avisos institucionales, fechas de exámenes y comunicados del tablón</strong>. La plataforma <strong>no vende, no comercializa, no cede ni transfiere ningún dato personal a terceros</strong> bajo ninguna circunstancia. Cualquier usuario puede darse de baja de forma inmediata en cualquier momento haciendo clic en "Darse de baja".
+        </p>
+
+        <h4 style="font-size: 0.95rem; font-weight: 700; color: #0B2545; margin-top: 14px; margin-bottom: 4px;">2. Ausencia de Financiamiento Externo</h4>
+        <p>
+          Este espacio no cuenta con financiamiento estatal, partidario rentado ni publicitario comercial. Funciona íntegramente sobre una arquitectura de costo cero (Zero-Cost Stack) sostenida por el trabajo militante y voluntario de estudiantes para garantizar el acceso democrático al material de estudio.
+        </p>
+
+        <h4 style="font-size: 0.95rem; font-weight: 700; color: #0B2545; margin-top: 14px; margin-bottom: 4px;">3. Material Pedagógico y Propiedad Intelectual</h4>
+        <p>
+          Los resúmenes, programas, guías y exámenes compartidos en el repositorio tienen fines <strong>estrictamente educativos y de apoyo pedagógico entre pares</strong>, amparados en el derecho al estudio y a la educación pública. No se cobra por ninguna descarga. Los archivos son aportados por la propia comunidad estudiantil bajo su exclusiva responsabilidad.
+        </p>
+
+        <h4 style="font-size: 0.95rem; font-weight: 700; color: #0B2545; margin-top: 14px; margin-bottom: 4px;">4. Deslinde de Responsabilidad Institucional</h4>
+        <p>
+          AltilloJVG es un canal estudiantil complementario y <strong>no reemplaza los medios oficiales del Instituto Superior del Profesorado "Joaquín V. González"</strong> (portal web oficial, cartelera institucional ni sistema SIU Guaraní). Los horarios, asignaciones de aulas y cronogramas se publican a título orientativo; ante cualquier duda o discrepancia, prevalecen las resoluciones de Rectorado y Consejo Directivo.
+        </p>
+
+        <div style="text-align: center; margin-top: 20px; padding-top: 14px; border-top: 1px solid #E2E8F0;">
+          <button type="button" onclick="closeTerminosModal()" style="background: #0B2545; color: #FFF; font-weight: 700; padding: 10px 24px; border-radius: 8px; border: none; cursor: pointer; font-size: 0.85rem;">
+            Entendido y Aceptar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts JavaScript con Cache Buster v=105 -->
+  <script src="data/resources_data.js?v=105"></script>
+  <script src="data/derechos_data.js?v=105"></script>
+  <script src="data/libros_guia_data.js?v=105"></script>
+  <script src="data/aulas_data.js?v=105"></script>
+  <script src="js/main.js?v=105"></script>
+  <script src="js/upload_form.js?v=105"></script>
+  <script src="js/aulas_search.js?v=105"></script>
+  <script src="js/materiales_explorer.js?v=105"></script>
+  <script src="js/mapa_carrera.js?v=105"></script>
+  <script src="js/news.js?v=105"></script>
 
   <!-- Controlador Inmediato de Vistas Móviles (Herramientas, Altillo, Novedades) -->
   <script>

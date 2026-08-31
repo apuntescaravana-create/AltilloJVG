@@ -98,6 +98,11 @@
           <button id="tabNoticias" class="tab-btn border-b-4 border-transparent text-gray-500 hover:text-brand-navy py-4 font-bold text-sm flex items-center gap-2 whitespace-nowrap">
             📢 Tablón de Noticias
           </button>
+          <!-- Pestaña 4: Consultas y Sugerencias -->
+          <button id="tabFeedback" class="tab-btn border-b-4 border-transparent text-gray-500 hover:text-brand-navy py-4 font-bold text-sm flex items-center gap-2 whitespace-nowrap">
+            💬 Consultas y Sugerencias
+            <span id="feedbackBadgeCount" class="bg-blue-600 text-white text-xs px-2 py-0.5 rounded-full font-bold">0</span>
+          </button>
         </div>
         
         <!-- Botón de Sincronización Automática de Aulas con GitHub Actions -->
@@ -305,11 +310,39 @@
 
         <!-- Listado de Noticias Activas -->
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-          <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+          <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center flex-wrap gap-2">
             <h3 class="font-bold text-brand-navy text-lg">Avisos Publicados Actualmente</h3>
-            <span class="text-xs font-medium text-gray-500" id="newsCounterBadge">Cargando avisos...</span>
+            <div class="flex items-center gap-3">
+              <button type="button" id="btnManageSubscribers" class="text-xs bg-sky-50 hover:bg-sky-100 text-sky-700 border border-sky-300 px-3 py-1.5 rounded-lg font-bold flex items-center gap-1.5 transition">
+                📧 Gestionar suscripciones a notificaciones por mail
+              </button>
+              <span class="text-xs font-medium text-gray-500" id="newsCounterBadge">Cargando avisos...</span>
+            </div>
           </div>
           <div class="divide-y divide-gray-200" id="newsListContainer">
+            <!-- Cargado dinámicamente -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================================
+           VISTA 4: CONSULTAS Y SUGERENCIAS DE ESTUDIANTES
+           ====================================================================== -->
+      <section id="sectionFeedback" class="hidden space-y-6">
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+          <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center flex-wrap gap-2">
+            <div>
+              <h3 class="font-bold text-brand-navy text-lg flex items-center gap-2">
+                💬 Buzón de Consultas y Sugerencias
+                <span id="feedbackHeaderBadge" class="bg-blue-600 text-white text-xs px-2.5 py-0.5 rounded-full font-bold">0 mensajes</span>
+              </h3>
+              <p class="text-xs text-gray-500 mt-0.5">Consultas, inquietudes y reportes enviados por estudiantes desde la web.</p>
+            </div>
+            <button onclick="loadFeedback()" class="text-xs bg-gray-50 border border-gray-300 hover:bg-gray-100 px-3 py-1.5 rounded-lg font-bold">
+              🔄 Refrescar
+            </button>
+          </div>
+          <div class="divide-y divide-gray-200" id="feedbackListContainer">
             <!-- Cargado dinámicamente -->
           </div>
         </div>
@@ -476,8 +509,52 @@
     </div>
   </div>
 
-  <!-- Scripts con Cache Buster v=21 -->
-  <script src="data/aulas_data.js?v=21"></script>
-  <script src="js/admin.js?v=21"></script>
+  <!-- ==========================================
+       MODAL: GESTIÓN DE SUSCRIPTORES AL TABLÓN
+       ========================================== -->
+  <div id="subscribersModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+    <div class="bg-white rounded-2xl shadow-xl max-w-2xl w-full overflow-hidden border border-gray-100 flex flex-col max-h-[85vh]">
+      <div class="bg-brand-navy text-white px-6 py-4 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center gap-2">
+          <span class="text-xl">📧</span>
+          <h4 class="font-bold text-lg">Suscripciones a Notificaciones por Mail</h4>
+        </div>
+        <button id="closeSubscribersModalBtn" class="text-2xl hover:text-brand-gold">&times;</button>
+      </div>
+      <div class="p-6 flex-grow overflow-y-auto space-y-4">
+        <div class="flex justify-between items-center flex-wrap gap-3">
+          <p class="text-xs text-gray-500">Listado de correos registrados para recibir los avisos del Tablón:</p>
+          <span id="subscribersCounterBadge" class="text-xs font-bold bg-sky-100 text-sky-800 px-2.5 py-1 rounded-full">0 suscriptores</span>
+        </div>
+        <div class="flex gap-2">
+          <input type="text" id="searchSubscriberInput" placeholder="Buscar por email..." class="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-brand-blue">
+          <button type="button" onclick="loadSubscribers()" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-2 rounded-lg text-xs font-bold">🔄</button>
+        </div>
+        <div class="border border-gray-200 rounded-xl overflow-hidden">
+          <table class="min-w-full divide-y divide-gray-200 text-left text-xs">
+            <thead class="bg-gray-50">
+              <tr>
+                <th class="px-4 py-3 font-bold text-gray-600 uppercase">Correo Electrónico</th>
+                <th class="px-4 py-3 font-bold text-gray-600 uppercase">Fecha</th>
+                <th class="px-4 py-3 font-bold text-gray-600 uppercase text-right">Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="subscribersTableBody" class="divide-y divide-gray-200 bg-white">
+              <!-- Cargado dinámicamente -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="bg-gray-50 px-6 py-3 border-t border-gray-200 flex justify-end flex-shrink-0">
+        <button type="button" id="closeSubscribersModalFooterBtn" class="px-4 py-2 bg-brand-navy hover:bg-brand-blue text-white rounded-lg text-xs font-bold">
+          Cerrar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts con Cache Buster v=25 -->
+  <script src="data/aulas_data.js?v=25"></script>
+  <script src="js/admin.js?v=25"></script>
 </body>
 </html>

@@ -14,13 +14,28 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnDescargarExcel = document.getElementById('btnDescargarExcel');
   const btnAbrirSheets = document.getElementById('btnAbrirSheets');
 
-  // Mapeo de carreras a plantillas específicas o universales
+  // Mapeo completo de las 18 carreras a sus plantillas oficiales
   const MAPAS_ARCHIVOS = {
-    "Profesorado de Filosofía": {
-      archivo: "data/mapas/Mapa_de_Carrera_Filosofia.xlsx",
-      nombre: "Mapa_de_Carrera_Filosofia.xlsx",
-      materiasCount: 45
-    }
+    "Profesorado de Filosofía": { archivo: "data/mapas/Mapa_de_Carrera_Filosofia.xlsx", nombre: "Mapa_de_Carrera_Filosofia_JVG.xlsx" },
+    "Profesorado de Historia": { archivo: "data/mapas/Mapa_de_Carrera_Historia.xlsx", nombre: "Mapa_de_Carrera_Historia_JVG.xlsx" },
+    "Profesorado de Lengua y Literatura": { archivo: "data/mapas/Mapa_de_Carrera_Lengua_y_Literatura.xlsx", nombre: "Mapa_de_Carrera_Lengua_y_Literatura_JVG.xlsx" },
+    "Profesorado de Inglés": { archivo: "data/mapas/Mapa_de_Carrera_Ingles.xlsx", nombre: "Mapa_de_Carrera_Ingles_JVG.xlsx" },
+    "Profesorado de Matemática": { archivo: "data/mapas/Mapa_de_Carrera_Matematica.xlsx", nombre: "Mapa_de_Carrera_Matematica_JVG.xlsx" },
+    "Profesorado de Biología": { archivo: "data/mapas/Mapa_de_Carrera_Biologia.xlsx", nombre: "Mapa_de_Carrera_Biologia_JVG.xlsx" },
+    "Profesorado de Física": { archivo: "data/mapas/Mapa_de_Carrera_Fisica.xlsx", nombre: "Mapa_de_Carrera_Fisica_JVG.xlsx" },
+    "Profesorado de Química": { archivo: "data/mapas/Mapa_de_Carrera_Quimica.xlsx", nombre: "Mapa_de_Carrera_Quimica_JVG.xlsx" },
+    "Profesorado de Geografía": { archivo: "data/mapas/Mapa_de_Carrera_Geografia.xlsx", nombre: "Mapa_de_Carrera_Geografia_JVG.xlsx" },
+    "Profesorado de Informática": { archivo: "data/mapas/Mapa_de_Carrera_Informatica.xlsx", nombre: "Mapa_de_Carrera_Informatica_JVG.xlsx" },
+    "Profesorado de Psicología": { archivo: "data/mapas/Mapa_de_Carrera_Psicologia.xlsx", nombre: "Mapa_de_Carrera_Psicologia_JVG.xlsx" },
+    "Profesorado de Ciencias de la Educación": { archivo: "data/mapas/Mapa_de_Carrera_Ciencias_de_la_Educacion.xlsx", nombre: "Mapa_de_Carrera_Ciencias_de_la_Educacion_JVG.xlsx" },
+    "Profesorado de Cs. de la Educación": { archivo: "data/mapas/Mapa_de_Carrera_Ciencias_de_la_Educacion.xlsx", nombre: "Mapa_de_Carrera_Ciencias_de_la_Educacion_JVG.xlsx" },
+    "Profesorado de Ciencias Jurídicas": { archivo: "data/mapas/Mapa_de_Carrera_Ciencias_Juridicas.xlsx", nombre: "Mapa_de_Carrera_Ciencias_Juridicas_JVG.xlsx" },
+    "Profesorado de Cs. Jurídicas": { archivo: "data/mapas/Mapa_de_Carrera_Ciencias_Juridicas.xlsx", nombre: "Mapa_de_Carrera_Ciencias_Juridicas_JVG.xlsx" },
+    "Profesorado de Ciencia Política": { archivo: "data/mapas/Mapa_de_Carrera_Ciencia_Politica.xlsx", nombre: "Mapa_de_Carrera_Ciencia_Politica_JVG.xlsx" },
+    "Profesorado de Economía": { archivo: "data/mapas/Mapa_de_Carrera_Economia.xlsx", nombre: "Mapa_de_Carrera_Economia_JVG.xlsx" },
+    "Profesorado de Ciencias de la Administración": { archivo: "data/mapas/Mapa_de_Carrera_Ciencias_de_la_Administracion.xlsx", nombre: "Mapa_de_Carrera_Ciencias_de_la_Administracion_JVG.xlsx" },
+    "Profesorado de Francés": { archivo: "data/mapas/Mapa_de_Carrera_Frances.xlsx", nombre: "Mapa_de_Carrera_Frances_JVG.xlsx" },
+    "Profesorado de Italiano": { archivo: "data/mapas/Mapa_de_Carrera_Italiano.xlsx", nombre: "Mapa_de_Carrera_Italiano_JVG.xlsx" }
   };
 
   // Abrir Modal
@@ -77,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (btnDescargarExcel) {
     btnDescargarExcel.addEventListener('click', () => {
       const selected = selectMapaCarrera ? selectMapaCarrera.value : '';
-      let fileUrl = "data/mapas/Mapa_de_Carrera_Filosofia.xlsx"; // plantilla oficial
+      let fileUrl = "data/mapas/Mapa_de_Carrera_General_Plantilla.xlsx";
       let fileName = "Mapa_de_Carrera_Personal_LaCaravana.xlsx";
 
       if (selected && MAPAS_ARCHIVOS[selected]) {

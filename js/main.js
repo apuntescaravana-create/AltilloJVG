@@ -105,6 +105,8 @@ document.addEventListener('DOMContentLoaded', () => {
         openDerechosModal();
       } else if (box.classList.contains('box-libros')) {
         openLibrosGuiaModal();
+      } else if (box.classList.contains('box-comodato')) {
+        openComodatoModal();
       }
     });
   });
@@ -194,14 +196,19 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!infoModal) return;
     infoModalTitle.textContent = "📝 Trámites y Certificados Estudiantiles";
     
-    let html = `<div style="display:flex; flex-direction:column; gap:12px;">`;
+    let html = `<div style="display:flex; flex-direction:column; gap:14px;">`;
     if (typeof JVG_OFFICIAL_RESOURCES !== 'undefined') {
       JVG_OFFICIAL_RESOURCES.tramites.forEach(item => {
+        const pasosHtml = Array.isArray(item.pasos)
+          ? `<ul style="margin: 8px 0 10px 18px; font-size:0.82rem; color:#475569; line-height:1.5;">${item.pasos.map(p => `<li style="margin-bottom:4px;">${p}</li>`).join('')}</ul>`
+          : `<p style="font-size:0.83rem; color:#475569; margin-bottom:6px;">${item.pasos}</p>`;
+
         html += `
-          <div style="background:#FAFDFF; border:1px solid #CBD5E1; padding:14px; border-radius:10px;">
-            <h4 style="color:#0B2545; font-size:0.95rem; margin-bottom:4px;">${item.nombre}</h4>
-            <p style="font-size:0.83rem; color:#475569; margin-bottom:6px;"><strong>Detalle:</strong> ${item.pasos}</p>
-            ${item.link ? `<a href="${item.link}" target="_blank" rel="noopener" style="display:inline-block; background:#009BE3; color:#fff; padding:5px 10px; border-radius:6px; text-decoration:none; font-size:0.75rem; font-weight:600;">Acceder a Trámite / SIU →</a>` : ''}
+          <div style="background:#FAFDFF; border:1px solid #CBD5E1; padding:16px; border-radius:10px;">
+            <h4 style="color:#0B2545; font-size:0.98rem; font-weight:700; margin-bottom:4px;">${item.nombre}</h4>
+            <p style="font-size:0.83rem; color:#64748B; margin-bottom:6px;">${item.descripcion || ''}</p>
+            ${pasosHtml}
+            ${item.link ? `<a href="${item.link}" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:6px; background:#009BE3; color:#fff; padding:6px 12px; border-radius:6px; text-decoration:none; font-size:0.78rem; font-weight:600;">Acceder a Trámite Oficial →</a>` : ''}
           </div>`;
       });
     }
@@ -215,16 +222,27 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!infoModal) return;
     infoModalTitle.textContent = "🎟️ Boleto Estudiantil y Becas";
     
-    let html = `<div style="display:flex; flex-direction:column; gap:12px;">`;
+    let html = `<div style="display:flex; flex-direction:column; gap:14px;">`;
     if (typeof JVG_OFFICIAL_RESOURCES !== 'undefined') {
       JVG_OFFICIAL_RESOURCES.becas.forEach(item => {
+        const pasosHtml = Array.isArray(item.pasos)
+          ? `<div style="background:#F8FAFC; border-left:3px solid #009BE3; padding:10px 12px; border-radius:4px; margin-bottom:10px;">
+               <strong style="font-size:0.78rem; color:#0284C7; display:block; margin-bottom:4px;">¿Cómo realizarlo paso a paso?</strong>
+               <ul style="margin:0 0 0 16px; font-size:0.81rem; color:#334155; line-height:1.5;">${item.pasos.map(p => `<li style="margin-bottom:3px;">${p}</li>`).join('')}</ul>
+             </div>`
+          : '';
+
         html += `
-          <div style="background:#FAFDFF; border:1px solid #BEE3F8; padding:14px; border-radius:10px;">
-            <h4 style="color:#0B2545; font-size:0.95rem; margin-bottom:4px;">${item.nombre}</h4>
+          <div style="background:#FAFDFF; border:1px solid #BEE3F8; padding:16px; border-radius:10px;">
+            <h4 style="color:#0B2545; font-size:0.98rem; font-weight:700; margin-bottom:4px;">${item.nombre}</h4>
             <p style="font-size:0.83rem; color:#64748B; margin-bottom:8px;">${item.descripcion}</p>
-            <a href="${item.link}" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:6px; background:#009BE3; color:#fff; padding:6px 12px; border-radius:6px; text-decoration:none; font-size:0.78rem; font-weight:600;">
-              Ver Información en Sitio Oficial →
-            </a>
+            ${pasosHtml}
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              <a href="${item.link}" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:6px; background:#009BE3; color:#fff; padding:6px 12px; border-radius:6px; text-decoration:none; font-size:0.78rem; font-weight:600;">
+                Sitio Oficial de Inscripción →
+              </a>
+              ${item.infoPdf ? `<a href="${item.infoPdf}" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:6px; background:#EEF4F8; color:#0B2545; border:1px solid #CBD5E1; padding:6px 12px; border-radius:6px; text-decoration:none; font-size:0.78rem; font-weight:600;">Descargar PDF Instructivo JVG</a>` : ''}
+            </div>
           </div>`;
       });
     }
@@ -233,6 +251,54 @@ document.addEventListener('DOMContentLoaded', () => {
     infoModal.classList.add('active');
     document.body.style.overflow = 'hidden';
   }
+
+  function openComodatoModal() {
+    if (!infoModal) return;
+    infoModalTitle.textContent = "💻 Préstamo de Computadoras en Comodato";
+    const comodato = JVG_OFFICIAL_RESOURCES.comodato;
+    let html = `
+      <div style="background:#FAFDFF; border:1px solid #BEE3F8; padding:18px; border-radius:12px;">
+        <h4 style="color:#0B2545; font-size:1rem; font-weight:700; margin-bottom:6px;">${comodato.titulo}</h4>
+        <p style="font-size:0.84rem; color:#475569; line-height:1.5; margin-bottom:14px;">${comodato.descripcion}</p>
+        
+        <h5 style="color:#007BB5; font-size:0.86rem; font-weight:700; margin-bottom:6px;">📌 Requisitos y Pasos para Solicitarla:</h5>
+        <ol style="margin-left:20px; font-size:0.82rem; color:#334155; line-height:1.5; margin-bottom:16px;">
+          ${comodato.pasos.map(p => `<li style="margin-bottom:4px;">${p}</li>`).join('')}
+        </ol>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+          <h5 style="color:#007BB5; font-size:0.86rem; font-weight:700; margin:0;">📝 Modelo de Carta para Presentar en Rectorado:</h5>
+          <button type="button" onclick="copyCartaComodato()" style="background:#009BE3; color:#fff; border:none; padding:5px 10px; border-radius:6px; font-size:0.75rem; font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:4px;">
+            📋 Copiar modelo
+          </button>
+        </div>
+        <div style="background:#F1F5F9; border:1px solid #CBD5E1; border-radius:8px; padding:14px; font-family:monospace; font-size:0.82rem; color:#1E293B; white-space:pre-wrap; line-height:1.45; margin-bottom:12px;" id="cartaComodatoText">${comodato.modeloCarta}</div>
+      </div>
+    `;
+    infoModalBody.innerHTML = html;
+    infoModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  window.openComodatoModal = openComodatoModal;
+
+  window.copyCartaComodato = function() {
+    if (typeof JVG_OFFICIAL_RESOURCES !== 'undefined' && JVG_OFFICIAL_RESOURCES.comodato) {
+      navigator.clipboard.writeText(JVG_OFFICIAL_RESOURCES.comodato.modeloCarta).then(() => {
+        alert('¡Modelo de carta copiado al portapapeles! Pegalo en tu procesador de textos o completalo con tus datos personales.');
+      }).catch(() => {
+        const textEl = document.getElementById('cartaComodatoText');
+        if (textEl) {
+          const range = document.createRange();
+          range.selectNodeContents(textEl);
+          const sel = window.getSelection();
+          sel.removeAllRanges();
+          sel.addRange(range);
+          document.execCommand('copy');
+          alert('¡Modelo de carta copiado al portapapeles!');
+        }
+      });
+    }
+  };
 
   // 5. Open Derechos Estudiantiles Modal
   function openDerechosModal() {
@@ -313,4 +379,180 @@ document.addEventListener('DOMContentLoaded', () => {
     infoModal.classList.add('active');
     document.body.style.overflow = 'hidden';
   }
+
+  // ============================================================================
+  // BUZÓN DE CONSULTAS Y SUGERENCIAS
+  // ============================================================================
+  const feedbackModal = document.getElementById('feedbackModal');
+  const closeFeedbackModalBtn = document.getElementById('closeFeedbackModalBtn');
+  const feedbackForm = document.getElementById('feedbackForm');
+
+  window.openFeedbackModal = function() {
+    if (!feedbackModal) return;
+    feedbackModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  };
+
+  function closeFeedbackModal() {
+    if (!feedbackModal) return;
+    feedbackModal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  if (closeFeedbackModalBtn) {
+    closeFeedbackModalBtn.addEventListener('click', closeFeedbackModal);
+  }
+
+  if (feedbackModal) {
+    feedbackModal.addEventListener('click', (e) => {
+      if (e.target === feedbackModal) closeFeedbackModal();
+    });
+  }
+
+  if (feedbackForm) {
+    feedbackForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const submitBtn = feedbackForm.querySelector('button[type="submit"]');
+      const originalText = submitBtn ? submitBtn.textContent : 'Enviar';
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Enviando...';
+      }
+
+      const payload = {
+        nombre: document.getElementById('feedbackNombre')?.value || '',
+        carrera: document.getElementById('feedbackCarrera')?.value || '',
+        tipo: document.getElementById('feedbackTipo')?.value || 'Sugerencia',
+        mensaje: document.getElementById('feedbackMensaje')?.value || ''
+      };
+
+      try {
+        const resp = await fetch('/api/feedback', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const result = await resp.json();
+        alert(result.message || '¡Mensaje enviado con éxito!');
+        feedbackForm.reset();
+        closeFeedbackModal();
+      } catch (err) {
+        console.error('Error sending feedback:', err);
+        alert('Hubo un error al enviar el mensaje. Por favor, intentá nuevamente.');
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalText;
+        }
+      }
+    });
+  }
+
+  // ============================================================================
+  // TÉRMINOS Y CONDICIONES / DESLINDE LEGAL
+  // ============================================================================
+  const terminosModal = document.getElementById('terminosModal');
+  const closeTerminosModalBtn = document.getElementById('closeTerminosModalBtn');
+
+  window.openTerminosModal = function(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    if (!terminosModal) return;
+    terminosModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  };
+
+  function closeTerminosModal() {
+    if (!terminosModal) return;
+    terminosModal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  if (closeTerminosModalBtn) {
+    closeTerminosModalBtn.addEventListener('click', closeTerminosModal);
+  }
+
+  if (terminosModal) {
+    terminosModal.addEventListener('click', (e) => {
+      if (e.target === terminosModal) closeTerminosModal();
+    });
+  }
+
+  // ============================================================================
+  // GESTIÓN DE SUSCRIPCIONES A NOVEDADES POR MAIL (Público)
+  // ============================================================================
+  window.handleSubscription = async function(e, inputId, msgId) {
+    if (e && e.preventDefault) e.preventDefault();
+    const input = document.getElementById(inputId);
+    const msgEl = document.getElementById(msgId);
+    if (!input) return;
+    const email = input.value.trim();
+    if (!email) return;
+
+    if (msgEl) {
+      msgEl.style.display = 'block';
+      msgEl.className = 'sub-feedback-msg info';
+      msgEl.textContent = 'Procesando suscripción...';
+    }
+
+    try {
+      const resp = await fetch('/api/subscribers?action=subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      });
+      const data = await resp.json();
+      if (msgEl) {
+        msgEl.className = `sub-feedback-msg ${data.success ? 'success' : 'error'}`;
+        msgEl.textContent = data.message || 'Suscripción procesada.';
+      }
+      if (data.success && !data.already_subscribed) {
+        input.value = '';
+      }
+    } catch (err) {
+      if (msgEl) {
+        msgEl.className = 'sub-feedback-msg error';
+        msgEl.textContent = 'Ocurrió un error al procesar tu solicitud.';
+      }
+    }
+  };
+
+  window.handleUnsubscribe = async function(inputId, msgId) {
+    const input = document.getElementById(inputId);
+    let email = input ? input.value.trim() : '';
+    if (!email) {
+      email = prompt('Ingresá el correo electrónico que deseás dar de baja de las notificaciones:');
+      if (!email) return;
+      email = email.trim();
+    }
+
+    const msgEl = document.getElementById(msgId);
+    if (msgEl) {
+      msgEl.style.display = 'block';
+      msgEl.className = 'sub-feedback-msg info';
+      msgEl.textContent = 'Procesando baja...';
+    }
+
+    try {
+      const resp = await fetch('/api/subscribers?action=unsubscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      });
+      const data = await resp.json();
+      if (msgEl) {
+        msgEl.className = `sub-feedback-msg ${data.success ? 'success' : 'error'}`;
+        msgEl.textContent = data.message || (data.success ? 'Eliminado exitosamente de las notificaciones por mail de los anuncios.' : 'No se encuentra ningún mail suscrito a las notificaciones por mail.');
+      } else {
+        alert(data.message);
+      }
+      if (input) input.value = '';
+    } catch (err) {
+      if (msgEl) {
+        msgEl.className = 'sub-feedback-msg error';
+        msgEl.textContent = 'Ocurrió un error al intentar dar de baja el correo.';
+      } else {
+        alert('Ocurrió un error al procesar la baja.');
+      }
+    }
+  };
 });

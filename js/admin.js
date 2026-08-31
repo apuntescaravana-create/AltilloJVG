@@ -19,15 +19,20 @@ document.addEventListener('DOMContentLoaded', () => {
   const tabSubmissions = document.getElementById('tabSubmissions');
   const tabApuntes = document.getElementById('tabApuntes');
   const tabNoticias = document.getElementById('tabNoticias');
+  const tabFeedback = document.getElementById('tabFeedback');
 
   // Contenedores de Sección
   const sectionSubmissions = document.getElementById('sectionSubmissions');
   const sectionApuntes = document.getElementById('sectionApuntes');
   const sectionNoticias = document.getElementById('sectionNoticias');
+  const sectionFeedback = document.getElementById('sectionFeedback');
 
   // Badges y Contadores
   const pendingBadgeCount = document.getElementById('pendingBadgeCount');
   const pendingHeaderBadge = document.getElementById('pendingHeaderBadge');
+  const feedbackBadgeCount = document.getElementById('feedbackBadgeCount');
+  const feedbackHeaderBadge = document.getElementById('feedbackHeaderBadge');
+  const feedbackListContainer = document.getElementById('feedbackListContainer');
   const historyCounterBadge = document.getElementById('historyCounterBadge');
 
   // Tablas y Contenedores
@@ -77,8 +82,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // CONMUTACIÓN DE PESTAÑAS (TABS)
   // ==========================================================================
   function switchTab(tabName) {
-    // Resetear estilos de los tres botones
-    [tabSubmissions, tabApuntes, tabNoticias].forEach(btn => {
+    // Resetear estilos de los botones
+    [tabSubmissions, tabApuntes, tabNoticias, tabFeedback].forEach(btn => {
       if (btn) {
         btn.classList.remove('border-brand-navy', 'text-brand-navy');
         btn.classList.add('border-transparent', 'text-gray-500');
@@ -89,6 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (sectionSubmissions) sectionSubmissions.classList.add('hidden');
     if (sectionApuntes) sectionApuntes.classList.add('hidden');
     if (sectionNoticias) sectionNoticias.classList.add('hidden');
+    if (sectionFeedback) sectionFeedback.classList.add('hidden');
 
     if (tabName === 'submissions') {
       if (tabSubmissions) {
@@ -111,6 +117,13 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       if (sectionNoticias) sectionNoticias.classList.remove('hidden');
       loadNews();
+    } else if (tabName === 'feedback') {
+      if (tabFeedback) {
+        tabFeedback.classList.add('border-brand-navy', 'text-brand-navy');
+        tabFeedback.classList.remove('border-transparent', 'text-gray-500');
+      }
+      if (sectionFeedback) sectionFeedback.classList.remove('hidden');
+      loadFeedback();
     }
   }
 
@@ -118,6 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (tabSubmissions) tabSubmissions.addEventListener('click', () => switchTab('submissions'));
   if (tabApuntes) tabApuntes.addEventListener('click', () => switchTab('apuntes'));
   if (tabNoticias) tabNoticias.addEventListener('click', () => switchTab('noticias'));
+  if (tabFeedback) tabFeedback.addEventListener('click', () => switchTab('feedback'));
 
   // ==========================================================================
   // AUTENTICACIÓN Y SESIÓN
@@ -1088,6 +1102,238 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+
+  // ==========================================================================
+  // GESTIÓN DE CONSULTAS Y SUGERENCIAS (BUZÓN)
+  // ==========================================================================
+  async function loadFeedback() {
+    if (!feedbackListContainer) return;
+    feedbackListContainer.innerHTML = '<div class="p-6 text-center text-sm text-gray-500">Cargando mensajes del buzón...</div>';
+
+    try {
+      const res = await fetch('/api/feedback', {
+        headers: { 'x-admin-password': adminPassword }
+      });
+      if (!res.ok) throw new Error('Error al cargar consultas');
+      const messages = await res.json();
+
+      const count = Array.isArray(messages) ? messages.length : 0;
+      if (feedbackBadgeCount) feedbackBadgeCount.textContent = count;
+      if (feedbackHeaderBadge) feedbackHeaderBadge.textContent = `${count} mensaje${count === 1 ? '' : 's'}`;
+
+      if (!messages || messages.length === 0) {
+        feedbackListContainer.innerHTML = `
+          <div class="p-10 text-center text-gray-400">
+            <span class="text-4xl block mb-2">📭</span>
+            <p class="font-bold text-sm">El buzón de sugerencias está vacío</p>
+            <p class="text-xs text-gray-400 mt-1">Los mensajes enviados por estudiantes desde la web aparecerán acá.</p>
+          </div>
+        `;
+        return;
+      }
+
+      feedbackListContainer.innerHTML = messages.map(item => {
+        const fecha = item.created_at ? new Date(item.created_at).toLocaleString('es-AR', {
+          day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
+        }) : 'Reciente';
+
+        let badgeColor = 'bg-gray-100 text-gray-700';
+        if (item.tipo === 'Sugerencia') badgeColor = 'bg-amber-100 text-amber-800 border-amber-200';
+        else if (item.tipo === 'Consulta') badgeColor = 'bg-sky-100 text-sky-800 border-sky-200';
+        else if (item.tipo === 'Reporte de Error') badgeColor = 'bg-red-100 text-red-800 border-red-200';
+
+        return `
+          <div class="p-5 hover:bg-gray-50 transition flex justify-between items-start gap-4">
+            <div class="space-y-1.5 flex-1">
+              <div class="flex items-center gap-2 flex-wrap">
+                <span class="px-2.5 py-0.5 rounded-full text-xs font-bold border ${badgeColor}">
+                  ${escapeHtml(item.tipo || 'Mensaje')}
+                </span>
+                <span class="font-bold text-sm text-gray-900">${escapeHtml(item.nombre || 'Anónimo')}</span>
+                <span class="text-xs text-gray-500">• Carrera: <strong>${escapeHtml(item.carrera || 'No especificada')}</strong></span>
+                <span class="text-xs text-gray-400">• ${fecha}</span>
+              </div>
+              <div class="text-sm text-gray-700 whitespace-pre-wrap bg-gray-50 p-3 rounded-lg border border-gray-100 mt-2">
+                ${escapeHtml(item.mensaje)}
+              </div>
+            </div>
+            <button onclick="deleteFeedback('${item.id}')" class="text-xs text-red-600 hover:text-red-800 hover:bg-red-50 p-2 rounded-lg font-bold transition flex items-center gap-1 border border-red-200" title="Eliminar mensaje">
+              🗑️ Borrar
+            </button>
+          </div>
+        `;
+      }).join('');
+
+    } catch (err) {
+      console.error(err);
+      feedbackListContainer.innerHTML = '<div class="p-6 text-center text-sm text-red-500 font-bold">Error al cargar los mensajes.</div>';
+    }
+  }
+  window.loadFeedback = loadFeedback;
+
+  window.deleteFeedback = async function(id) {
+    if (!confirm('¿Estás seguro de que querés borrar este mensaje del buzón?')) return;
+    try {
+      const res = await fetch(`/api/feedback?id=${encodeURIComponent(id)}`, {
+        method: 'DELETE',
+        headers: { 'x-admin-password': adminPassword }
+      });
+      if (res.ok) {
+        loadFeedback();
+      } else {
+        alert('Error al borrar el mensaje.');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Error de conexión.');
+    }
+  };
+
+  // ==========================================================================
+  // GESTIÓN DE SUSCRIPCIONES A NOTIFICACIONES POR MAIL (ADMIN)
+  // ==========================================================================
+  const btnManageSubscribers = document.getElementById('btnManageSubscribers');
+  const subscribersModal = document.getElementById('subscribersModal');
+  const closeSubscribersModalBtn = document.getElementById('closeSubscribersModalBtn');
+  const closeSubscribersModalFooterBtn = document.getElementById('closeSubscribersModalFooterBtn');
+  const subscribersTableBody = document.getElementById('subscribersTableBody');
+  const subscribersCounterBadge = document.getElementById('subscribersCounterBadge');
+  const searchSubscriberInput = document.getElementById('searchSubscriberInput');
+
+  let currentSubscribers = [];
+
+  function openSubscribersModal() {
+    if (subscribersModal) subscribersModal.classList.remove('hidden');
+    loadSubscribers();
+  }
+
+  function closeSubscribersModal() {
+    if (subscribersModal) subscribersModal.classList.add('hidden');
+  }
+
+  if (btnManageSubscribers) btnManageSubscribers.addEventListener('click', openSubscribersModal);
+  if (closeSubscribersModalBtn) closeSubscribersModalBtn.addEventListener('click', closeSubscribersModal);
+  if (closeSubscribersModalFooterBtn) closeSubscribersModalFooterBtn.addEventListener('click', closeSubscribersModal);
+
+  if (subscribersModal) {
+    subscribersModal.addEventListener('click', (e) => {
+      if (e.target === subscribersModal) closeSubscribersModal();
+    });
+  }
+
+  async function loadSubscribers() {
+    if (!subscribersTableBody) return;
+    subscribersTableBody.innerHTML = '<tr><td colspan="3" class="px-4 py-4 text-center text-gray-500">Cargando lista de suscriptores...</td></tr>';
+
+    try {
+      const res = await fetch('/api/subscribers', {
+        headers: { 'x-admin-password': adminPassword }
+      });
+      if (!res.ok) throw new Error('Error al cargar suscriptores');
+      currentSubscribers = await res.json();
+
+      if (subscribersCounterBadge) {
+        const count = Array.isArray(currentSubscribers) ? currentSubscribers.length : 0;
+        subscribersCounterBadge.textContent = `${count} suscriptor${count === 1 ? '' : 'es'}`;
+      }
+
+      renderSubscribersTable(currentSubscribers);
+    } catch (err) {
+      console.error(err);
+      subscribersTableBody.innerHTML = '<tr><td colspan="3" class="px-4 py-4 text-center text-red-500 font-bold">Error al cargar suscriptores.</td></tr>';
+    }
+  }
+  window.loadSubscribers = loadSubscribers;
+
+  function renderSubscribersTable(list) {
+    if (!subscribersTableBody) return;
+
+    if (!list || list.length === 0) {
+      subscribersTableBody.innerHTML = '<tr><td colspan="3" class="px-4 py-6 text-center text-gray-400">No hay correos suscriptos actualmente.</td></tr>';
+      return;
+    }
+
+    subscribersTableBody.innerHTML = list.map(sub => {
+      const fecha = sub.created_at ? new Date(sub.created_at).toLocaleDateString('es-AR', {
+        day: '2-digit', month: '2-digit', year: 'numeric'
+      }) : '—';
+
+      return `
+        <tr class="hover:bg-gray-50 transition">
+          <td class="px-4 py-3 font-semibold text-gray-900">${escapeHtml(sub.email)}</td>
+          <td class="px-4 py-3 text-gray-500">${fecha}</td>
+          <td class="px-4 py-3 text-right space-x-2">
+            <button onclick="editSubscriber('${sub.id}', '${escapeQuote(sub.email)}')" class="text-sky-600 hover:text-sky-800 font-bold text-xs bg-sky-50 px-2 py-1 rounded border border-sky-200">
+              ✏️ Editar
+            </button>
+            <button onclick="deleteSubscriber('${sub.id}')" class="text-red-600 hover:text-red-800 font-bold text-xs bg-red-50 px-2 py-1 rounded border border-red-200">
+              🗑️ Borrar
+            </button>
+          </td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  if (searchSubscriberInput) {
+    searchSubscriberInput.addEventListener('input', (e) => {
+      const term = e.target.value.toLowerCase().trim();
+      if (!term) {
+        renderSubscribersTable(currentSubscribers);
+      } else {
+        const filtered = currentSubscribers.filter(s => (s.email || '').toLowerCase().includes(term));
+        renderSubscribersTable(filtered);
+      }
+    });
+  }
+
+  window.editSubscriber = async function(id, currentEmail) {
+    const newEmail = prompt('Modificar correo electrónico del suscriptor:', currentEmail);
+    if (!newEmail || newEmail.trim() === currentEmail) return;
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(newEmail.trim())) {
+      alert('Por favor ingresá un correo electrónico válido.');
+      return;
+    }
+
+    try {
+      const res = await fetch('/api/subscribers', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-admin-password': adminPassword
+        },
+        body: JSON.stringify({ id, email: newEmail.trim() })
+      });
+      if (res.ok) {
+        loadSubscribers();
+      } else {
+        alert('Error al actualizar el correo.');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Error de conexión al actualizar.');
+    }
+  };
+
+  window.deleteSubscriber = async function(id) {
+    if (!confirm('¿Estás seguro de que querés eliminar este correo de las suscripciones?')) return;
+    try {
+      const res = await fetch(`/api/subscribers?id=${encodeURIComponent(id)}`, {
+        method: 'DELETE',
+        headers: { 'x-admin-password': adminPassword }
+      });
+      if (res.ok) {
+        loadSubscribers();
+      } else {
+        alert('Error al eliminar suscriptor.');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Error de conexión.');
+    }
+  };
 
   function escapeQuote(str) {
     return String(str || '').replace(/'/g, "\\'");
