@@ -87,18 +87,22 @@
               <span>Avisos por Mail</span>
             </div>
             <p class="tablon-sub-desc">Recibí las novedades importantes y fechas de examen directamente en tu correo.</p>
-            <form onsubmit="handleSubscription(event, 'subEmailDesktop', 'subMsgDesktop')">
+            <form onsubmit="handleSubscription(event, 'subEmailDesktop', 'subMsgDesktop', 'subConsentDesktop')">
               <div class="tablon-sub-input-group">
                 <input type="email" id="subEmailDesktop" placeholder="Tu correo electrónico..." required class="tablon-sub-input">
                 <button type="submit" class="tablon-sub-btn">Suscribirme</button>
               </div>
+              <label style="display: flex; align-items: flex-start; gap: 8px; margin-top: 10px; font-size: 0.73rem; color: #475569; cursor: pointer; line-height: 1.35;">
+                <input type="checkbox" id="subConsentDesktop" required style="margin-top: 2px; accent-color: var(--primary-cyan); cursor: pointer;">
+                <span>Acepto los <a href="#" onclick="openTerminosModal(event)" style="color: #0284C7; text-decoration: underline; font-weight: 600;">Términos de uso y Privacidad</a></span>
+              </label>
             </form>
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px; border-top: 1px solid #E2E8F0; padding-top: 8px;">
               <button type="button" onclick="handleUnsubscribe('subEmailDesktop', 'subMsgDesktop')" class="tablon-unsub-link">
                 Darse de baja
               </button>
               <a href="#" onclick="openTerminosModal(event)" class="tablon-privacy-link">
-                Privacidad de datos
+                Ver condiciones
               </a>
             </div>
             <div id="subMsgDesktop" class="sub-feedback-msg" style="display:none;"></div>
@@ -219,8 +223,8 @@
             </a>
 
             <!-- 7. Préstamo de Computadoras en Comodato -->
-            <a href="#" class="resource-box box-comodato" style="border: 2px solid #D99B26; background: #FFFDF5;">
-              <div class="resource-icon-badge" style="background: #D99B26; color: #FFFFFF;">
+            <a href="#" class="resource-box box-comodato">
+              <div class="resource-icon-badge">
                 <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                   <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
                   <line x1="8" y1="21" x2="16" y2="21"></line>
@@ -228,7 +232,7 @@
                 </svg>
               </div>
               <div>
-                <h4 class="resource-box-title" style="color: #78350F;">Préstamo de Computadoras (Comodato)</h4>
+                <h4 class="resource-box-title">Préstamo de Computadoras (Comodato)</h4>
                 <p class="resource-box-desc">Pedí una netbook institucional para tu cursada (requisitos y modelo de carta a Rectorado).</p>
               </div>
             </a>
@@ -258,7 +262,13 @@
             <!-- 1. Biología -->
             <a href="#" class="carrera-card">
               <svg class="card-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v18M12 3c6 0 10 3.582 10 8a10 10 0 01-10 10c-6 0-10-5.582-10-10 0-4.418 4-8 10-8z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 7C9.5 4 6.5 5 6.5 7.5c2.5 2 5.5.5 5.5-.5z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 7c2.5-3 5.5-2 5.5.5-2.5 2-5.5.5-5.5-.5z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 7v5"/>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 11h6M10 11v3l-3.5 4.5A4.5 4.5 0 0010.5 22h3a4.5 4.5 0 004-3.5L14 14v-3"/>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M7.8 18c1.8-.8 3.5.8 5.2 0 1.2-.6 2.2 0 2.2 0"/>
+                <circle cx="10" cy="19.5" r="0.75" fill="currentColor"/>
+                <circle cx="14" cy="19" r="0.75" fill="currentColor"/>
               </svg>
               <span class="card-title">Profesorado de Biología</span>
               <span class="card-dept">Dpto. Biología</span>
@@ -304,7 +314,8 @@
             <!-- 6. Economía -->
             <a href="#" class="carrera-card">
               <svg class="card-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V6m0 8v2m0-6c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                <circle cx="12" cy="12" r="9"/>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12M14.5 9.5c0-1.38-1.12-2.5-2.5-2.5s-2.5 1.12-2.5 2.5 1.12 2.5 2.5 2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5 2.5-1.12 2.5-2.5"/>
               </svg>
               <span class="card-title">Profesorado de Economía</span>
               <span class="card-dept">Dpto. Economía</span>
@@ -376,10 +387,7 @@
             <!-- 14. Italiano -->
             <a href="#" class="carrera-card">
               <svg class="card-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-                <g transform="rotate(-8 12 12)">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M8 21V5h8v16M8 17h8M8 13h8M8 9h8M9 5c0-2 2-3 3-3s3 1 3 3M10 21v-4M12 21v-4M14 21v-4M10 17v-4M12 17v-4M14 17v-4M10 13v-4M12 13v-4M14 13v-4"/>
-                </g>
-                <path stroke-linecap="round" stroke-linejoin="round" d="M4 21h16"/>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 21h18M4 21V9a2 2 0 012-2h12a2 2 0 012 2v12M8 7V4a1 1 0 011-1h6a1 1 0 011 1v3M7 11h2v4H7zm4 0h2v4h-2zm4 0h2v4h-2zm-8 6h2v4H7zm4 0h2v4h-2zm4 0h2v4h-2z"/>
               </svg>
               <span class="card-title">Profesorado de Italiano</span>
               <span class="card-dept">Dpto. Italiano</span>
@@ -417,7 +425,7 @@
             <!-- 18. Química -->
             <a href="#" class="carrera-card">
               <svg class="card-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L5.605 15.12a2 2 0 00-1.806.547M8 4h8l-1 5.5a4 4 0 01-1.5 2.7l-1.5 1.1a4 4 0 01-4 0l-1.5-1.1A4 4 0 016 9.5L5 4h3z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18h8M3 22h18M14 22a7 7 0 10-14 0M9 3l6 6M11 1l6 6M12 8l-2 2 4 4 2-2M11 15a4 4 0 004-4"/>
               </svg>
               <span class="card-title">Profesorado de Química</span>
               <span class="card-dept">Dpto. Química</span>
@@ -495,18 +503,22 @@
                 <span>Avisos por Mail</span>
               </div>
               <p class="tablon-sub-desc">Recibí las novedades importantes y fechas de examen directamente en tu correo.</p>
-              <form onsubmit="handleSubscription(event, 'subEmailMobile', 'subMsgMobile')">
+              <form onsubmit="handleSubscription(event, 'subEmailMobile', 'subMsgMobile', 'subConsentMobile')">
                 <div class="tablon-sub-input-group">
                   <input type="email" id="subEmailMobile" placeholder="Tu correo electrónico..." required class="tablon-sub-input">
                   <button type="submit" class="tablon-sub-btn">Suscribirme</button>
                 </div>
+                <label style="display: flex; align-items: flex-start; gap: 8px; margin-top: 10px; font-size: 0.73rem; color: #475569; cursor: pointer; line-height: 1.35;">
+                  <input type="checkbox" id="subConsentMobile" required style="margin-top: 2px; accent-color: var(--primary-cyan); cursor: pointer;">
+                  <span>Acepto los <a href="#" onclick="openTerminosModal(event)" style="color: #0284C7; text-decoration: underline; font-weight: 600;">Términos de uso y Privacidad</a></span>
+                </label>
               </form>
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px; border-top: 1px solid #E2E8F0; padding-top: 8px;">
                 <button type="button" onclick="handleUnsubscribe('subEmailMobile', 'subMsgMobile')" class="tablon-unsub-link">
                   Darse de baja
                 </button>
                 <a href="#" onclick="openTerminosModal(event)" class="tablon-privacy-link">
-                  Privacidad de datos
+                  Ver condiciones
                 </a>
               </div>
               <div id="subMsgMobile" class="sub-feedback-msg" style="display:none;"></div>
@@ -746,7 +758,7 @@
         <span>AltilloJVG © 2026 - Repositorio Estudiantil</span>
         <span>•</span>
         <a href="#" onclick="openTerminosModal(event)" style="color:#CBD5E1; text-decoration:underline; font-size:0.75rem;">
-          Términos, Privacidad y Deslinde Legal
+          Términos de Uso y Privacidad
         </a>
       </div>
     </div>
@@ -1069,8 +1081,8 @@
        ========================================================================== -->
   <div class="modal-overlay" id="mapaCarreraModal">
     <div class="modal-container" style="max-width: 620px; width: 95%;">
-      <div class="modal-header" style="background: linear-gradient(135deg, #0B2545 0%, #134074 100%);">
-        <h3 class="modal-header-title" style="display: flex; align-items: center; gap: 8px;">
+      <div class="modal-header">
+        <h3 class="modal-header-title">
           <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/>
           </svg>
@@ -1081,38 +1093,30 @@
 
       <div class="modal-body" style="padding: 24px;">
         <div style="text-align: center; margin-bottom: 20px;">
-          <span style="font-size: 0.72rem; font-weight: 800; background: #FEF3C7; color: #92400E; padding: 4px 12px; border-radius: 20px; text-transform: uppercase; border: 1px solid #FDE68A;">
-            La Caravana + Estudiantes Independientes (Lista 90)
-          </span>
-          <h4 style="font-size: 1.25rem; font-weight: 800; color: #0B2545; margin-top: 10px; margin-bottom: 6px;">
-            Seguí tu trayectoria académica en tiempo real
+          <h4 style="font-size: 1.15rem; font-weight: 800; color: #0B2545; margin-bottom: 6px;">
+            Seguí tus correlatividades y porcentaje de avance
           </h4>
-          <p style="font-size: 0.84rem; color: #64748B; line-height: 1.5;">
-            Controlá tus correlatividades, finales adeudados y porcentaje de carrera completada con nuestra planilla automatizada sin errores.
+          <p style="font-size: 0.85rem; color: #64748B; max-width: 480px; margin: 0 auto; line-height: 1.5;">
+            Descargá la plantilla Excel interactiva oficial de tu profesorado o subila a tu Google Drive para marcar las cursadas y finales con menús desplegables en tiempo real.
           </p>
         </div>
 
-        <!-- Selector de Carrera -->
-        <div class="form-group" style="margin-bottom: 18px;">
-          <label class="form-label" style="font-weight: 700; font-size: 0.85rem; color: #334155; display: block; margin-bottom: 6px;">Seleccioná tu Carrera o Profesorado:</label>
-          <select class="form-select" id="selectMapaCarrera" style="font-weight: 600; padding: 10px 14px; border: 1.5px solid #CBD5E1; border-radius: 10px; width: 100%;">
-            <option value="">-- Seleccioná tu profesorado --</option>
+        <!-- Selector de Carrera para Descarga Directa -->
+        <div style="background: #F8FAFC; border: 1.5px solid #CBD5E1; border-radius: 12px; padding: 16px; margin-bottom: 20px;">
+          <label class="form-label" style="font-weight: 700; color: #0B2545; margin-bottom: 8px; display: block;">
+            Seleccioná tu Carrera o Profesorado:
+          </label>
+          <select id="selectMapaCarrera" class="form-select" style="width: 100%; padding: 10px 14px; border-radius: 8px; border: 1.5px solid #94A3B8; font-weight: 600; font-size: 0.9rem; color: #0B2545; background-color: #FFFFFF;">
+            <option value="">-- Elegí tu profesorado --</option>
           </select>
-        </div>
 
-        <!-- Desplegable "¿Cómo usarlo?" -->
-        <div style="margin-bottom: 20px; border: 1px solid #E2E8F0; border-radius: 12px; overflow: hidden; background: #F8FAFC;">
-          <button type="button" id="btnToggleInstrucciones" style="width: 100%; text-align: left; padding: 12px 16px; font-weight: 700; font-size: 0.86rem; color: #0284C7; background: #F0F9FF; border: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
-            <span>📖 ¿Cómo usarlo y guardarlo en tu Google Drive?</span>
-            <span class="toggle-arrow" style="font-size: 0.8rem;">▼</span>
-          </button>
-          <div id="instruccionesContent" class="hidden" style="padding: 16px; font-size: 0.82rem; color: #475569; line-height: 1.6;">
-            <ol style="margin-left: 18px; list-style-type: decimal; space-y: 6px;">
-              <li><strong>Descargá el archivo:</strong> Hacé clic en el botón <em>"Descargar Planilla Excel (.xlsx)"</em>.</li>
-              <li><strong>Subilo a tu Drive:</strong> Entrá a tu cuenta de Google Drive, tocá <em>"+ Nuevo"</em> y subí la planilla.</li>
-              <li><strong>Abrilo con Sheets:</strong> Hacé clic derecho sobre el archivo en Drive ➔ <em>"Abrir con"</em> ➔ <em>"Hojas de cálculo de Google"</em>.</li>
-              <li><strong>Cargá tus materias:</strong> Completá con <em>"SÍ"</em> las materias con cursada regular y los finales aprobados.</li>
-              <li><strong>Fórmulas automáticas:</strong> El panel calcula qué materias podés cursar el próximo cuatrimestre y tu % exacto de avance.</li>
+          <!-- Vista previa rápida de características del mapa -->
+          <div style="margin-top: 14px; font-size: 0.8rem; color: #475569; line-height: 1.5;">
+            <div style="font-weight: 700; color: #0284C7; margin-bottom: 4px;">✨ Incluye en la plantilla:</div>
+            <ol style="margin-left: 18px; margin-bottom: 0;">
+              <li>Menús desplegables nativos (<strong>SI / NO</strong>) por materia.</li>
+              <li>Fórmulas automáticas de materias regulares y aprobadas.</li>
+              <li>Cálculo en vivo de <strong>% de carrera aprobada</strong>.</li>
             </ol>
           </div>
         </div>
@@ -1139,8 +1143,8 @@
        ========================================================================== -->
   <div class="modal-overlay" id="feedbackModal">
     <div class="modal-container" style="max-width: 540px; width: 95%;">
-      <div class="modal-header" style="background: linear-gradient(135deg, #0B2545 0%, #134074 100%);">
-        <h3 class="modal-header-title" style="display: flex; align-items: center; gap: 8px;">
+      <div class="modal-header">
+        <h3 class="modal-header-title">
           <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
           </svg>
@@ -1174,7 +1178,7 @@
             <label style="font-size: 0.8rem; font-weight: 700; color: #334155; display: block; margin-bottom: 4px;">Mensaje * :</label>
             <textarea id="feedbackMensaje" rows="4" required placeholder="Escribí aquí tu mensaje detallado..." style="width: 100%; padding: 9px 12px; border: 1.5px solid #CBD5E1; border-radius: 8px; font-size: 0.85rem; resize: vertical;"></textarea>
           </div>
-          <button type="submit" style="background: linear-gradient(135deg, #0B2545 0%, #009BE3 100%); color: #FFF; font-weight: 700; padding: 12px; border-radius: 10px; border: none; cursor: pointer; font-size: 0.9rem; margin-top: 4px; box-shadow: 0 4px 12px rgba(0,155,227,0.2);">
+          <button type="submit" style="background: var(--primary-cyan); color: #FFF; font-weight: 700; padding: 12px; border-radius: 10px; border: none; cursor: pointer; font-size: 0.9rem; margin-top: 4px; box-shadow: 0 4px 12px rgba(0,155,227,0.25);">
             ✉️ Enviar Mensaje
           </button>
         </form>
@@ -1186,44 +1190,56 @@
        MODAL: TÉRMINOS Y CONDICIONES / POLÍTICA DE PRIVACIDAD
        ========================================================================== -->
   <div class="modal-overlay" id="terminosModal">
-    <div class="modal-container" style="max-width: 680px; width: 95%;">
-      <div class="modal-header" style="background: linear-gradient(135deg, #0B2545 0%, #134074 100%);">
-        <h3 class="modal-header-title" style="display: flex; align-items: center; gap: 8px;">
-          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+    <div class="modal-container" style="max-width: 720px; width: 95%;">
+      <div class="modal-header">
+        <h3 class="modal-header-title">
+          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
           </svg>
-          Términos, Privacidad y Deslinde Legal
+          Términos de Uso y Política de Privacidad
         </h3>
         <button class="modal-close-btn" id="closeTerminosModalBtn">&times;</button>
       </div>
-      <div class="modal-body" style="padding: 24px; font-size: 0.83rem; color: #334155; line-height: 1.6;">
-        <div style="background: #F0F9FF; border-left: 4px solid #009BE3; padding: 12px 14px; border-radius: 6px; margin-bottom: 16px;">
-          <strong style="color: #0369A1; display: block; margin-bottom: 2px;">Compromiso con la Comunidad Estudiantil</strong>
-          AltilloJVG es una plataforma comunitaria, autogestionada, 100% gratuita y sin fines de lucro desarrollada por <strong>estudiantes independientes y La Caravana</strong> para el ISP "Joaquín V. González".
+      <div class="modal-body" style="padding: 24px; font-size: 0.84rem; color: #334155; line-height: 1.6; max-height: 75vh; overflow-y: auto;">
+        
+        <div style="background: #F0F9FF; border-left: 4px solid #009BE3; padding: 12px 14px; border-radius: 6px; margin-bottom: 18px;">
+          <strong style="color: #0369A1; display: block; margin-bottom: 2px; font-size: 0.88rem;">Marco Jurídico e Institucional</strong>
+          Los presentes Términos y Condiciones de Uso y Políticas de Tratamiento de Datos Personales rigen el acceso y la utilización del portal digital <strong>AltilloJVG</strong>, de conformidad con lo previsto por la <strong>Ley Nacional N° 25.326 de Protección de los Datos Personales</strong>, la <strong>Ley de Educación Superior N° 24.521</strong> y las garantías consagradas en la Constitución de la República Argentina.
         </div>
 
-        <h4 style="font-size: 0.95rem; font-weight: 700; color: #0B2545; margin-top: 14px; margin-bottom: 4px;">1. Protección y No Venta de Datos Personales</h4>
+        <h4 style="font-size: 0.92rem; font-weight: 700; color: #0B2545; margin-top: 14px; margin-bottom: 4px;">Artículo 1. Naturaleza Jurídica y Finalidad del Proyecto</h4>
         <p>
-          Los correos electrónicos ingresados voluntariamente a través del formulario de notificaciones se utilizan <strong>exclusivamente para enviar avisos institucionales, fechas de exámenes y comunicados del tablón</strong>. La plataforma <strong>no vende, no comercializa, no cede ni transfiere ningún dato personal a terceros</strong> bajo ninguna circunstancia. Cualquier usuario puede darse de baja de forma inmediata en cualquier momento haciendo clic en "Darse de baja".
+          AltilloJVG es una iniciativa digital comunitaria, de libre acceso, abierta y sin fines de lucro, impulsada y autogestionada conjuntamente por <strong>estudiantes independientes y la agrupación estudiantil La Caravana</strong> del Instituto Superior del Profesorado "Joaquín V. González". Su objeto exclusivo es facilitar el acceso democrático al material de estudio, optimizar la organización académica y propiciar la colaboración pedagógica horizontal entre pares.
         </p>
 
-        <h4 style="font-size: 0.95rem; font-weight: 700; color: #0B2545; margin-top: 14px; margin-bottom: 4px;">2. Ausencia de Financiamiento Externo</h4>
+        <h4 style="font-size: 0.92rem; font-weight: 700; color: #0B2545; margin-top: 14px; margin-bottom: 4px;">Artículo 2. Tratamiento y Protección de Datos Personales (Ley N° 25.326)</h4>
         <p>
-          Este espacio no cuenta con financiamiento estatal, partidario rentado ni publicitario comercial. Funciona íntegramente sobre una arquitectura de costo cero (Zero-Cost Stack) sostenida por el trabajo militante y voluntario de estudiantes para garantizar el acceso democrático al material de estudio.
+          <strong>2.1. Consentimiento Informado y Finalidad:</strong> La recolección de casillas de correo electrónico a través de los formularios de suscripción a novedades se realiza con el consentimiento libre y expreso del usuario, destinándose de manera estricta y exclusiva al envío de avisos institucionales, fechas de examen, inscripciones y comunicados del tablón estudiantil.
+        </p>
+        <p>
+          <strong>2.2. Prohibición Absoluta de Comercialización y Cesión:</strong> Queda terminantemente prohibida cualquier forma de venta, arrendamiento, cesión, intercambio o transferencia total o parcial de las direcciones de correo electrónico o información recabada a favor de personas físicas, jurídicas, partidos políticos o empresas comerciales de cualquier índole.
+        </p>
+        <p>
+          <strong>2.3. Derecho de Acceso, Rectificación y Supresión Definitiva (Habeas Data):</strong> El titular de los datos podrá en cualquier momento, de forma irrestricta y gratuita, ejercer su derecho de desuscripción y eliminación inmediata de la base de datos automatizada utilizando el enlace "Darse de baja" disponible en la plataforma.
         </p>
 
-        <h4 style="font-size: 0.95rem; font-weight: 700; color: #0B2545; margin-top: 14px; margin-bottom: 4px;">3. Material Pedagógico y Propiedad Intelectual</h4>
+        <h4 style="font-size: 0.92rem; font-weight: 700; color: #0B2545; margin-top: 14px; margin-bottom: 4px;">Artículo 3. Ausencia de Fines de Lucro y Gratuidad Absoluta</h4>
         <p>
-          Los resúmenes, programas, guías y exámenes compartidos en el repositorio tienen fines <strong>estrictamente educativos y de apoyo pedagógico entre pares</strong>, amparados en el derecho al estudio y a la educación pública. No se cobra por ninguna descarga. Los archivos son aportados por la propia comunidad estudiantil bajo su exclusiva responsabilidad.
+          La plataforma opera bajo un modelo de arquitectura tecnológica de costo cero (Zero-Cost Stack) sostenido por el trabajo voluntario estudiantil. El acceso, la navegación, la visualización, la carga y la descarga de la totalidad de los recursos son y serán siempre 100% gratuitos. AltilloJVG no percibe financiamiento estatal, subsidios gubernamentales ni contraprestaciones publicitarias comerciales.
         </p>
 
-        <h4 style="font-size: 0.95rem; font-weight: 700; color: #0B2545; margin-top: 14px; margin-bottom: 4px;">4. Deslinde de Responsabilidad Institucional</h4>
+        <h4 style="font-size: 0.92rem; font-weight: 700; color: #0B2545; margin-top: 14px; margin-bottom: 4px;">Artículo 4. Propiedad Intelectual y Fines Exclusivamente Educativos</h4>
         <p>
-          AltilloJVG es un canal estudiantil complementario y <strong>no reemplaza los medios oficiales del Instituto Superior del Profesorado "Joaquín V. González"</strong> (portal web oficial, cartelera institucional ni sistema SIU Guaraní). Los horarios, asignaciones de aulas y cronogramas se publican a título orientativo; ante cualquier duda o discrepancia, prevalecen las resoluciones de Rectorado y Consejo Directivo.
+          Los programas de cátedra, apuntes de clase, guías de lectura, parciales resueltos y resúmenes compartidos en el repositorio digital son aportados de forma colaborativa por miembros de la comunidad con fines de estudio personal, investigación y apoyo pedagógico, amparados por los principios del derecho a la educación pública y el uso legítimo con fines formativos.
         </p>
 
-        <div style="text-align: center; margin-top: 20px; padding-top: 14px; border-top: 1px solid #E2E8F0;">
-          <button type="button" onclick="closeTerminosModal()" style="background: #0B2545; color: #FFF; font-weight: 700; padding: 10px 24px; border-radius: 8px; border: none; cursor: pointer; font-size: 0.85rem;">
+        <h4 style="font-size: 0.92rem; font-weight: 700; color: #0B2545; margin-top: 14px; margin-bottom: 4px;">Artículo 5. Independencia y Carácter Orientativo de la Información</h4>
+        <p>
+          AltilloJVG es una herramienta estudiantil independiente y <strong>no reemplaza los canales ni sistemas administrativos oficiales del Instituto Superior del Profesorado "Joaquín V. González"</strong> (tales como el portal institucional web, la Secretaría del Instituto, Bedelía ni el sistema SIU Guaraní). La información sobre asignación de aulas, correlatividades y calendarios se publica con fines meramente informativos y orientativos; ante cualquier duda o divergencia, prevalecerán siempre los actos administrativos y resoluciones emanadas de los órganos directivos oficiales del Instituto.
+        </p>
+
+        <div style="text-align: center; margin-top: 22px; padding-top: 16px; border-top: 1px solid #E2E8F0;">
+          <button type="button" onclick="closeTerminosModal()" style="background: var(--primary-cyan); color: #FFF; font-weight: 700; padding: 11px 28px; border-radius: 10px; border: none; cursor: pointer; font-size: 0.88rem; box-shadow: 0 4px 12px rgba(0,155,227,0.25);">
             Entendido y Aceptar
           </button>
         </div>
@@ -1231,17 +1247,17 @@
     </div>
   </div>
 
-  <!-- Scripts JavaScript con Cache Buster v=105 -->
-  <script src="data/resources_data.js?v=105"></script>
-  <script src="data/derechos_data.js?v=105"></script>
-  <script src="data/libros_guia_data.js?v=105"></script>
-  <script src="data/aulas_data.js?v=105"></script>
-  <script src="js/main.js?v=105"></script>
-  <script src="js/upload_form.js?v=105"></script>
-  <script src="js/aulas_search.js?v=105"></script>
-  <script src="js/materiales_explorer.js?v=105"></script>
-  <script src="js/mapa_carrera.js?v=105"></script>
-  <script src="js/news.js?v=105"></script>
+  <!-- Scripts JavaScript con Cache Buster v=106 -->
+  <script src="data/resources_data.js?v=106"></script>
+  <script src="data/derechos_data.js?v=106"></script>
+  <script src="data/libros_guia_data.js?v=106"></script>
+  <script src="data/aulas_data.js?v=106"></script>
+  <script src="js/main.js?v=106"></script>
+  <script src="js/upload_form.js?v=106"></script>
+  <script src="js/aulas_search.js?v=106"></script>
+  <script src="js/materiales_explorer.js?v=106"></script>
+  <script src="js/mapa_carrera.js?v=106"></script>
+  <script src="js/news.js?v=106"></script>
 
   <!-- Controlador Inmediato de Vistas Móviles (Herramientas, Altillo, Novedades) -->
   <script>

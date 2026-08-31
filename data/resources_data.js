@@ -104,10 +104,10 @@ const JVG_OFFICIAL_RESOURCES = {
       nombre: "Boleto Estudiantil Terciario / Superior (SUBE)",
       descripcion: "Beneficio de 50 viajes mensuales gratuitos en colectivos, subte y premetro para estudiantes del nivel terciario.",
       pasos: [
-        "1. Requisito indispensable: tener una tarjeta SUBE registrada a tu nombre en sube.gob.ar.",
-        "2. Estar inscripto/a como estudiante regular en el Joaquín V. González (el instituto informa la nómina oficial periódicamente).",
-        "3. Ingresar al portal oficial del GCBA de Boleto Estudiantil y completar el formulario con tus datos.",
-        "4. Una vez aprobado en la web, acercate a cualquier Terminal Automática SUBE (TAS) o apoyá la tarjeta en tu celular con la App SUBE (tecnología NFC) para activar el subsidio."
+        "Requisito indispensable: tener una tarjeta SUBE registrada a tu nombre en sube.gob.ar.",
+        "Estar inscripto/a como estudiante regular en el Joaquín V. González (el instituto informa la nómina oficial periódicamente).",
+        "Ingresar al portal oficial del GCBA de Boleto Estudiantil y completar el formulario con tus datos.",
+        "Una vez aprobado en la web, acercate a cualquier Terminal Automática SUBE (TAS) o apoyá la tarjeta en tu celular con la App SUBE (tecnología NFC) para activar el subsidio."
       ],
       link: "https://boletoestudiantil.buenosaires.gob.ar/",
       infoPdf: "http://institutojvgonzalez.buenosaires.edu.ar/institucional/docs/2026/alumnos2026-boleto-estud1.pdf"
@@ -116,10 +116,10 @@ const JVG_OFFICIAL_RESOURCES = {
       nombre: "Becas Ciudad (Gobierno de la Ciudad de Buenos Aires)",
       descripcion: "Estímulo económico destinado a estudiantes regulares de carreras docentes y técnicas en profesorados de CABA.",
       pasos: [
-        "1. Convocatoria anual: habitual apertura entre marzo y mayo de cada ciclo lectivo.",
-        "2. Requisitos: ser estudiante regular del nivel superior y cumplir los criterios socioeconómicos establecidos por el GCBA.",
-        "3. Inscripción: completar el formulario virtual en el portal de Becas Ciudad y adjuntar constancia de regularidad y comprobantes familiares.",
-        "4. Cobro: se deposita a través de cuenta bancaria asignada del Banco Ciudad."
+        "Convocatoria anual: habitual apertura entre marzo y mayo de cada ciclo lectivo.",
+        "Requisitos: ser estudiante regular del nivel superior y cumplir los criterios socioeconómicos establecidos por el GCBA.",
+        "Inscripción: completar el formulario virtual en el portal de Becas Ciudad y adjuntar constancia de regularidad y comprobantes familiares.",
+        "Cobro: se deposita a través de cuenta bancaria asignada del Banco Ciudad."
       ],
       link: "https://buenosaires.gob.ar/educacion/estudiantes/becas-educativas/becas-ciudad"
     },
@@ -127,10 +127,10 @@ const JVG_OFFICIAL_RESOURCES = {
       nombre: "Programa PROGRESAR Nivel Superior",
       descripcion: "Beca nacional orientada a garantizar el acompañamiento y finalización de los estudios terciarios y de formación docente.",
       pasos: [
-        "1. Requisitos de edad: 17 a 24 años (hasta 30 años para estudiantes avanzados, sin límite para personas con hijos monoparentales, discapacidad o colectivos vulnerables).",
-        "2. Ingresos del grupo familiar: no deben superar los 3 Salarios Mínimos, Vitales y Móviles (SMVM).",
-        "3. Convocatorias: 1° llamado (marzo-abril) y 2° llamado (agosto-septiembre) en la web de Progresar o la app Mi Argentina.",
-        "4. El JVG certifica tu regularidad académica automáticamente tras tu postulación."
+        "Requisitos de edad: 17 a 24 años (hasta 30 años para estudiantes avanzados, sin límite para personas con hijos monoparentales, discapacidad o colectivos vulnerables).",
+        "Ingresos del grupo familiar: no deben superar los 3 Salarios Mínimos, Vitales y Móviles (SMVM).",
+        "Convocatorias: 1° llamado (marzo-abril) y 2° llamado (agosto-septiembre) en la web de Progresar o la app Mi Argentina.",
+        "El JVG certifica tu regularidad académica automáticamente tras tu postulación."
       ],
       link: "https://www.argentina.gob.ar/educacion/progresar"
     }
@@ -140,11 +140,11 @@ const JVG_OFFICIAL_RESOURCES = {
     titulo: "Préstamo de Computadoras en Comodato",
     descripcion: "Si no contás con computadora propia para tus cursadas, lecturas y trabajos prácticos, podés solicitar una netbook en comodato al Instituto.",
     pasos: [
-      "1. Ser estudiante regular del ISP Joaquín V. González.",
-      "2. Redactar una nota formal dirigida a Rectorado solicitando el préstamo bajo contrato de comodato (indicando si es por 6 meses o por 1 año).",
-      "3. Presentar la nota en Mesa de Entradas / Secretaría del Instituto (o elevarla por el canal administrativo correspondiente).",
-      "4. Al aprobarse, se firma el acta de comodato donde te comprometés al cuidado del equipo y a su devolución al finalizar el período lectivo convenido.",
-      "5. Retirás la computadora configurada para uso educativo."
+      "Ser estudiante regular del ISP Joaquín V. González.",
+      "Redactar una nota formal dirigida a Rectorado solicitando el préstamo bajo contrato de comodato (indicando si es por 6 meses o por 1 año).",
+      "Presentar la nota en Mesa de Entradas / Secretaría del Instituto (o elevarla por el canal administrativo correspondiente).",
+      "Al aprobarse, se firma el acta de comodato donde te comprometés al cuidado del equipo y a su devolución al finalizar el período lectivo convenido.",
+      "Retirás la computadora configurada para uso educativo."
     ],
     modeloCarta: `XX/XX/20XX Ciudad Autónoma de Buenos Aires 
 

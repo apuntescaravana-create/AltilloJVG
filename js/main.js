@@ -200,7 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof JVG_OFFICIAL_RESOURCES !== 'undefined') {
       JVG_OFFICIAL_RESOURCES.tramites.forEach(item => {
         const pasosHtml = Array.isArray(item.pasos)
-          ? `<ul style="margin: 8px 0 10px 18px; font-size:0.82rem; color:#475569; line-height:1.5;">${item.pasos.map(p => `<li style="margin-bottom:4px;">${p}</li>`).join('')}</ul>`
+          ? `<ul style="margin: 8px 0 10px 18px; font-size:0.82rem; color:#475569; line-height:1.5;">${item.pasos.map(p => `<li style="margin-bottom:4px;">${p.replace(/^\d+[\.\)]\s*/, '')}</li>`).join('')}</ul>`
           : `<p style="font-size:0.83rem; color:#475569; margin-bottom:6px;">${item.pasos}</p>`;
 
         html += `
@@ -228,7 +228,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const pasosHtml = Array.isArray(item.pasos)
           ? `<div style="background:#F8FAFC; border-left:3px solid #009BE3; padding:10px 12px; border-radius:4px; margin-bottom:10px;">
                <strong style="font-size:0.78rem; color:#0284C7; display:block; margin-bottom:4px;">¿Cómo realizarlo paso a paso?</strong>
-               <ul style="margin:0 0 0 16px; font-size:0.81rem; color:#334155; line-height:1.5;">${item.pasos.map(p => `<li style="margin-bottom:3px;">${p}</li>`).join('')}</ul>
+               <ul style="margin:0 0 0 16px; font-size:0.81rem; color:#334155; line-height:1.5;">${item.pasos.map(p => `<li style="margin-bottom:3px;">${p.replace(/^\d+[\.\)]\s*/, '')}</li>`).join('')}</ul>
              </div>`
           : '';
 
@@ -263,7 +263,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         <h5 style="color:#007BB5; font-size:0.86rem; font-weight:700; margin-bottom:6px;">📌 Requisitos y Pasos para Solicitarla:</h5>
         <ol style="margin-left:20px; font-size:0.82rem; color:#334155; line-height:1.5; margin-bottom:16px;">
-          ${comodato.pasos.map(p => `<li style="margin-bottom:4px;">${p}</li>`).join('')}
+          ${comodato.pasos.map(p => `<li style="margin-bottom:4px;">${p.replace(/^\d+[\.\)]\s*/, '')}</li>`).join('')}
         </ol>
 
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
@@ -466,6 +466,7 @@ document.addEventListener('DOMContentLoaded', () => {
     terminosModal.classList.remove('active');
     document.body.style.overflow = '';
   }
+  window.closeTerminosModal = closeTerminosModal;
 
   if (closeTerminosModalBtn) {
     closeTerminosModalBtn.addEventListener('click', closeTerminosModal);
@@ -480,10 +481,21 @@ document.addEventListener('DOMContentLoaded', () => {
   // ============================================================================
   // GESTIÓN DE SUSCRIPCIONES A NOVEDADES POR MAIL (Público)
   // ============================================================================
-  window.handleSubscription = async function(e, inputId, msgId) {
+  window.handleSubscription = async function(e, inputId, msgId, consentId) {
     if (e && e.preventDefault) e.preventDefault();
     const input = document.getElementById(inputId);
     const msgEl = document.getElementById(msgId);
+    const consent = consentId ? document.getElementById(consentId) : null;
+
+    if (consent && !consent.checked) {
+      if (msgEl) {
+        msgEl.style.display = 'block';
+        msgEl.className = 'sub-feedback-msg error';
+        msgEl.textContent = 'Debés aceptar los Términos de Uso y Política de Privacidad para suscribirte.';
+      }
+      return;
+    }
+
     if (!input) return;
     const email = input.value.trim();
     if (!email) return;
@@ -507,6 +519,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       if (data.success && !data.already_subscribed) {
         input.value = '';
+        if (consent) consent.checked = false;
       }
     } catch (err) {
       if (msgEl) {

@@ -596,6 +596,36 @@ body {
   color: #92400E;
 }
 
+/* Tarjeta Comodato de Computadoras */
+.side-card.comodato {
+  background-color: var(--card-blue-bg);
+  border-color: #BEE3F8;
+}
+
+.side-card.comodato .side-card-icon {
+  background-color: var(--primary-cyan);
+  color: #FFFFFF;
+}
+
+.side-card.comodato .side-card-title {
+  color: var(--primary-navy);
+}
+
+/* Tarjeta Feedback / Consultas y Sugerencias */
+.side-card.feedback {
+  background-color: var(--card-blue-bg);
+  border-color: #BEE3F8;
+}
+
+.side-card.feedback .side-card-icon {
+  background-color: var(--primary-cyan);
+  color: #FFFFFF;
+}
+
+.side-card.feedback .side-card-title {
+  color: var(--primary-navy);
+}
+
 /* Tarjeta CTA Móvil Ir al Tablón (solo en mobile / tablets) */
 .side-card.cta-tablon-mobile {
   display: none;
@@ -1438,12 +1468,15 @@ body {
 
 .tablon-sub-input-group {
   display: flex;
-  gap: 6px;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
 }
 
 .tablon-sub-input {
-  flex: 1;
-  padding: 8px 12px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 9px 12px;
   font-size: 0.8rem;
   border: 1px solid #CBD5E1;
   border-radius: 8px;
@@ -1458,8 +1491,10 @@ body {
 }
 
 .tablon-sub-btn {
-  padding: 8px 12px;
-  font-size: 0.78rem;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 9px 12px;
+  font-size: 0.82rem;
   font-weight: 700;
   font-family: var(--font-heading);
   background: var(--primary-cyan);
@@ -1467,7 +1502,10 @@ body {
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  white-space: nowrap;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
   transition: background 0.2s ease, transform 0.15s ease;
 }
 
