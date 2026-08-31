@@ -6,6 +6,17 @@ El proyecto centraliza apuntes clasificados, programas, exámenes, buscadores de
 
 ---
 
+## 🔗 Enlaces de Acceso Oficial (Producción)
+
+* 🌐 **Sitio Web Público (para toda la comunidad estudiantil y docente):**  
+  **[https://altillo-jvg.vercel.app/](https://altillo-jvg.vercel.app/)**
+* 🔒 **Panel de Administración y Moderación (con clave de acceso):**  
+  **[https://altillo-jvg.vercel.app/admin.html](https://altillo-jvg.vercel.app/admin.html)**
+* 📦 **Repositorio Oficial de Código Abierto en GitHub:**  
+  **[https://github.com/apuntescaravana-create/AltilloJVG](https://github.com/apuntescaravana-create/AltilloJVG)**
+
+---
+
 ## 🌟 Características Principales
 
 ### 1. 📚 Repositorio Digital de Apuntes
@@ -14,12 +25,12 @@ El proyecto centraliza apuntes clasificados, programas, exámenes, buscadores de
 * **Previsualización y Descarga**: Visualización directa de archivos PDF y documentos almacenados en la nube.
 * **Formulario de Carga Comunitaria**: Formulario interactivo adaptado a celulares con scroll táctil continuo (`max-height: 88vh`), selección de cátedra y carga directa con moderación previa.
 
-### 2. 🗺️ Mapas de Carrera Personales (18 Libros Excel Automatizados)
-* **Plantillas Personalizadas por Profesorado**: Archivos `.xlsx` generados a medida con todas las materias de cada plan de estudio oficial del JVG.
+### 2. 🗺️ Mapas de Carrera Personales (18 Libros Excel Oficiales)
+* **Plantillas Canónicas Sincronizadas con Google Drive**: 18 archivos `.xlsx` oficiales generados a partir de los Correlativators del centro de estudiantes con todas las asignaturas por año y tramo.
 * **Validación Desplegable Nativa (`SI` / `NO`)**: Cada fila contiene validación desplegable para marcar fácilmente la condición de *Cursada Regular* y *Final Aprobado*.
 * **Cálculo Automático de Avance y Correlatividades**: Fórmulas integradas que calculan el % total de materias completadas y habilitan automáticamente qué materias podés cursar el próximo cuatrimestre.
 * **Denominación Oficial Actualizada**: Asignaturas del Campo de la Formación General correctamente identificadas como **"Lectura, Escritura y Oralidad" (LEO 1 y LEO 2)**.
-* **Integración Directa con Google Drive / Sheets**: Descarga directa en un clic con guía paso a paso para abrirlo y sincronizarlo en Google Drive.
+* **Integración Directa con Google Drive / Sheets**: Descarga directa en un clic con guía paso a paso para abrirlo y sincronizarlo en Google Drive sin requerir software instalado.
 
 ### 3. 📌 Tablón de Novedades & Sistema de Difusión por Email
 * **Estética Institucional Limpia**: Tipografía `Outfit`, cabecera formal con badge celeste y luz LED pulsante "EN VIVO".
@@ -30,9 +41,16 @@ El proyecto centraliza apuntes clasificados, programas, exámenes, buscadores de
   * 🔵 **Avisos Generales / Cursada**: Información de aulas, novedades de comisiones y cátedras.
 * **Avisos Fijados**: Distintivo `📌 DESTACADO` para notas de alta prioridad ancladas al inicio.
 * **Lectura Progresiva y Paginación**: Sistema de recorte inteligente de texto ("Ver más" / "Ver menos") y botón expansible para consultar el histórico completo de avisos publicados.
-* **Suscripción y Desuscripción a Notificaciones por Mail**: Widget integrado en el tablón (Desktop y Móvil) que permite a las y los estudiantes suscribirse para recibir novedades en su correo o darse de baja en cualquier momento de manera inmediata y automatizada.
+* **Suscripción y Desuscripción a Notificaciones por Mail**: Widget integrado en el tablón (Desktop y Móvil) con límite de 300 cupos que permite a las y los estudiantes suscribirse para recibir novedades en su correo o darse de baja en cualquier momento de manera inmediata y automatizada.
 
-### 4. 🛠️ Herramientas Estudiantiles & Información Útil
+### 4. 📊 Panel de Administración Integral (5 Vistas)
+* **Vista 1: Moderación de Aportes**: Bandeja de entrada para aprobar o rechazar documentos enviados por la comunidad, con sincronización a base de datos y canales de Telegram.
+* **Vista 2: Gestión de Apuntes**: Buscador, edición y eliminación de apuntes existentes en el repositorio.
+* **Vista 3: Publicador del Tablón**: Redacción de avisos con soporte de fijado, categorización y límite de edición de 30 minutos. Modal de gestión de suscriptores por mail enumerado (`Fila 1: #1 | usuario@...`) sobre un máximo de 300 cupos.
+* **Vista 4: Buzón de Consultas**: Visualización y respuesta a mensajes e inquietudes remitidas desde la web.
+* **Vista 5: Métricas y Respaldo (Backup)**: Dashboard analítico liviano con selector de período (Hoy/Día, Este Mes, Este Año, Histórico Total), ranking porcentual de herramientas más consultadas, historial de visitas y descarga de Backup JSON consolidado en 1 clic.
+
+### 5. 🛠️ Herramientas Estudiantiles & Información Útil
 * **Buscador de Aulas y Cursadas**: Motor de consulta indexado sobre una base de **1.658 clases y comisiones** (turnos mañana, tarde y vespertino) para encontrar salones, docentes y horarios en segundos.
 * **Préstamo de Computadoras en Comodato**: Instructivo completo con requisitos institucionales y el modelo textual exacto de carta para presentar en Rectorado solicitando netbooks por 6 meses o 1 año, con botón de copiado al portapapeles.
 * **Trámites y Certificados**: Guías paso a paso para homologaciones, equivalencias y certificados de alumno regular a través del sistema autogestión / SIU.
@@ -40,16 +58,15 @@ El proyecto centraliza apuntes clasificados, programas, exámenes, buscadores de
 * **Normativa Institucional y Régimen Estudiantil**: Reglamento Orgánico (ROI), correlatividades y resoluciones del Consejo Directivo.
 * **Guía de Recursos Bibliográficos**: Metabuscadores abiertos, bibliotecas universitarias y técnicas de búsqueda académica en PDF.
 
-### 5. 💬 Buzón de Consultas y Sugerencias
+### 6. 💬 Buzón de Consultas y Sugerencias
 * **Canal Directo con la Administración**: Formulario accesible desde el pie de página, barra lateral y accesos rápidos en celulares para enviar consultas, sugerencias o reportar errores en apuntes y materias.
-* **Bandeja de Entrada en el Panel Admin**: Las consultas llegan en tiempo real al panel administrativo con fecha, nombre, profesorado y tipo de consulta, permitiendo su lectura y depuración.
 
-### 6. ⚖️ Términos, Condiciones y Política de Privacidad
+### 7. ⚖️ Términos, Condiciones y Política de Privacidad
 * **Deslinde Legal Institucional**: Marco legal explícito que aclara que el Altillo es un proyecto estudiantil complementario autogestionado por estudiantes independientes y La Caravana que no reemplaza las vías oficiales del ISP JVG.
 * **Protección y No Venta de Datos**: Compromiso de confidencialidad estricta garantizando que los correos electrónicos se usan exclusivamente para avisos del tablón, sin venta ni cesión a terceros, y con baja voluntaria inmediata.
 * **Ausencia de Financiamiento Externo**: Declaración de sustentabilidad comunitaria sin financiamiento estatal ni publicitario comercial.
 
-### 7. 📱 Arquitectura y Navegación Móvil (3 Vistas Dedicadas)
+### 8. 📱 Arquitectura y Navegación Móvil (3 Vistas Dedicadas)
 La interfaz para smartphones (`<= 1024px`) está optimizada con una barra de navegación inferior (*Bottom Navigation Bar*) limpia y nativa:
 1. **Pestaña Herramientas**: Despliega las herramientas en **tarjetas grandes con descripción completa** arriba, seguidas de la sección integral de *Información Útil*.
 2. **Pestaña Altillo**: Cabecera institucional + grilla de las 18 carreras arriba de todo, con accesos compactos a herramientas al pie del scroll.
