@@ -351,31 +351,84 @@
            ====================================================================== -->
       <section id="sectionMetricas" class="hidden space-y-6">
         
+        <!-- Barra de Control de Período -->
+        <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm flex justify-between items-center flex-wrap gap-3">
+          <div>
+            <h3 class="text-base font-bold text-brand-navy flex items-center gap-2">
+              📊 Métricas y Estadísticas de Uso
+            </h3>
+            <p class="text-xs text-gray-500">Monitoreo de visitas, demanda de herramientas y estado del repositorio.</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <label for="metricsPeriodFilter" class="text-xs font-bold text-gray-500 uppercase">Filtrar por:</label>
+            <select id="metricsPeriodFilter" class="text-xs bg-gray-50 border border-gray-300 font-bold px-3 py-2 rounded-lg outline-none focus:ring-2 focus:ring-brand-blue">
+              <option value="hoy">📅 Hoy (Día)</option>
+              <option value="mes">🗓️ Este Mes</option>
+              <option value="anio">📊 Este Año</option>
+              <option value="total" selected>🌐 Histórico Total</option>
+            </select>
+            <button type="button" onclick="loadMetricsDashboard()" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-2 rounded-lg text-xs font-bold">
+              🔄 Refrescar
+            </button>
+          </div>
+        </div>
+
         <!-- Tarjetas de Métricas Principales (KPIs) -->
         <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+            <span class="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-1">👁️ Visitas Plataforma</span>
+            <div class="text-3xl font-extrabold text-brand-navy" id="metricTotalVisits">0</div>
+            <span class="text-xs text-blue-600 font-semibold mt-1 inline-block" id="metricVisitsPeriodTag">● En período seleccionado</span>
+          </div>
+
+          <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+            <span class="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-1">⚡ Herramienta Top</span>
+            <div class="text-xl font-extrabold text-amber-600 truncate mt-1" id="metricTopTool">Aulas</div>
+            <span class="text-xs text-amber-700 font-semibold mt-1 inline-block" id="metricTopToolClicks">0 usos</span>
+          </div>
+
+          <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
             <span class="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-1">📚 Apuntes Aprobados</span>
-            <div class="text-3xl font-extrabold text-brand-navy" id="metricTotalApuntes">0</div>
-            <span class="text-xs text-green-600 font-semibold mt-1 inline-block">● Activos en Repositorio</span>
-          </div>
-
-          <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
-            <span class="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-1">⏳ Aportes Pendientes</span>
-            <div class="text-3xl font-extrabold text-amber-600" id="metricPendingApuntes">0</div>
-            <span class="text-xs text-amber-700 font-semibold mt-1 inline-block">● Por revisar</span>
-          </div>
-
-          <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
-            <span class="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-1">📢 Avisos en Tablón</span>
-            <div class="text-3xl font-extrabold text-brand-cyan" id="metricTotalNews">0</div>
-            <span class="text-xs text-sky-700 font-semibold mt-1 inline-block">● Comunicados vigentes</span>
+            <div class="text-3xl font-extrabold text-green-600" id="metricTotalApuntes">0</div>
+            <span class="text-xs text-green-700 font-semibold mt-1 inline-block">● Activos en Repositorio</span>
           </div>
 
           <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
             <span class="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-1">📬 Suscriptores Mail</span>
-            <div class="text-3xl font-extrabold text-purple-600" id="metricTotalSubscribers">0</div>
-            <span class="text-xs text-purple-700 font-semibold mt-1 inline-block">● Notificaciones activas</span>
+            <div class="text-3xl font-extrabold text-purple-600" id="metricTotalSubscribers">0 / 300</div>
+            <span class="text-xs text-purple-700 font-semibold mt-1 inline-block">● Máximo 300 cupos</span>
           </div>
+        </div>
+
+        <!-- Gráfico / Ranking de Herramientas Más Usadas & Desglose Cronológico -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          
+          <!-- Ranking de Herramientas Más Usadas (2 Columnas) -->
+          <div class="lg:col-span-2 bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+            <h4 class="text-sm font-bold text-brand-navy uppercase tracking-wider mb-4 flex items-center justify-between">
+              <span>🛠️ Herramientas Más Consultadas</span>
+              <span class="text-xs font-normal text-gray-400">Por volumen de clics</span>
+            </h4>
+            <div class="space-y-3.5" id="toolRankingContainer">
+              <!-- Cargado dinámicamente -->
+            </div>
+          </div>
+
+          <!-- Historial Reciente de Visitas por Fecha (1 Columna) -->
+          <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm flex flex-col justify-between">
+            <div>
+              <h4 class="text-sm font-bold text-brand-navy uppercase tracking-wider mb-3 flex items-center justify-between">
+                <span>📈 Actividad por Fecha</span>
+              </h4>
+              <div class="divide-y divide-gray-100 max-h-64 overflow-y-auto text-xs" id="visitsHistoryList">
+                <!-- Cargado dinámicamente -->
+              </div>
+            </div>
+            <div class="mt-4 pt-3 border-t border-gray-100 text-center">
+              <span class="text-[11px] text-gray-400">Métricas analíticas ligeras de alto rendimiento</span>
+            </div>
+          </div>
+
         </div>
 
         <!-- Panel de Herramientas de Mantenimiento y Backup -->
@@ -391,7 +444,7 @@
                 Descargá un archivo <code>.json</code> con la totalidad de los apuntes, solicitudes, comunicados del tablón, buzón y lista de suscriptores para respaldar en tu computadora sin depender de ningún servidor.
               </p>
             </div>
-            <button type="button" id="btnExportFullBackup" class="w-full py-3 bg-brand-navy hover:bg-brand-blue text-white font-bold rounded-lg shadow text-sm flex items-center justify-center gap-2">
+            <button type="button" id="btnExportFullBackup" class="w-full py-3 bg-brand-navy hover:bg-brand-blue text-white font-bold rounded-lg shadow text-sm flex items-center justify-center gap-2 transition">
               📥 Descargar Backup Completo (.json)
             </button>
           </div>
@@ -409,10 +462,10 @@
               <input type="text" id="urgentBannerInput" placeholder="Escribí el aviso urgente aquí..." class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm mb-3 outline-none focus:ring-2 focus:ring-brand-blue">
             </div>
             <div class="flex gap-2">
-              <button type="button" id="btnSaveUrgentBanner" class="flex-1 py-2.5 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-lg text-xs flex items-center justify-center gap-1.5">
+              <button type="button" id="btnSaveUrgentBanner" class="flex-1 py-2.5 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-lg text-xs flex items-center justify-center gap-1.5 transition">
                 📢 Activar Alerta
               </button>
-              <button type="button" id="btnClearUrgentBanner" class="py-2.5 px-4 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold rounded-lg text-xs">
+              <button type="button" id="btnClearUrgentBanner" class="py-2.5 px-4 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold rounded-lg text-xs transition">
                 Desactivar
               </button>
             </div>
@@ -590,14 +643,14 @@
       <div class="bg-brand-navy text-white px-6 py-4 flex justify-between items-center flex-shrink-0">
         <div class="flex items-center gap-2">
           <span class="text-xl">📧</span>
-          <h4 class="font-bold text-lg">Suscripciones a Notificaciones por Mail</h4>
+          <h4 class="font-bold text-lg">Suscripciones por Mail <span class="text-xs font-normal text-sky-200">(Máx. 300 cupos)</span></h4>
         </div>
         <button id="closeSubscribersModalBtn" class="text-2xl hover:text-brand-gold">&times;</button>
       </div>
       <div class="p-6 flex-grow overflow-y-auto space-y-4">
         <div class="flex justify-between items-center flex-wrap gap-3">
-          <p class="text-xs text-gray-500">Listado de correos registrados para recibir los avisos del Tablón:</p>
-          <span id="subscribersCounterBadge" class="text-xs font-bold bg-sky-100 text-sky-800 px-2.5 py-1 rounded-full">0 suscriptores</span>
+          <p class="text-xs text-gray-500">Listado de correos registrados para recibir los avisos del Tablón (máximo 300 destinatarios):</p>
+          <span id="subscribersCounterBadge" class="text-xs font-bold bg-purple-100 text-purple-800 px-2.5 py-1 rounded-full">0 / 300 cupos</span>
         </div>
         <div class="flex gap-2">
           <input type="text" id="searchSubscriberInput" placeholder="Buscar por email..." class="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-brand-blue">
@@ -607,6 +660,7 @@
           <table class="min-w-full divide-y divide-gray-200 text-left text-xs">
             <thead class="bg-gray-50">
               <tr>
+                <th class="px-3 py-3 font-bold text-gray-600 uppercase w-12 text-center">#</th>
                 <th class="px-4 py-3 font-bold text-gray-600 uppercase">Correo Electrónico</th>
                 <th class="px-4 py-3 font-bold text-gray-600 uppercase">Fecha</th>
                 <th class="px-4 py-3 font-bold text-gray-600 uppercase text-right">Acciones</th>
@@ -626,8 +680,8 @@
     </div>
   </div>
 
-  <!-- Scripts con Cache Buster v=27 -->
-  <script src="data/aulas_data.js?v=27"></script>
-  <script src="js/admin.js?v=27"></script>
+  <!-- Scripts con Cache Buster v=28 -->
+  <script src="data/aulas_data.js?v=28"></script>
+  <script src="js/admin.js?v=28"></script>
 </body>
 </html>

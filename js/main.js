@@ -102,21 +102,29 @@ document.addEventListener('DOMContentLoaded', () => {
     box.addEventListener('click', (e) => {
       e.preventDefault();
       if (box.classList.contains('box-aulas')) {
+        trackToolUsage('aulas');
         if (typeof window.openAulasModal === 'function') window.openAulasModal();
         else openHorariosModal();
       } else if (box.classList.contains('box-mapa-carrera')) {
+        trackToolUsage('mapas');
         if (typeof window.openMapaCarreraModal === 'function') window.openMapaCarreraModal();
       } else if (box.classList.contains('box-finales')) {
+        trackToolUsage('promedio');
         openFinalesModal();
       } else if (box.classList.contains('box-tramites')) {
+        trackToolUsage('becas');
         openTramitesModal();
       } else if (box.classList.contains('box-becas')) {
+        trackToolUsage('becas');
         openBecasModal();
       } else if (box.classList.contains('box-derechos')) {
+        trackToolUsage('becas');
         openDerechosModal();
       } else if (box.classList.contains('box-libros')) {
+        trackToolUsage('apuntes');
         openLibrosGuiaModal();
       } else if (box.classList.contains('box-comodato')) {
+        trackToolUsage('computadoras');
         openComodatoModal();
       }
     });
@@ -579,5 +587,26 @@ document.addEventListener('DOMContentLoaded', () => {
         alert('Ocurrió un error al procesar la baja.');
       }
     }
+  };
+
+  // ==========================================================================
+  // TELEMETRÍA Y ANALÍTICA LIGERA DE ALTO RENDIMIENTO
+  // ==========================================================================
+  function trackVisit() {
+    try {
+      const todayStr = new Date().toISOString().split('T')[0];
+      const visits = JSON.parse(localStorage.getItem('altillojvg_analytics_visits') || '{}');
+      visits[todayStr] = (visits[todayStr] || 0) + 1;
+      localStorage.setItem('altillojvg_analytics_visits', JSON.stringify(visits));
+    } catch (e) {}
+  }
+  trackVisit();
+
+  window.trackToolUsage = function(toolKey) {
+    try {
+      const tools = JSON.parse(localStorage.getItem('altillojvg_analytics_tools') || '{}');
+      tools[toolKey] = (tools[toolKey] || 0) + 1;
+      localStorage.setItem('altillojvg_analytics_tools', JSON.stringify(tools));
+    } catch (e) {}
   };
 });

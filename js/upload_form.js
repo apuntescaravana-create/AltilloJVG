@@ -5,818 +5,1043 @@
  */
 
 const CURRICULUM_DATA = {
-  "Profesorado de Matemática": {
+  "Profesorado de Biología": {
     "1° Año": [
-      "Álgebra I",
-      "Análisis Matemático I",
-      "Geometría I",
-      "Introducción a la Matemática Superior",
-      "Elementos Básicos de Matemática",
+      "Matemática",
+      "Física",
+      "Química",
+      "Introducción a los sistemas vivientes",
+      "Psicología educacional",
+      "PsicologÍa del desarrollo y del aprendizaje",
+      "Leo"
+    ],
+    "2° Año": [
+      "Biología de los animales 1",
+      "Biología de las plantas 1",
+      "Biología molecular y celular",
+      "Ciencias de la tierra",
+      "Física biológica",
+      "Química biológica",
+      "Pedagogía",
+      "Trabajo de Campo I",
+      "DDHH, sociedad y estado",
+      "Taller de lengua extranjera",
+      "Taller de actualización en didacticas especificas",
+      "Taller de actualización disciplinar y su didactica",
+      "Nuevas tecnologias"
+    ],
+    "3° Año": [
+      "Genética clasica, molecular y poblacional",
+      "Biología de las plantas 2",
+      "Biología humana 1",
+      "Biodiversidad de las plantas",
+      "Biología de los animales 2",
+      "Didactica general",
+      "Filosofía",
+      "Trabajod de campo 2",
+      "La experimentación en biología y su didactica"
+    ],
+    "4° Año": [
+      "Biología de los microorganimos, las algas y los hongos",
+      "Biología de los animales 3",
+      "Biología humana 2",
+      "Dinamica terrestre",
+      "Historia. filosofia y sociologia de la biología",
+      "Construcción practica docente 1 para el nivel medio",
+      "Taller de educación no formal",
+      "El lenguaje de la biología y su didactica",
+      "Historia de la educación Argentina",
+      "Ecología y etología"
+    ],
+    "5° Año": [
+      "Morfofisiologia comparada de los animales y ambiente",
+      "Genetica, ambiente y sociedad",
+      "Evolución e historia de la vida",
+      "Construcción practica docente 2 y residencia niveles medio y superior",
+      "Metodologia de la investigación",
+      "Educación para la salud",
+      "Sistema y politica educativa",
+      "Didactica de la educación en el ambiente y la sustentabilidad"
+    ]
+  },
+  "Profesorado de Ciencias de la Educación": {
+    "1° Año": [
       "Pedagogía",
       "Lectura, Escritura y Oralidad I (LEO 1)",
+      "Antropología social y cultural",
+      "Psicología General",
+      "Bases biologicas de la subjetividad",
+      "Filosofía",
+      "Estudios culturales y educación",
+      "Trabajo de Campo I",
+      "Esi"
+    ],
+    "2° Año": [
+      "Psicología ciclos vitales",
+      "Lectura, Escritura y Oralidad II (LEO 2)",
+      "Didáctica general",
+      "Sociología de la educación",
+      "Filosofía de la educación",
+      "Instituciones educativas",
+      "Psicologia de la educación",
+      "Estado, sociedad y DDHH",
+      "Nuevas tecnologias",
+      "Trabajo de Campo II",
+      "Psicología social y analisis de las organizaciones educativas"
+    ],
+    "3° Año": [
+      "Historia social de la educación",
+      "Problemas didacticos 1",
+      "Educación no formal e informal",
+      "Trabajo de Campo III",
+      "Curriculum",
+      "Evaluación",
+      "Trabajo docente",
+      "Lengua Extranjera",
+      "Epistemologia de las ciencias sociales",
+      "Sistema y política educativa"
+    ],
+    "4° Año": [
+      "Metodologia de la investigación educativa",
+      "Estadistica socioeducativa",
+      "Legislación educativa",
+      "Construcción de la practica docente 1",
+      "Políticas epistematicas",
+      "Historia de la educación Argentina",
+      "Autoridad pedagógica",
+      "Problemas didacticos 2",
+      "Dimensión etica del trabajo docente",
+      "Pedagogía social"
+    ],
+    "5° Año": [
+      "Configuración dinamica de roles profesionales",
+      "Practica de la investigación educativa"
+    ],
+    "Tramo Superior / Seminarios": [
+      "Construcción de la practica docente 2",
+      "Ateneo de politicas publicas",
+      "Experiencias educativas en contexto"
+    ]
+  },
+  "Profesorado de Ciencia Política": {
+    "1° Año": [
+      "Introducción a las ciencias sociales: Política y Jurídica",
+      "Fundamentos de la ciencia política",
+      "Historia mundial contemporánea",
+      "Historia del pensamiento político",
+      "Historia de los hechos y de las ideas económicas",
+      "Sociología",
+      "Antropología cultural",
+      "Lectura, escritura y oralidad 1",
+      "Pedagogía general",
+      "Psicología Educacional",
+      "Sujeto de nivel",
       "Trabajo de Campo I"
     ],
     "2° Año": [
-      "Álgebra II",
-      "Análisis Matemático II",
-      "Geometría II",
-      "Física General",
-      "Didáctica General",
-      "Psicología Educacional",
-      "Sujetos de la Educación",
+      "Teoría y prática política 1",
+      "Historia política y social latinoamericana y Argentina contemporánea",
+      "Historia de los movimientos políticos y sociales",
+      "Derecho constitucional",
+      "Economía política",
+      "Didactica general",
+      "Lectura, escritura y oralidad 2",
+      "Filosofía",
+      "Esi",
       "Trabajo de Campo II"
     ],
     "3° Año": [
-      "Álgebra III",
-      "Análisis Matemático III",
-      "Geometría III",
-      "Probabilidad y Estadística",
-      "Didáctica de la Matemática I",
-      "Historia Social de la Educación",
-      "Derechos Humanos, Sociedad y Estado",
-      "Construcción de la Práctica Docente I"
+      "Teoría y prática política 2",
+      "Movimientos políticos y sociales",
+      "Gobierno y administración nacional, provincial y municipal",
+      "Derecho a las relaciones internacionales",
+      "Epistemología y metodología de la investigación",
+      "Construcción de la práctica docente",
+      "Enseñanza de la ciencia política 1",
+      "Ecología y ambiente",
+      "Historia de la educación Argentina",
+      "DDHH, sociedad y estado",
+      "Taller optativo: Estrategias para el analisis del discurso político"
+    ],
+    "Tramo Superior / Seminarios": [],
+    "4° Año": [
+      "Ética",
+      "Relaciones internacionales",
+      "Psicología política y social",
+      "Política educacional y legislación escolar / Sistema y política educativa",
+      "Lengua extranjera",
+      "Nuevas tecnologias"
+    ],
+    "5° Año": [
+      "Enseñanza de la ciencia política 2",
+      "Residencia pedagógica",
+      "Medios de comunicación y opinión publica",
+      "Const. políticas de los pueblos originarios de America Latina y en especial Argentina",
+      "Análisis de las políticas publicas"
+    ]
+  },
+  "Profesorado de Ciencias de la Administración": {
+    "1° Año": [
+      "Sistemas de Información Contable",
+      "Análisis Matemático",
+      "Derecho Público",
+      "Introducción a la Economía",
+      "Historia Económica General y Argentina",
+      "Lectura, escritura y oralidad 1",
+      "Pedagogía",
+      "Psicología educacional",
+      "Sujetos de la enseñanza",
+      "Trabajo de Campo I"
+    ],
+    "2° Año": [
+      "Pricipios de administración",
+      "Estadística",
+      "Derecho civil y societario",
+      "Didactica general",
+      "Filosofía",
+      "Geografía económica",
+      "Lectura, escritura y oralidad 2",
+      "Trabajo de Campo II"
+    ],
+    "3° Año": [
+      "Contabilidad de gestión y costos",
+      "Régimen tributario y laboral",
+      "Derecho comercial y Económico",
+      "Didáctica Específica de las Ciencias de la Administración y Constr. de la Práctica Docente",
+      "Historia de la educación Argentina",
+      "DD HH, sociedad y estado",
+      "Matemática financiera"
     ],
     "4° Año": [
-      "Fundamentos de la Matemática",
-      "Ecuaciones Diferenciales",
-      "Didáctica de la Matemática II",
-      "Historia de la Matemática",
-      "Tecnologías Digitales en la Enseñanza de la Matemática",
-      "Educación Sexual Integral (ESI)",
-      "Ética y Trabajo Docente",
-      "Residencia y Construcción de la Práctica Docente II"
+      "Administración estratégica",
+      "Taller diseño y gestión de organizaciones",
+      "Taller de nuevas tecnologias",
+      "Metodología de la investigación",
+      "Sistema y política educativa",
+      "Aplicativos informáticos",
+      "Didáctica de la educación superior",
+      "Didactica de educación a distancia",
+      "Comercialización y marketing",
+      "Administración de recursos humanos"
+    ],
+    "5° Año": [
+      "Taller de lengua extranjera - ingles",
+      "Taller de informática",
+      "Esi",
+      "Construccion de la practica docente 2"
     ],
     "Tramo Superior / Seminarios": [
-      "Seminario de Especialización en Matemática",
-      "Epistemología de la Matemática",
-      "Taller de Investigación Educativa en Matemática"
+      "Taller optativo: Valuación contable"
     ]
+  },
+  "Profesorado de Ciencias Jurídicas": {
+    "1° Año": [
+      "Derecho político",
+      "Historia de las instituciones Argentinas 1",
+      "Historia de las ideas e instituciones politicas",
+      "Historia de los hechos y de las ideas económicas",
+      "Introducción al derecho",
+      "Taller de expresión oral y escrita 1",
+      "Pedagogia general",
+      "Sociología general",
+      "Psicologia del desarrollo y del aprendizaje",
+      "Trabajo de Campo I"
+    ],
+    "2° Año": [
+      "Derecho privado 1",
+      "Historia de las instituciones Argentinas 2",
+      "Derecho penal y criminalidad",
+      "Economía política",
+      "Derecho constitucional",
+      "Derechos humanos y garantias",
+      "Didactica General",
+      "Introducción a la filosofía",
+      "Taller de expresión oral y escrita 2",
+      "Trabajo de Campo II"
+    ],
+    "3° Año": [
+      "Derecho privado 2",
+      "Derecho administrativo y municipal",
+      "Elementos de derecho procesal y régimen legal de concursos y quiebras",
+      "Relaciones laborales y seguridad social",
+      "Demografía, ecología y geografía humana",
+      "Didactica especifica 1 y trabajo de campo 3",
+      "Estado, sociedad y DDHH",
+      "Historia mundial contemporanea"
+    ],
+    "4° Año": [
+      "Derecho internacional público",
+      "Derecho ambiental y de los recursos naturales"
+    ],
+    "Tramo Superior / Seminarios": [
+      "Psicología social y jurídica",
+      "Derecho de las comunicaciones de los transportes",
+      "Nociones de etica",
+      "Historia social de la educación",
+      "Didáctica específica 2 y residencia",
+      "Política educacional y legislación escolar",
+      "Finanzas y legislación impositiva",
+      "Taller optativo: El adulto como sujeto del aprendizaje",
+      "Esi",
+      "Politica educacional y legislación escolar",
+      "Para cursar Trabajo de campo 1 es necesario estar cursando o haber cursado: • Pedagogía general • Psicología del desarrollo y del aprendizaje"
+    ]
+  },
+  "Profesorado de Economía": {
+    "1° Año": [
+      "Sistenas de información contable",
+      "Analisis matemático",
+      "Derecho publico",
+      "Introduccion a la economía",
+      "Historia economica general y Argentina",
+      "Lectura, Escritura y Oralidad I (LEO 1)",
+      "Pedagogía",
+      "Psicología Educacional",
+      "Sujetos de la enseñanza",
+      "Trabajo de Campo I"
+    ],
+    "2° Año": [
+      "Principios de administración",
+      "Estadistica",
+      "Derecho civil y societario",
+      "Didactica general",
+      "Filosofía",
+      "Geografia economica",
+      "Lectura, Escritura y Oralidad II (LEO 2)",
+      "Trabajo de Campo II"
+    ],
+    "3° Año": [
+      "Microeconomía",
+      "Finanzas publicas",
+      "Didactica especifica y construcción de la practica docente 1",
+      "Historia del pensamiento economico",
+      "Historia de la educación Argentina",
+      "DDHH, sociedad y estado",
+      "Sem/taller opt. Economias comparadas",
+      "Sem/taller opt. Politica economia"
+    ],
+    "4° Año": [
+      "Macroeconomia",
+      "Crecimiento y desarrollo economico",
+      "Dinero, credito y bancos",
+      "Aplicativos informaticos",
+      "Metodología de la investigación",
+      "Taller de nuevas tecnologias",
+      "Sistema y politica educativa",
+      "Didactica de la educación superior",
+      "Didactica de la educación a distancia"
+    ],
+    "5° Año": [
+      "Taller de idioma extranjero ingles",
+      "Taller de informatica",
+      "Esi",
+      "Construcción de la practica docente 2",
+      "Econometria"
+    ],
+    "Tramo Superior / Seminarios": []
   },
   "Profesorado de Filosofía": {
     "1° Año": [
-      "Introducción a la Filosofía",
-      "Lógica I",
-      "Filosofía Antigua",
-      "Historia de la Filosofía Antigua",
+      "Lógica 1 y teoría de la argumentación",
+      "Introducción a la filosofía",
+      "Psicología educacional",
+      "Psicología del desarrollo",
+      "Sociología",
       "Pedagogía",
       "Lectura, Escritura y Oralidad I (LEO 1)",
-      "Trabajo de Campo I"
+      "Trabajo de Campo I",
+      "Esi",
+      "Lengua extranjera"
     ],
     "2° Año": [
-      "Filosofía Medieval",
-      "Gnoseología",
-      "Antropología Filosófica",
-      "Lógica II",
-      "Didáctica General",
-      "Psicología Educacional",
-      "Sujetos de la Educación",
+      "Didáctica general",
+      "Historia de la Educación Argentina",
+      "Historia de la filosofía antigua",
+      "Filosofía Argentina y Latinoamericana",
+      "Historia del arte",
+      "Metodología de la investigación",
+      "Nuevas tecnologias",
+      "Lectura, Escritura y Oralidad II (LEO 2)",
       "Trabajo de Campo II"
     ],
     "3° Año": [
-      "Filosofía Moderna",
-      "Metafísica",
-      "Ética",
-      "Filosofía Política",
-      "Didáctica de la Filosofía",
-      "Historia Social de la Educación",
-      "Derechos Humanos, Sociedad y Estado",
-      "Construcción de la Práctica Docente I"
+      "Logica 2",
+      "Filosofía de la logica",
+      "Historia de la filosofia medieval",
+      "Metafisica",
+      "Historia de la ciencia",
+      "Trabajo de Campo III",
+      "Sistema y política educativa",
+      "Taller filosofía y educación",
+      "Teoría del conocimiento",
+      "Etica"
     ],
-    "4° Año": [
-      "Filosofía Contemporánea",
-      "Filosofía Latinoamericana y Argentina",
-      "Estética",
-      "Filosofía de las Ciencias y Epistemología",
-      "Educación Sexual Integral (ESI)",
-      "Ética y Trabajo Docente",
-      "Residencia y Construcción de la Práctica Docente II"
+    "4° Año": [],
+    "Tramo Superior / Seminarios": [
+      "Filosofia del lenguaje",
+      "Estetica",
+      "Filosofica politca",
+      "Historia de la filosofia moderna",
+      "Residencia",
+      "Filosofía de la historia",
+      "Filosofía de la ciencia"
+    ],
+    "5° Año": [
+      "Antropologia cultural",
+      "Filosofia de genero",
+      "Filosofia de la religión",
+      "Sociedad, estado y DDHH",
+      "Filosofia contemporanea"
+    ]
+  },
+  "Profesorado de Física": {
+    "1° Año": [
+      "Física 1",
+      "Análisis Matemático I",
+      "Álgebras 1",
+      "Geometría"
     ],
     "Tramo Superior / Seminarios": [
-      "Seminario de Textos Filosóficos I",
-      "Seminario de Textos Filosóficos II",
-      "Taller de Investigación en Filosofía"
+      "Trabajo de Campo I",
+      "Lectura, escritura y oralidad 1",
+      "Pedagogía",
+      "Nuevas tecnologias",
+      "Trabajo de Campo II",
+      "Didáctica general",
+      "Psicología educacional",
+      "Sujeros del nivel",
+      "Astrofísica",
+      "Matemática superior A",
+      "Matemática superior B",
+      "Didáctica de la física 1",
+      "Trabajo de Campo III",
+      "DDHH, estado y sociedad",
+      "Esi",
+      "Filosofía",
+      "Lectura, escritura y oralidad 2"
+    ],
+    "2° Año": [
+      "Física 2",
+      "Análisis Matemático II",
+      "Álgebra II",
+      "Química"
+    ],
+    "3° Año": [
+      "Física 3 A",
+      "Física 3 B"
+    ],
+    "4° Año": [
+      "Física 4",
+      "Física teórica 1 A",
+      "Física experimental",
+      "Didáctica de la física 2 para el nivel medio",
+      "Residencia pedagógica para el nivel medio",
+      "Epistemología e historia de la física",
+      "Historia de la educación Argentina",
+      "Sistema y política educativa",
+      "Lengua extranjera"
+    ],
+    "5° Año": [
+      "Física teórica 2",
+      "Física teórica 1 B",
+      "Mecánica cuántica",
+      "Astronomía",
+      "Didáctica de la física 2 para el nivel superior",
+      "Residencia pedagógica para el nivel superior"
     ]
+  },
+  "Profesorado de Francés": {
+    "1° Año": [
+      "Trabajo de Campo I",
+      "Lengua francesa 1",
+      "Introducción a los estudios socioculturales",
+      "Leo",
+      "Pedagogía",
+      "Taller de oralidad en frances",
+      "Fonética y fonología 1",
+      "Gramática 1",
+      "Sujetos del nivel",
+      "Psicología educacional"
+    ],
+    "2° Año": [
+      "Nuevas tecnologias",
+      "DDHH, sociedad y estado",
+      "Trabajo de Campo II",
+      "Lengua francesa 2",
+      "Gramática 2",
+      "Introducción a la literatura",
+      "Fonética y fonología 2",
+      "Historia de Francia 1",
+      "Didáctica general",
+      "Lengua Extranjera 1",
+      "Lengua Extranjera 2"
+    ],
+    "3° Año": [
+      "Historia de Francia 2",
+      "Fonética y fonología 3",
+      "Esi",
+      "Didáctica para el nivel incial y primario / Construcción de la práctica docente",
+      "Lengua francesa 3",
+      "Linguistica general y análisis del discurso",
+      "Literatura francesa 1",
+      "Didactica para nivel medio 1 y construcción de la práctica docente"
+    ],
+    "4° Año": [
+      "Didáctica de la fonética",
+      "Sistema y política educativa",
+      "Residencia para el nivel inicial y primario",
+      "Literatura francesa 2",
+      "Gramática del texto",
+      "Lengua francesa 4",
+      "Didáctica del FLE para el nivel medio 2 y residencia"
+    ],
+    "5° Año": [
+      "Historia de la Educación Argentina",
+      "Introducción a la investigación en ciencias del lenguaje",
+      "Literatura francesa contemporánea",
+      "Estudios linguísticos comparados",
+      "Historia de la lengua francesa",
+      "Historia del Arte",
+      "Filosofía",
+      "Didactica del FLE para nivel superior y residencia"
+    ]
+  },
+  "Profesorado de Geografía": {
+    "1° Año": [
+      "Ciencias de la tierra 1: Geologia y paleontologia",
+      "Información Geográfica 1",
+      "Dinamica de los procesos climaticos",
+      "Introdución a la geografía",
+      "Economía y territorios",
+      "Lectura, Escritura y Oralidad I (LEO 1)",
+      "Pedagogía",
+      "Psicología educacional",
+      "Psicología del sujeto del nviel",
+      "Historia mundial",
+      "Trabajo de Campo I"
+    ],
+    "2° Año": [
+      "Posicionamiento espacial y geomatico",
+      "Geografía Política",
+      "Ciencias de la tierra 2",
+      "Ecología y biogeografía",
+      "Geografía Económica Mundial",
+      "Territorios 1: America latina y anglosajona",
+      "Didáctica general",
+      "Trabajo de Campo II",
+      "Historia social latinoamericana"
+    ],
+    "3° Año": [
+      "Información geográfica 2",
+      "Territorios 2: Europa",
+      "Geografia de la Argentina 1",
+      "Geografia de la Argentina 2",
+      "Construcción de la práctica docente y enseñanza de la geografía 1",
+      "Historia de la educación Argentina",
+      "Lectura, Escritura y Oralidad II (LEO 2)",
+      "Filosofía",
+      "DDHH, sociedad y estado"
+    ],
+    "4° Año": [
+      "Epistemología e historia de la geografía",
+      "Geografía de la Republica Argentina 3",
+      "Geografía social",
+      "Teledetección geográfica",
+      "Problemáticas socioambientales"
+    ],
+    "Tramo Superior / Seminarios": [
+      "Territorios 3: Asia",
+      "Geografía urbana y rural",
+      "Enseñanza de la geografía 2 y residemcia pedagógica",
+      "Territorios 4: Africa y Oceania",
+      "Nuevas tecnologias",
+      "Lengua extranjera: Portugues",
+      "Antropologia",
+      "Esi"
+    ],
+    "5° Año": []
   },
   "Profesorado de Historia": {
     "1° Año": [
       "Introducción a la Historia",
-      "Historia Antigua de Oriente y Grecia",
-      "Historia Antigua de Roma",
-      "Historia de América I (Precolombina e Indígena)",
-      "Pedagogía",
+      "PreHistoria y Arqueología",
+      "Introducción a la Historia Antigua",
+      "Historia Argentina y Americana 1",
       "Lectura, Escritura y Oralidad I (LEO 1)",
+      "Pedagogía General",
       "Trabajo de Campo I"
     ],
     "2° Año": [
-      "Historia Medieval",
-      "Historia Moderna",
-      "Historia de América II (Colonial)",
-      "Historia Argentina I (Colonial e Independencia)",
+      "Historia Argentina y Americana 2",
+      "Historia de Roma",
+      "Historia de Grecia",
+      "Historia de España",
       "Didáctica General",
-      "Psicología Educacional",
-      "Sujetos de la Educación",
-      "Trabajo de Campo II"
+      "Trabajo de Campo II",
+      "Lectura, Escritura y Oralidad II (LEO 2)"
     ],
     "3° Año": [
-      "Historia Contemporánea del Siglo XIX",
-      "Historia de América III (Siglo XIX)",
-      "Historia Argentina II (Siglo XIX)",
-      "Didáctica de la Historia I",
-      "Historia Social de la Educación",
-      "Derechos Humanos, Sociedad y Estado",
-      "Construcción de la Práctica Docente I"
+      "Historia Argentina y Americana 3",
+      "Historia de la Edad Media",
+      "Historia de la Edad Moderna",
+      "Enseñanza de la Historia y Construcción de la Práctica Docente 1",
+      "Introducción a la Geografía",
+      "Psicología Educacional",
+      "Sujetos del Nivel"
     ],
     "4° Año": [
-      "Historia Contemporánea del Siglo XX",
-      "Historia de América IV (Siglo XX y Actual)",
-      "Historia Argentina III (Siglo XX y Actual)",
-      "Historiografía",
-      "Didáctica de la Historia II",
-      "Educación Sexual Integral (ESI)",
-      "Ética y Trabajo Docente",
-      "Residencia y Construcción de la Práctica Docente II"
+      "Historia Argentina Contemporánea"
     ],
     "Tramo Superior / Seminarios": [
-      "Seminario de Historia Argentina y Latinoamericana",
-      "Seminario de Historia Mundial Contemporánea",
-      "Taller de Investigación Histórica"
+      "Historia Americana Contemporánea",
+      "Construcción de la Práctica Docente 2 / Residencia Media y Superior",
+      "Historia Contemporánea",
+      "Filosofía"
+    ],
+    "5° Año": [
+      "Teoría e Historia de la historiografía",
+      "Historia de la Educación Argentina",
+      "DDHH, Sociedad y Estado",
+      "Historia del Arte",
+      "Sistema y política educativa",
+      "Lengua Extranjera",
+      "Esi",
+      "Nuevas Tecnologías",
+      "Historia de Asia",
+      "Historia de África",
+      "Historia del Pensamiento Social y Económico",
+      "Historia del Pensamiento Político",
+      "Historia de las Mujeres y de género",
+      "Historia Americana desde los Orígenes"
     ]
   },
-  "Profesorado de Lengua y Literatura": {
+  "Profesorado de Informática": {
     "1° Año": [
-      "Lingüística General I",
-      "Gramática Española I",
-      "Teoría y Análisis Literario I",
-      "Literatura Española I (Medieval y Siglo de Oro)",
-      "Pedagogía",
+      "Álgebra",
+      "Herramientas informaticas",
+      "Trabajo de Campo I",
+      "Programación 1",
+      "Diseño 1",
+      "Informatica",
       "Lectura, Escritura y Oralidad I (LEO 1)",
-      "Trabajo de Campo I"
+      "Psicología Educacional",
+      "Sujetos de nivel",
+      "Pedagogía"
     ],
     "2° Año": [
-      "Lingüística General II",
-      "Gramática Española II",
-      "Teoría y Análisis Literario II",
-      "Literatura Española II",
-      "Literatura Latinoamericana I",
-      "Didáctica General",
-      "Psicología Educacional",
-      "Sujetos de la Educación",
-      "Trabajo de Campo II"
+      "Calculo para informatica",
+      "Tecnologia de la información y la comunicación",
+      "Trabajo de Campo II",
+      "Sistemas informaticos",
+      "Lectura, Escritura y Oralidad II (LEO 2)",
+      "Diseño 2",
+      "Programación 2",
+      "Didáctica general",
+      "Esi"
     ],
     "3° Año": [
-      "Historia de la Lengua Española",
-      "Literatura Latinoamericana II",
-      "Literatura Argentina I",
-      "Didáctica de la Lengua y la Literatura I",
-      "Historia Social de la Educación",
-      "Derechos Humanos, Sociedad y Estado",
-      "Construcción de la Práctica Docente I"
+      "Informatica educativa",
+      "Filosofía",
+      "Ingles 1",
+      "Redes y comunicaciones de datos",
+      "Discursos digitales",
+      "Logica informatica",
+      "Programación 3",
+      "DDHH, sociedad y estado"
     ],
     "4° Año": [
-      "Literatura Argentina II",
-      "Literaturas Extranjeras Clásicas y Modernas",
-      "Semiótica y Análisis del Discurso",
-      "Didáctica de la Lengua y la Literatura II",
-      "Educación Sexual Integral (ESI)",
-      "Ética y Trabajo Docente",
-      "Residencia y Construcción de la Práctica Docente II"
+      "Recursos informaticos aplicados a otras disciplinas",
+      "Proyectos educativos",
+      "Construcción de la practica docente 1",
+      "Historia de la educación Argentina",
+      "Nuevos escenarios, cultura tecnologica y subjetividad",
+      "Ingles 2",
+      "Informatica educativa 2",
+      "Tecnicas digitales"
     ],
-    "Tramo Superior / Seminarios": [
-      "Seminario de Literatura Argentina y Latinoamericana",
-      "Seminario de Lingüística Aplicada",
-      "Taller de Escritura Creativa y Académica"
+    "5° Año": [
+      "Diseño de sistemas",
+      "Modelizacion matemática y simulación",
+      "Inteligencia artifical",
+      "Lengua extranjera",
+      "Sistema y politica educativa"
     ]
   },
   "Profesorado de Inglés": {
     "1° Año": [
       "Lengua Inglesa I",
-      "Fonética y Fonología Inglesa I",
       "Gramática Inglesa I",
-      "Dicción y Práctica de Laboratorio I",
-      "Geografía y Cultura de los Pueblos de Habla Inglesa I",
+      "Fonética y Fonología I",
+      "Prácticas en el Laboratorio de Idiomas I",
+      "Geografía y Cultura de las Islas Británicas",
+      "Geografía y Cultura de los EEUU y Otros Pueblos de Habla Inglesa",
+      "Leo",
+      "Psicología Educacional",
+      "Sujetos de Nivel",
       "Pedagogía",
-      "Lectura, Escritura y Oralidad I (LEO 1)",
-      "Construcción de la Práctica Docente en Nivel Inicial y Primario I"
+      "Trabajo de campo I"
     ],
     "2° Año": [
       "Lengua Inglesa II",
-      "Fonética y Fonología Inglesa II",
       "Gramática Inglesa II",
-      "Literatura en Lengua Inglesa I",
-      "Geografía y Cultura de los Pueblos de Habla Inglesa II",
+      "Fonética y Fonología II",
+      "Prácticas en el Laboratorio de Idiomas II",
+      "Historia de la Civilización Inglesa I",
+      "Literatura Inglesa I",
       "Didáctica General",
-      "Psicología Educacional",
-      "Sujetos de la Educación",
-      "Construcción de la Práctica Docente en Nivel Inicial y Primario II y Residencia"
+      "Análisis del Discurso",
+      "Trabajo de Campo II",
+      "Construcción de la Práctica Docente en los Niveles Inicial y Primario I"
     ],
     "3° Año": [
       "Lengua Inglesa III",
-      "Fonología y Fonética Inglesa III",
-      "Gramática Inglesa III",
-      "Lingüística General y Aplicada",
-      "Literatura en Lengua Inglesa II",
-      "Historia de la Lengua Inglesa",
-      "Didáctica Especial y Construcción de la Práctica Docente en Nivel Medio I",
-      "Historia Social de la Educación",
-      "Derechos Humanos, Sociedad y Estado"
+      "Fonología en Laboratorio y Su Didáctica I",
+      "Historia de la Civilización Inglesa II",
+      "Literatura Inglesa II",
+      "Historia Norteamericana",
+      "Filosofía",
+      "Adquisición de la Lengua Materna y Extranjera",
+      "Construcción de la Práctica Docente en el Nivel medio I",
+      "Esi",
+      "Construcción de la Práctica docente en los Niveles Inicial y Primario II y Residencia",
+      "Introducción a la Lingüística"
     ],
     "4° Año": [
       "Lengua Inglesa IV",
-      "Análisis del Discurso en Lengua Inglesa",
-      "Literatura en Lengua Inglesa III y Contemporánea",
-      "Estudios Culturales Anglófonos",
-      "Didáctica Especial y Residencia en Nivel Medio y Superior",
-      "Educación Sexual Integral (ESI)",
-      "Ética y Trabajo Docente"
+      "Literatura Inglesa III",
+      "Literatura Contemporánea en Lengua Inglesa",
+      "Fonología en Laboratorio y su Didáctica II",
+      "Literatura Norteamericana",
+      "Historia de la Educación Argentina",
+      "Sistema y Política Educativa",
+      "DDHH, Sociedad y Estado",
+      "Construcción de la Práctica Docente en el Nivel Medio II y Residencia"
     ],
-    "Tramo Superior / Seminarios": [
-      "Seminario de Literatura en Lengua Inglesa",
-      "Seminario de Lingüística y Adquisición del Lenguaje",
-      "Taller de Traducción y Práctica Profesional"
-    ]
-  },
-  "Profesorado de Biología": {
-    "1° Año": [
-      "Introducción a la Biología y Sistemas Vivientes",
-      "Biología Celular y Molecular",
-      "Diversidad Vegetal I",
-      "Química General e Inorgánica",
-      "Matemática y Estadística Aplicada",
-      "Pedagogía",
-      "Lectura, Escritura y Oralidad I (LEO 1)",
-      "Trabajo de Campo I"
-    ],
-    "2° Año": [
-      "Diversidad Vegetal II",
-      "Diversidad Animal I (Invertebrados)",
-      "Anatomía y Fisiología Humana",
-      "Química Orgánica y Biológica",
-      "Didáctica General",
-      "Psicología Educacional",
-      "Sujetos de la Educación",
-      "Trabajo de Campo II"
-    ],
-    "3° Año": [
-      "Diversidad Animal II (Vertebrados)",
-      "Genética General y Molecular",
-      "Ecología General y de Poblaciones",
-      "Didáctica de la Biología I",
-      "Ciencias de la Tierra y Dinámica Terrestre",
-      "Historia Social de la Educación",
-      "Derechos Humanos, Sociedad y Estado",
-      "Construcción de la Práctica Docente I"
-    ],
-    "4° Año": [
-      "Evolución y Paleontología",
-      "Fisiología y Morfología Comparada",
-      "Educación para la Salud y el Ambiente",
-      "Didáctica de la Biología II",
-      "Educación Sexual Integral (ESI)",
-      "Ética y Trabajo Docente",
-      "Residencia y Construcción de la Práctica Docente II"
-    ],
-    "Tramo Superior / Seminarios": [
-      "Seminario de Biotecnología y Sociedad",
-      "Seminario de Epistemología de la Biología",
-      "Taller de Investigación en Ciencias Naturales"
-    ]
-  },
-  "Profesorado de Física": {
-    "1° Año": [
-      "Física General I (Mecánica y Cinemática)",
-      "Álgebra y Geometría Analítica I",
-      "Análisis Matemático I",
-      "Laboratorio de Física I",
-      "Pedagogía",
-      "Lectura, Escritura y Oralidad I (LEO 1)",
-      "Trabajo de Campo I"
-    ],
-    "2° Año": [
-      "Física General II (Calor, Termodinámica y Fluidos)",
-      "Física General III (Óptica y Ondas)",
-      "Análisis Matemático II",
-      "Química General",
-      "Laboratorio de Física II",
-      "Didáctica General",
-      "Psicología Educacional",
-      "Sujetos de la Educación",
-      "Trabajo de Campo II"
-    ],
-    "3° Año": [
-      "Física General IV (Electromagnetismo)",
-      "Métodos Matemáticos de la Física",
-      "Mecánica Teórica",
-      "Didáctica de la Física I",
-      "Laboratorio de Física III",
-      "Historia Social de la Educación",
-      "Derechos Humanos, Sociedad y Estado",
-      "Construcción de la Práctica Docente I"
-    ],
-    "4° Año": [
-      "Introducción a la Física Moderna y Cuántica",
-      "Termodinámica Estadística",
-      "Astronomía y Astrofísica Básica",
-      "Didáctica de la Física II",
-      "Historia y Epistemología de la Física",
-      "Educación Sexual Integral (ESI)",
-      "Ética y Trabajo Docente",
-      "Residencia y Construcción de la Práctica Docente II"
-    ],
-    "Tramo Superior / Seminarios": [
-      "Seminario de Física Contemporánea",
-      "Taller de Experimentación y Modelización",
-      "Taller de Investigación en Enseñanza de la Física"
-    ]
-  },
-  "Profesorado de Química": {
-    "1° Año": [
-      "Química General e Inorgánica I",
-      "Laboratorio de Química General",
-      "Matemática I (Cálculo y Álgebra)",
-      "Física I",
-      "Pedagogía",
-      "Lectura, Escritura y Oralidad I (LEO 1)",
-      "Trabajo de Campo I"
-    ],
-    "2° Año": [
-      "Química General e Inorgánica II",
-      "Química Orgánica I",
-      "Química Analítica Cualitativa",
-      "Matemática II",
-      "Física II",
-      "Didáctica General",
-      "Psicología Educacional",
-      "Sujetos de la Educación",
-      "Trabajo de Campo II"
-    ],
-    "3° Año": [
-      "Química Orgánica II",
-      "Química Analítica Cuantitativa e Instrumental",
-      "Fisicoquímica I",
-      "Didáctica de la Química I",
-      "Biología Celular y Bioquímica",
-      "Historia Social de la Educación",
-      "Derechos Humanos, Sociedad y Estado",
-      "Construcción de la Práctica Docente I"
-    ],
-    "4° Año": [
-      "Fisicoquímica II",
-      "Química Industrial y Ambiental",
-      "Bromatología y Toxicología",
-      "Didáctica de la Química II",
-      "Historia y Epistemología de la Química",
-      "Educación Sexual Integral (ESI)",
-      "Ética y Trabajo Docente",
-      "Residencia y Construcción de la Práctica Docente II"
-    ],
-    "Tramo Superior / Seminarios": [
-      "Seminario de Química Aplicada",
-      "Taller de Seguridad e Higiene en Laboratorio",
-      "Taller de Investigación en Enseñanza de la Química"
-    ]
-  },
-  "Profesorado de Geografía": {
-    "1° Año": [
-      "Introducción a la Geografía",
-      "Cartografía y Sistemas de Información Geográfica (SIG)",
-      "Geografía Física I (Geomorfología y Geología)",
-      "Geografía Humana y Social I",
-      "Pedagogía",
-      "Lectura, Escritura y Oralidad I (LEO 1)",
-      "Trabajo de Campo I"
-    ],
-    "2° Año": [
-      "Geografía Física II (Climatología, Hidrología y Biogeografía)",
-      "Geografía Económica y Urbana",
-      "Geografía de América Latina",
-      "Geografía Rural y de la Población",
-      "Didáctica General",
-      "Psicología Educacional",
-      "Sujetos de la Educación",
-      "Trabajo de Campo II"
-    ],
-    "3° Año": [
-      "Geografía de la República Argentina I (Bases Físicas y Ambientales)",
-      "Geografía de la República Argentina II (Socioeconómica y Regional)",
-      "Geopolítica y Geografía Política",
-      "Didáctica de la Geografía I",
-      "Historia Social de la Educación",
-      "Derechos Humanos, Sociedad y Estado",
-      "Construcción de la Práctica Docente I"
-    ],
-    "4° Año": [
-      "Geografía Mundial Contemporánea (Problemas Globales)",
-      "Planificación Territorial y Problemáticas Ambientales",
-      "Epistemología e Historia del Pensamiento Geográfico",
-      "Didáctica de la Geografía II",
-      "Educación Sexual Integral (ESI)",
-      "Ética y Trabajo Docente",
-      "Residencia y Construcción de la Práctica Docente II"
-    ],
-    "Tramo Superior / Seminarios": [
-      "Seminario de Geografía Urbana y Metropolización",
-      "Seminario de Recursos Naturales y Desarrollo Sustentable",
-      "Taller de Investigación Geográfica"
-    ]
-  },
-  "Profesorado de Informática": {
-    "1° Año": [
-      "Algoritmos y Estructuras de Datos I",
-      "Arquitectura y Organización de Computadoras",
-      "Fundamentos de Informática y Sistemas Digitales",
-      "Matemática Discreta y Álgebra Lineal",
-      "Pedagogía",
-      "Lectura, Escritura y Oralidad I (LEO 1)",
-      "Trabajo de Campo I"
-    ],
-    "2° Año": [
-      "Algoritmos y Estructuras de Datos II",
-      "Sistemas Operativos y Redes de Comunicación",
-      "Bases de Datos I",
-      "Programación Orientada a Objetos",
-      "Didáctica General",
-      "Psicología Educacional",
-      "Sujetos de la Educación",
-      "Trabajo de Campo II"
-    ],
-    "3° Año": [
-      "Ingeniería de Software y Desarrollo Web",
-      "Bases de Datos II y Administración de Servidores",
-      "Informática Educativa I y Entornos Virtuales",
-      "Didáctica de la Informática I",
-      "Seguridad Informática y Ética Digital",
-      "Historia Social de la Educación",
-      "Derechos Humanos, Sociedad y Estado",
-      "Construcción de la Práctica Docente I"
-    ],
-    "4° Año": [
-      "Tecnologías Emergentes, IA y Ciencia de Datos",
-      "Informática Educativa II y Robótica Pedagógica",
-      "Discursos y Culturas Digitales",
-      "Didáctica de la Informática II",
-      "Educación Sexual Integral (ESI)",
-      "Ética y Trabajo Docente",
-      "Residencia y Construcción de la Práctica Docente II"
-    ],
-    "Tramo Superior / Seminarios": [
-      "Seminario de Redes Avanzadas y Cloud Computing",
-      "Seminario de Accesibilidad y Tecnologías Inclusivas",
-      "Taller de Proyecto Final de Informática"
-    ]
-  },
-  "Profesorado de Psicología": {
-    "1° Año": [
-      "Psicología General",
-      "Antropología Social y Cultural",
-      "Lógica y Epistemología General",
-      "Biología y Neurociencias del Comportamiento",
-      "Procesos Colectivos y Problemas Sociales",
-      "Pedagogía",
-      "Lectura, Escritura y Oralidad I (LEO 1)",
-      "Trabajo de Campo I"
-    ],
-    "2° Año": [
-      "Psicología del Desarrollo y Ciclos Vitales I (Niñez y Adolescencia)",
-      "Psicoanálisis I (Teoría Freudiana)",
-      "Psicología Social y Comunitaria",
-      "Didáctica General",
-      "Psicología Educacional",
-      "Sujetos de la Educación",
-      "Estado, Sociedad y Derechos Humanos",
-      "Trabajo de Campo II"
-    ],
-    "3° Año": [
-      "Psicología del Desarrollo y Ciclos Vitales II (Adultez y Vejez)",
-      "Psicoanálisis II (Teorías Posfreudianas)",
-      "Teoría de las Organizaciones y Análisis Institucional",
-      "Psicopatología Infanto-Juvenil y del Adulto",
-      "Técnicas de Exploración y Evaluación Psicológica",
-      "Didáctica de la Enseñanza de la Psicología I",
-      "Historia Social de la Educación",
-      "Construcción de la Práctica Docente I"
-    ],
-    "4° Año": [
-      "Historia de la Psicología",
-      "Psicología Institucional y Forense",
-      "Psicopedagogía y Orientación Vocacional",
-      "Didáctica de la Enseñanza de la Psicología II",
-      "Educación Sexual Integral (ESI)",
-      "Ética y Trabajo Docente",
-      "Residencia y Construcción de la Práctica Docente II"
-    ],
-    "Tramo Superior / Seminarios": [
-      "Seminario de Psicología Comunitaria e Intervención Social",
-      "Seminario de Epistemología Psicológica",
-      "Taller de Investigación en Psicología"
-    ]
-  },
-  "Profesorado de Ciencias de la Educación": {
-    "1° Año": [
-      "Pedagogía General",
-      "Filosofía General",
-      "Antropología y Educación",
-      "Psicología General y del Desarrollo",
-      "Sociología General",
-      "Lectura, Escritura y Oralidad I (LEO 1)",
-      "Trabajo de Campo I"
-    ],
-    "2° Año": [
-      "Didáctica General",
-      "Historia de la Educación Argentina y Latinoamericana",
-      "Sociología de la Educación",
-      "Psicología de la Educación",
-      "Instituciones Educativas y Análisis Organizacional",
-      "Filosofía de la Educación",
-      "Estado, Sociedad y Derechos Humanos",
-      "Trabajo de Campo II"
-    ],
-    "3° Año": [
-      "Teoría y Diseño Curricular",
-      "Política y Legislación Educativa",
-      "Metodología de la Investigación Educativa I (Cualitativa)",
-      "Didáctica de Nivel Inicial, Primario y Secundario",
-      "Historia Social de la Educación",
-      "Problemas Didácticos Contemporáneos",
-      "Construcción de la Práctica Docente I"
-    ],
-    "4° Año": [
-      "Planeamiento y Gestión Educativa",
-      "Metodología de la Investigación Educativa II (Cuantitativa y Mixta)",
-      "Evaluación de Proyectos Educativos",
-      "Educación No Formal y Pedagogía Social",
-      "Educación Sexual Integral (ESI)",
-      "Ética y Trabajo Docente",
-      "Residencia y Construcción de la Práctica Docente II"
-    ],
-    "Tramo Superior / Seminarios": [
-      "Seminario de Políticas Públicas Educativas",
-      "Seminario de Educación Superior y Universitaria",
-      "Taller de Trabajo Final / Tesis de Licenciatura"
-    ]
-  },
-  "Profesorado de Ciencias Jurídicas": {
-    "1° Año": [
-      "Introducción al Derecho y Teoría General",
-      "Derecho Político y Teoría del Estado",
-      "Historia de las Ideas e Instituciones Políticas",
-      "Sociología Jurídica",
-      "Pedagogía",
-      "Lectura, Escritura y Oralidad I (LEO 1)",
-      "Trabajo de Campo I"
-    ],
-    "2° Año": [
-      "Derecho Constitucional y Garantías",
-      "Derechos Humanos y Derecho Internacional de los DD.HH.",
-      "Derecho Privado I (Parte General y Personas)",
-      "Derecho Penal I (Parte General)",
-      "Didáctica General",
-      "Psicología Educacional",
-      "Sujetos de la Educación",
-      "Trabajo de Campo II"
-    ],
-    "3° Año": [
-      "Derecho Privado II (Obligaciones y Contratos)",
-      "Derecho Administrativo",
-      "Derecho del Trabajo y Relaciones Laborales",
-      "Didáctica de las Ciencias Jurídicas I",
-      "Elementos de Derecho Procesal",
-      "Historia Social de la Educación",
-      "Construcción de la Práctica Docente I"
-    ],
-    "4° Año": [
-      "Derecho Internacional Público y de la Integración",
-      "Finanzas Públicas y Derecho Tributario",
-      "Derecho Ambiental y de los Recursos Naturales",
-      "Didáctica de las Ciencias Jurídicas II",
-      "Educación Sexual Integral (ESI)",
-      "Ética y Trabajo Docente",
-      "Residencia y Construcción de la Práctica Docente II"
-    ],
-    "Tramo Superior / Seminarios": [
-      "Seminario de Derecho Constitucional Profundizado",
-      "Seminario de Género y Sistema de Justicia",
-      "Taller de Práctica Forense y Litigación Educativa"
-    ]
-  },
-  "Profesorado de Ciencia Política": {
-    "1° Año": [
-      "Introducción a la Ciencia Política",
-      "Teoría Política Clásica y Medieval",
-      "Historia Política Argentina I",
-      "Sociología Política",
-      "Pedagogía",
-      "Lectura, Escritura y Oralidad I (LEO 1)",
-      "Trabajo de Campo I"
-    ],
-    "2° Año": [
-      "Teoría Política Moderna",
-      "Historia Política Argentina II",
-      "Sistemas Políticos Comparados",
-      "Opinión Pública y Comunicación Política",
-      "Didáctica General",
-      "Psicología Educacional",
-      "Sujetos de la Educación",
-      "Trabajo de Campo II"
-    ],
-    "3° Año": [
-      "Teoría Política Contemporánea",
-      "Relaciones Internacionales y Política Exterior",
-      "Políticas Públicas y Administración del Estado",
-      "Didáctica de la Ciencia Política I",
-      "Historia Social de la Educación",
-      "Derechos Humanos, Sociedad y Estado",
-      "Construcción de la Práctica Docente I"
-    ],
-    "4° Año": [
-      "Partidos Políticos y Sistemas Electorales",
-      "Filosofía Política Latinoamericana",
-      "Metodología del Análisis Político",
-      "Didáctica de la Ciencia Política II",
-      "Educación Sexual Integral (ESI)",
-      "Ética y Trabajo Docente",
-      "Residencia y Construcción de la Práctica Docente II"
-    ],
-    "Tramo Superior / Seminarios": [
-      "Seminario de Política Latinoamericana Contemporánea",
-      "Seminario de Movimientos Sociales y Ciudadanía",
-      "Taller de Investigación en Ciencia Política"
-    ]
-  },
-  "Profesorado de Economía": {
-    "1° Año": [
-      "Principios de Economía y Microeconomía I",
-      "Matemática para Economistas I (Álgebra y Cálculo)",
-      "Historia del Pensamiento Económico I",
-      "Contabilidad General y Social",
-      "Pedagogía",
-      "Lectura, Escritura y Oralidad I (LEO 1)",
-      "Trabajo de Campo I"
-    ],
-    "2° Año": [
-      "Macroeconomía I",
-      "Microeconomía II",
-      "Matemática para Economistas II",
-      "Estadística Económica",
-      "Historia Económica Argentina y Mundial",
-      "Didáctica General",
-      "Psicología Educacional",
-      "Sujetos de la Educación",
-      "Trabajo de Campo II"
-    ],
-    "3° Año": [
-      "Macroeconomía II (Dinero, Crédito y Bancos)",
-      "Economía Internacional y Comercio Exterior",
-      "Finanzas Públicas y Política Fiscal",
-      "Didáctica de la Economía I",
-      "Historia Social de la Educación",
-      "Derechos Humanos, Sociedad y Estado",
-      "Construcción de la Práctica Docente I"
-    ],
-    "4° Año": [
-      "Desarrollo Económico y Estructura Productiva Argentina",
-      "Economía Política y Distribución del Ingreso",
-      "Formulación y Evaluación de Proyectos",
-      "Didáctica de la Economía II",
-      "Educación Sexual Integral (ESI)",
-      "Ética y Trabajo Docente",
-      "Residencia y Construcción de la Práctica Docente II"
-    ],
-    "Tramo Superior / Seminarios": [
-      "Seminario de Economía Social y Cooperativismo",
-      "Seminario de Integración Económica Regional",
-      "Taller de Investigación Económica"
-    ]
-  },
-  "Profesorado de Ciencias de la Administración": {
-    "1° Año": [
-      "Teoría de la Administración I (Fundamentos y Escuelas)",
-      "Principios de Economía y Mercado",
-      "Matemática Aplicada a la Administración",
-      "Sistemas de Información y Contabilidad Básica",
-      "Pedagogía",
-      "Lectura, Escritura y Oralidad I (LEO 1)",
-      "Trabajo de Campo I"
-    ],
-    "2° Año": [
-      "Teoría de la Administración II (Procesos Organizacionales)",
-      "Contabilidad Financiera y de Costos",
-      "Estadística Aplicada a las Organizaciones",
-      "Derecho Aplicado a las Organizaciones",
-      "Didáctica General",
-      "Psicología Educacional",
-      "Sujetos de la Educación",
-      "Trabajo de Campo II"
-    ],
-    "3° Año": [
-      "Administración de Recursos Humanos y Relaciones Laborales",
-      "Administración Financiera y Presupuestaria",
-      "Comercialización y Marketing Estratégico",
-      "Didáctica de la Administración I",
-      "Historia Social de la Educación",
-      "Derechos Humanos, Sociedad y Estado",
-      "Construcción de la Práctica Docente I"
-    ],
-    "4° Año": [
-      "Planeamiento Estratégico y Dirección General",
-      "Gestión de Organizaciones Públicas, Privadas y del Tercer Sector",
-      "Emprendedorismo y Formulación de Proyectos",
-      "Didáctica de la Administración II",
-      "Educación Sexual Integral (ESI)",
-      "Ética y Trabajo Docente",
-      "Residencia y Construcción de la Práctica Docente II"
-    ],
-    "Tramo Superior / Seminarios": [
-      "Seminario de Innovación y Gestión Tecnológica",
-      "Seminario de Responsabilidad Social Organizacional",
-      "Taller de Simulación de Negocios y Práctica Profesional"
-    ]
-  },
-  "Profesorado de Francés": {
-    "1° Año": [
-      "Lengua Francesa I",
-      "Fonética y Fonología Francesa I",
-      "Gramática Francesa I",
-      "Práctica de Laboratorio y Expresión Oral I",
-      "Civilización y Cultura Francesa I",
-      "Pedagogía",
-      "Lectura, Escritura y Oralidad I (LEO 1)",
-      "Construcción de la Práctica Docente en Nivel Inicial y Primario I"
-    ],
-    "2° Año": [
-      "Lengua Francesa II",
-      "Fonética y Fonología Francesa II",
-      "Gramática Francesa II",
-      "Literatura Francesa I (Siglos XVI al XVIII)",
-      "Civilización y Cultura Francesa II",
-      "Didáctica General",
-      "Psicología Educacional",
-      "Sujetos de la Educación",
-      "Construcción de la Práctica Docente en Nivel Inicial y Primario II y Residencia"
-    ],
-    "3° Año": [
-      "Lengua Francesa III",
-      "Lingüística Aplicada al Francés",
-      "Literatura Francesa II (Siglo XIX)",
-      "Didáctica Especial y Construcción de la Práctica Docente en Nivel Medio I",
-      "Historia Social de la Educación",
-      "Derechos Humanos, Sociedad y Estado"
-    ],
-    "4° Año": [
-      "Lengua Francesa IV",
-      "Literatura Francesa y Francófona Contemporánea (Siglo XX y XXI)",
-      "Estudios Francófonos y Diversidad Cultural",
-      "Didáctica Especial y Residencia en Nivel Medio y Superior",
-      "Educación Sexual Integral (ESI)",
-      "Ética y Trabajo Docente"
-    ],
-    "Tramo Superior / Seminarios": [
-      "Seminario de Literatura y Cine Francófono",
-      "Seminario de Lingüística y Didáctica del FLE",
-      "Taller de Traducción Francés-Español"
+    "5° Año": [
+      "Metodología de la Investigación en Lenguas Extranjeras",
+      "Escritura Académica",
+      "Construcción de la Práctica Docente en el Nivel Superior y Residencia",
+      "Lengua Extranjera Nivel I",
+      "Lengua Extranjera Nivel II",
+      "Prerrequisitos",
+      "Nuevas Tecnologías",
+      "Taller formativo docente I",
+      "El Texto Literario en el Aula",
+      "Saberes Lúdicos, Motores y Corporales",
+      "Historia Contemporánea de los Pueblos Angloparlantes",
+      "Literaturas en Lengua Inglesa",
+      "El Profesor de Inglés y el Maestro de Grado / Sala",
+      "Taller formativo docente II",
+      "Alfabetización",
+      "El Uso de la Voz en el Aula",
+      "Escritura Creativa",
+      "Técnicas Teatrales en el Aula de Inglés",
+      "Redacción del Discurso Académico",
+      "Taller de Didáctica Específica",
+      "Multimedios Aplicados a la Enseñanza del Inglés",
+      "Enseñanza de las Lenguas Extranjeras en Educación Especial",
+      "Técnicas Informáticas Aplicadas a la Enseñanza de la Lengua Extranjera",
+      "Dinámica de Grupos"
     ]
   },
   "Profesorado de Italiano": {
     "1° Año": [
-      "Lengua Italiana I",
-      "Fonética y Fonología Italiana I",
-      "Gramática Italiana I",
-      "Práctica de Laboratorio y Dicción I",
-      "Cultura y Civilización Italiana I",
+      "Lengua italiana 1",
+      "Gramatica italiana 1",
+      "Fonterica y fonologia 1",
+      "Literatura italiana medieval",
+      "Historia Romana y medieval",
+      "La enseñanza del Italiano a partir de las culturas regionales",
+      "La enseñanza del Italiano a partir del cine y teatro italianos",
+      "Lectura, escritura y oralidad",
       "Pedagogía",
-      "Lectura, Escritura y Oralidad I (LEO 1)",
-      "Construcción de la Práctica Docente en Nivel Inicial y Primario I"
+      "Psicología Educacional",
+      "Psicologia y Sujetos del nivel",
+      "Trabajo de Campo I",
+      "Taller de consolidacion de la lengua italiana"
     ],
     "2° Año": [
-      "Lengua Italiana II",
-      "Fonética y Fonología Italiana II",
-      "Gramática Italiana II",
-      "Literatura Italiana I (Orígenes, Dante, Petrarca, Boccaccio)",
-      "Cultura y Civilización Italiana II",
-      "Didáctica General",
-      "Psicología Educacional",
-      "Sujetos de la Educación",
-      "Construcción de la Práctica Docente en Nivel Inicial y Primario II y Residencia"
+      "Lengua italiana 2",
+      "Gramatica italiana 2",
+      "Fonterica y fonologia 2",
+      "Literatura del humanismo y del renacimiento",
+      "Historia italiana moderna",
+      "Latin 1",
+      "Didactica general",
+      "Trabajo de Campo II",
+      "La enseñanza del italiano y la divina comedia 1",
+      "Nuevas tecnologias"
     ],
     "3° Año": [
-      "Lengua Italiana III",
-      "Lingüística Aplicada al Italiano",
-      "Literatura Italiana II (Del Renacimiento al Romanticismo)",
-      "Didáctica Especial y Construcción de la Práctica Docente en Nivel Medio I",
-      "Historia Social de la Educación",
-      "Derechos Humanos, Sociedad y Estado"
+      "Lengua italiana 3",
+      "Literatura italiana del barroco y del iluminismo",
+      "Latin 2",
+      "Construcción de la practica docente en el nivel medio",
+      "Filosofía",
+      "Lingüistica",
+      "Construcción de la practica docente en el nivel inicial y primario",
+      "La enseñanza del italiano y la divina comedia 2",
+      "Esi"
     ],
     "4° Año": [
-      "Lengua Italiana IV",
-      "Literatura Italiana Contemporánea (Siglos XX y XXI)",
-      "Estudios Culturales de Italia y la Emigración Italiana en Argentina",
-      "Didáctica Especial y Residencia en Nivel Medio y Superior",
-      "Educación Sexual Integral (ESI)",
-      "Ética y Trabajo Docente"
+      "Lengua italina 4",
+      "La enseñanza del italiano a partir del arte italiano",
+      "Residencia en contextos de injerencia profesional / Didáctica especifica 2 y residencia",
+      "Historia de la educación Argentina",
+      "DDHH, sociedad y estado",
+      "Sistema y política educativa",
+      "Taller de didactica de la fonetica",
+      "Lengua extranjera 1",
+      "Lengua extranjera 2"
+    ],
+    "5° Año": [
+      "Historia civilización italina del risogimento y siglo xx",
+      "Historia de la lengua italiana",
+      "La enseñanza del italiano a partir de la musica italiana",
+      "Taller de tecnicas de lectocomprensión e investigación",
+      "Construcción de la práctica doncete en el nivel superior y residencia en contextos de injerencia profesional",
+      "Lengua 5: Sociolingüistica",
+      "Taller de la didáctica del italiano en el nivel superior",
+      "• Taller de consolidación de la lengua italiana cursan con carácter obligatorio SOLO los ingresantes que hayan aprobado el examen de admisión con 5 (cinco) ó 6 (seis) puntos. Aquellos ingresantres que hayan obtenido 7 (siete) o más puntos estarán en condiciones de acreditar el Taller de consolidación y, por lo tanto, no deberán cursalo (Ver Acta de Acreditación de 2.11.2018)."
+    ]
+  },
+  "Profesorado de Lengua y Literatura": {
+    "1° Año": [
+      "Lectura, escritura y oralidad 1: generos académicos",
+      "Taller de lectura de textos literarios",
+      "Taller de gramatica y lingüistica",
+      "Taller de literatura y teoría literaria",
+      "Taller de literatura Argentina y Latinoamericana conectada con la literatura española",
+      "Teoría literaria",
+      "Fílosofia",
+      "Introducción al estudio del lenguaje y elemento de semiología",
+      "Introducción a la lengua y la literatura latina",
+      "Latín 1 y literatura latina",
+      "Pedagogía",
+      "Psicología educacional",
+      "Sujetos del nivel medio y superior"
+    ],
+    "2° Año": [
+      "Lectura, escritura y oralidad 2: generos e intercursividad",
+      "Gramática 1",
+      "Literatura francesa e italiana",
+      "Historia del arte",
+      "Latín 2 y literatura latina",
+      "Didáctica general",
+      "La lectura y la escritura en la educación formal y no formal",
+      "Lectocomprensión de lengua extranjera 1",
+      "Lectocomprensión de lengua extranjera 2",
+      "Nuevas tecnologias"
     ],
     "Tramo Superior / Seminarios": [
-      "Seminario de Literatura Italiana y Traducción",
-      "Seminario de Didáctica del Italiano como Lengua Extranjera",
-      "Taller de Cultura y Cine Italiano"
+      "Lenguaje, sociedad y educacíon",
+      "Canon literario, canon escolar y formación del gusto",
+      "Representación y proyección de los discrusos de la Antigüedad en la escuela",
+      "Retórica y poética",
+      "Literatura rusa y de otros patrimonios culturales no occidentales",
+      "Análisis del discurso",
+      "Estudios hispánicos"
+    ],
+    "3° Año": [
+      "Gramática 2",
+      "Literatura en la lengua inglesa y alemana",
+      "Literatura española del siglo de oro",
+      "Latín 3 y literatura latina",
+      "Griego 1 y literatura griega",
+      "Historia de la educación Argentina",
+      "Sistema y politica educativa"
+    ],
+    "4° Año": [
+      "Gramática 3",
+      "Gramática histórica",
+      "Literatura Argentina",
+      "Literatura Latinoamericana",
+      "Lengua y literatura Latinas y su enseñanza en el nivel medio y superior",
+      "Griego 2 y literatura griega",
+      "Metodología especial y prácticas de la enseñanza"
+    ],
+    "5° Año": [
+      "DDHH, sociedad y estado",
+      "Lingüistica",
+      "Estudio de la diversidad lingüística y su enseñanza en el nivel medio y superior",
+      "Problemas de literatura contemporánea en lengua española",
+      "Literatura, cine y otros lenguajes en los siglos XX y XXI",
+      "Metodología especial y Residencia"
+    ]
+  },
+  "Profesorado de Matemática": {
+    "1° Año": [
+      "Elementos Básicos de Matemática",
+      "Álgebra I",
+      "Geometría I",
+      "Análisis Matemático I",
+      "Introducción a la Matemática Superior",
+      "Pedagogía",
+      "Psicología Educacional",
+      "Sujeto del aprendizaje",
+      "Lectura, Escritura y Oralidad I (LEO 1)",
+      "Trabajo de Campo I"
+    ],
+    "2° Año": [
+      "Álgebra II",
+      "Geometría II",
+      "Análisis Matemático II",
+      "Física",
+      "Nuevas tecnologías",
+      "Filosofía",
+      "Didáctica general",
+      "Trabajo de Campo II"
+    ],
+    "3° Año": [
+      "TICS en el aula de matemática",
+      "Álgebra III",
+      "Probabilidades y estadística",
+      "Historia de la Matemática",
+      "Historia de la Educación Argentina",
+      "DDHH, Estado y Sociedad",
+      "Didáctica de la Matemática 1",
+      "Lectura, Escritura y Oralidad II (LEO 2)",
+      "Trabajo de Campo III"
+    ],
+    "4° Año": [
+      "Fundamentos de la Matemática",
+      "Astronomía General Básica",
+      "Lengua Extranjera",
+      "Sistema y Política Educativa",
+      "Didáctica de la Matemática 2",
+      "Construcción de la Práctica Docente 1",
+      "Reflexión y actualización de la práctica docente",
+      "Esi"
+    ],
+    "5° Año": [
+      "Construcción de la Práctica Docente 2",
+      "Temas avanzados de matemática",
+      "Fundamentos de la física",
+      "Análisis Matemático III",
+      "Astronomía superior"
+    ]
+  },
+  "Profesorado de Psicología": {
+    "1° Año": [
+      "Pedagogía",
+      "Antropología social y cultural",
+      "Psicología General",
+      "Lectura, Escritura y Oralidad I (LEO 1)",
+      "Filosofía",
+      "Procesos colectivos y problemas sociales",
+      "Metedo de la investigación social",
+      "Lógica",
+      "Biología",
+      "Trabajo de Campo I",
+      "Teórica de la argumentación",
+      "Estadística",
+      "Neurobiología y adaptación"
+    ],
+    "2° Año": [
+      "Psicología social",
+      "Estadi, sociedad y DDHH",
+      "Nuevas tecnologias",
+      "Psicología de los ciclos vitales 1",
+      "Psicologiía educacional",
+      "Didáctica general",
+      "Bases neurofisiológicas",
+      "Epistemología general y especial",
+      "Lectura, Escritura y Oralidad II (LEO 2)",
+      "Aproximación al proceso salud y enfermedad",
+      "Trabajo de Campo II"
+    ],
+    "Tramo Superior / Seminarios": [
+      "Escuela y comunidad"
+    ],
+    "3° Año": [
+      "Historia de la educación Argentina",
+      "Psicología de los ciclos vitales 2",
+      "Adolescencia y mundo contemporaneo",
+      "Teória de las organizaciones y análisis institucionales",
+      "Teória psicoanalitica",
+      "Tecnicas de exploración psicologica",
+      "Teória y dinamica de los grupos de aprendizaje",
+      "Estrategias para la resolución de conflictos",
+      "Sistema y política educativa",
+      "Teória psicoanalitica post Freudiana",
+      "Teória y practica de la comunicación",
+      "Neuropsicología del aprendizaje"
+    ],
+    "4° Año": [
+      "Esi",
+      "Taller didáctico para la enseñanza de la piscología",
+      "Historia de la psicología",
+      "Prácticas de la investigación psicologíca",
+      "Piscopedagogia",
+      "Psicopatologia",
+      "Psicologia del arte",
+      "Escuela y violencia",
+      "Práctica de la enseñanza psicologica nivel medio y superior",
+      "Lengua extranjera"
+    ],
+    "5° Año": [
+      "Práctica de la enseñanza psicologica nivel medio y residencia",
+      "Introducción a los estudios de genero",
+      "Pedagogía de la convivencia escolar",
+      "Psicología aplicada al deporte",
+      "Orientación vocacional y ocupacional",
+      "Epistemologia y psicologia genetica",
+      "• Es obligatorio cursar y apobrar a lo largo de la carrera cuatro instancias curriculares optativas."
+    ]
+  },
+  "Profesorado de Química": {
+    "1° Año": [
+      "Análisis Matemático I",
+      "Mecánica y óptica geométrica",
+      "Introducción a la química",
+      "Química general e inorgánica 1",
+      "Trabajo de Campo I",
+      "Sujetos de nivel",
+      "Psicología educacional",
+      "Lectura, escritura y oralidad 1",
+      "Pedagogía"
+    ],
+    "2° Año": [
+      "Análisis Matemático II",
+      "Electromagnetismo y fenomenos ondulatorios",
+      "Introducción a la dinámica terrestre y mineralogía",
+      "Química general e inorgánica 2",
+      "Química orgánica 1",
+      "Trabajo de Campo II",
+      "Didáctica general",
+      "DDHH, sociedad y estado"
+    ],
+    "3° Año": [
+      "Matemática aplicada",
+      "Calor y termodinámica",
+      "Dinamica terrestre",
+      "Química orgánica 2",
+      "Química analitica",
+      "Biología celular",
+      "Fisiologia celular y humana",
+      "Construcción de la practica docente 1",
+      "Filosofía",
+      "Esi"
+    ],
+    "4° Año": [
+      "Química física",
+      "Intoducción a la química industrial",
+      "Química industrial descriptiva",
+      "Química biológica",
+      "Epistemología e historia de la química"
+    ],
+    "Tramo Superior / Seminarios": [
+      "Lectura, escritura y oralidad 2",
+      "Sistema y política educativa",
+      "Historia de la educación Argentina"
+    ],
+    "5° Año": [
+      "Biología molecular",
+      "Biotecnologia",
+      "Metodologia de la investigación",
+      "Nuevas tecnologias",
+      "Lengua extranjera",
+      "Construcción de la practica docente 2"
     ]
   }
 };
