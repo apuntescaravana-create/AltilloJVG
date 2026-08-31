@@ -19,7 +19,7 @@ export default async function handler(req, res) {
 
   const SUPABASE_URL = process.env.SUPABASE_URL || "https://nfpmrjvdjzzyzjskmiqt.supabase.co";
   const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || "";
-  const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "";
+  const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 
   const localFilePath = path.join(process.cwd(), 'data', 'feedback.json');
 
@@ -49,8 +49,8 @@ export default async function handler(req, res) {
   // ============================================================================
   if (req.method === 'GET') {
     const adminPass = req.headers['x-admin-password'];
-    if (adminPass !== ADMIN_PASSWORD) {
-      return res.status(401).json({ error: 'Acceso no autorizado.' });
+    if (!ADMIN_PASSWORD || !adminPass || adminPass !== ADMIN_PASSWORD) {
+      return res.status(401).json({ error: 'Acceso no autorizado. Contraseña incorrecta.' });
     }
 
     try {
@@ -126,8 +126,8 @@ export default async function handler(req, res) {
   // ============================================================================
   if (req.method === 'DELETE') {
     const adminPass = req.headers['x-admin-password'];
-    if (adminPass !== ADMIN_PASSWORD) {
-      return res.status(401).json({ error: 'Acceso no autorizado.' });
+    if (!ADMIN_PASSWORD || !adminPass || adminPass !== ADMIN_PASSWORD) {
+      return res.status(401).json({ error: 'Acceso no autorizado. Contraseña incorrecta.' });
     }
 
     const id = req.query.id || req.body.id;

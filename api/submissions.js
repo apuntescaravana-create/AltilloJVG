@@ -26,7 +26,7 @@ export default async function handler(req, res) {
 
   // Todas las acciones de submissions requieren autenticación de administrador
   const passwordHeader = req.headers['x-admin-password'];
-  if (!passwordHeader || passwordHeader !== ADMIN_PASSWORD) {
+  if (!ADMIN_PASSWORD || !passwordHeader || passwordHeader !== ADMIN_PASSWORD) {
     return res.status(401).json({ error: 'No autorizado. Contraseña incorrecta.' });
   }
 

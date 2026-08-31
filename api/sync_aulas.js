@@ -26,7 +26,7 @@ export default async function handler(req, res) {
 
   // Validar contraseña
   const passwordHeader = req.headers['x-admin-password'];
-  if (passwordHeader !== ADMIN_PASSWORD) {
+  if (!passwordHeader || passwordHeader !== ADMIN_PASSWORD) {
     return res.status(401).json({ error: 'No autorizado. Contraseña incorrecta.' });
   }
 

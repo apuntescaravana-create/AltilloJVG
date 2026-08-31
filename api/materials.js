@@ -72,7 +72,7 @@ export default async function handler(req, res) {
   // ==========================================
   if (req.method === 'DELETE') {
     const passwordHeader = req.headers['x-admin-password'];
-    if (passwordHeader !== ADMIN_PASSWORD) {
+    if (!ADMIN_PASSWORD || !passwordHeader || passwordHeader !== ADMIN_PASSWORD) {
       return res.status(401).json({ error: 'No autorizado. Contraseña incorrecta.' });
     }
 
@@ -107,7 +107,7 @@ export default async function handler(req, res) {
   // ==========================================
   if (req.method === 'PUT') {
     const passwordHeader = req.headers['x-admin-password'];
-    if (passwordHeader !== ADMIN_PASSWORD) {
+    if (!ADMIN_PASSWORD || !passwordHeader || passwordHeader !== ADMIN_PASSWORD) {
       return res.status(401).json({ error: 'No autorizado. Contraseña incorrecta.' });
     }
 
