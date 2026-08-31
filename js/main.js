@@ -4,6 +4,17 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+  // 0. Chequeo de Banner de Alerta Urgente (Gestionado desde Panel Admin)
+  try {
+    const urgentText = localStorage.getItem('altillojvg_urgent_banner');
+    const urgentBanner = document.getElementById('urgentAlertBanner');
+    const urgentAlertText = document.getElementById('urgentAlertText');
+    if (urgentText && urgentBanner && urgentAlertText) {
+      urgentAlertText.textContent = urgentText;
+      urgentBanner.style.display = 'block';
+    }
+  } catch (e) {}
+
   // 1. Upload Modal Handling
   const uploadModal = document.getElementById('uploadModal');
   const openUploadModalBtn = document.getElementById('openUploadModalBtn');
@@ -237,11 +248,12 @@ document.addEventListener('DOMContentLoaded', () => {
             <h4 style="color:#0B2545; font-size:0.98rem; font-weight:700; margin-bottom:4px;">${item.nombre}</h4>
             <p style="font-size:0.83rem; color:#64748B; margin-bottom:8px;">${item.descripcion}</p>
             ${pasosHtml}
-            <div style="display:flex; gap:8px; flex-wrap:wrap;">
-              <a href="${item.link}" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:6px; background:#009BE3; color:#fff; padding:6px 12px; border-radius:6px; text-decoration:none; font-size:0.78rem; font-weight:600;">
-                Sitio Oficial de Inscripción →
+            <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:8px;">
+              <a href="${item.link}" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:6px; background:#009BE3; color:#fff; padding:7px 13px; border-radius:6px; text-decoration:none; font-size:0.8rem; font-weight:700;">
+                🌐 Portal de Inscripción Oficial →
               </a>
-              ${item.infoPdf ? `<a href="${item.infoPdf}" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:6px; background:#EEF4F8; color:#0B2545; border:1px solid #CBD5E1; padding:6px 12px; border-radius:6px; text-decoration:none; font-size:0.78rem; font-weight:600;">Descargar PDF Instructivo JVG</a>` : ''}
+              ${item.linkSecundario ? `<a href="${item.linkSecundario}" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:6px; background:#F0F9FF; color:#0369A1; border:1px solid #BAE6FD; padding:7px 12px; border-radius:6px; text-decoration:none; font-size:0.8rem; font-weight:600;">${item.textoLinkSecundario || 'Más Información'} →</a>` : ''}
+              ${item.infoPdf ? `<a href="${item.infoPdf}" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:6px; background:#EEF4F8; color:#0B2545; border:1px solid #CBD5E1; padding:7px 12px; border-radius:6px; text-decoration:none; font-size:0.8rem; font-weight:600;">📄 Descargar Instructivo PDF</a>` : ''}
             </div>
           </div>`;
       });
@@ -342,10 +354,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // 6. Open "Cómo NO conseguir libros piratas" Modal
   function openLibrosGuiaModal() {
     if (!infoModal) return;
-    infoModalTitle.innerHTML = "📚 Cómo <em>no</em> conseguir libros piratas";
+    infoModalTitle.innerHTML = '🚫 Guía Preventiva: Cómo <em>"NO"</em> conseguir libros "piratas" 😉';
     
-    let html = `<p style="margin-bottom:16px; color:#475569; font-size:0.88rem; line-height:1.4;">
-      Guía colaborativa de metabuscadores abiertos, bibliotecas digitales y trucos de búsqueda académica para estudiantes del Joaquín V. González:
+    let html = `<p style="margin-bottom:16px; color:#475569; font-size:0.88rem; line-height:1.5;">
+      Una guía puramente pedagógica e informativa sobre aquellos metabuscadores libres y trucos de búsqueda académica a los que <em>"bajo ningún concepto"</em> deberías entrar si querés evitar encontrar libros y artículos universitarios gratuitos al instante:
     </p><div style="display:flex; flex-direction:column; gap:18px;">`;
 
     if (typeof JVG_LIBROS_GUIA !== 'undefined') {

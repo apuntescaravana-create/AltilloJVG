@@ -1,75 +1,75 @@
 /**
- * AltilloJVG - Guía "Cómo NO conseguir libros piratas"
- * Recursos, repositorios académicos digitales y técnicas de búsqueda para estudiantes.
+ * AltilloJVG - Guía de Advertencia: "Cómo NO conseguir libros piratas"
+ * Manual preventivo y pedagógico sobre sitios a los que bajo ninguna circunstancia deberías ingresar.
  */
 
 const JVG_LIBROS_GUIA = [
   {
-    categoria: "🌐 Metabuscadores y Repositorios Abiertos",
-    icono: "🔍",
-    color: "#009BE3",
+    categoria: "🚫 Sitios que JAMÁS deberías visitar si no querés bibliografía gratis al instante",
+    icono: "🛑",
+    color: "#DC2626",
     sitios: [
       {
-        nombre: "Anna's Archive",
-        descripcion: "El buscador abierto más completo del mundo para libros académicos, papers y manuales de estudio.",
-        consejo: "Buscá escribiendo el ISBN de 13 dígitos para encontrar exactamente la edición que te piden en la cátedra.",
+        nombre: "Anna's Archive (El archivador que NO deberías abrir)",
+        descripcion: "Peligrosísimo metabuscador mundial que indexa más de 30 millones de libros, manuales universitarios y papers. Si cometés el error de entrar y buscar por título o ISBN, te descargará el PDF completo en segundos sin cobrarte un solo centavo.",
+        consejo: "Bajo ningún concepto pegues el código ISBN de 13 dígitos de tu programa de materia, porque encuentra la edición exacta.",
         link: "https://annas-archive.org"
       },
       {
-        nombre: "Library Genesis (LibGen)",
-        descripcion: "Biblioteca digital colectiva enfocada en libros de texto universitarios, literatura científica y ensayos.",
-        consejo: "Probá las distintas solapas de descarga (Fiction, Non-fiction, Scientific Articles).",
+        nombre: "Library Genesis / LibGen (Evitar a toda costa)",
+        descripcion: "Enorme repositorio colaborativo donde estudiantes de todo el mundo comparten libros de texto, tratados y ensayos. Si ingresás por descuido, podrías conseguir el libro importado que la fotocopiadora no tiene.",
+        consejo: "Evitá explorar sus servidores espejo (mirrors) de 'Non-fiction' y 'Scientific articles'.",
         link: "https://libgen.is"
       },
       {
-        nombre: "Internet Archive & Open Library",
-        descripcion: "Biblioteca digital sin fines de lucro con millones de libros digitalizados, revistas históricas y audiolibros.",
-        consejo: "Permite la lectura en línea y préstamos digitales por 14 días.",
-        link: "https://archive.org"
-      },
-      {
-        nombre: "Sci-Hub",
-        descripcion: "Base de datos abierta para el acceso libre a artículos de investigación científica y publicaciones académicas.",
-        consejo: "Pegá la URL o el DOI del paper que necesitas desbloquear.",
+        nombre: "Sci-Hub (Bajo ningún concepto ingreses un DOI aquí)",
+        descripcion: "Sitio web sumamente problemático para las grandes corporaciones editoriales. Si copiás el identificador DOI de un paper científico de pago y lo pegás en su barra, lo desbloquea de inmediato en texto completo.",
+        consejo: "Cuidado: burlarás el muro de pago de 40 USD por artículo de las multinacionales.",
         link: "https://sci-hub.se"
+      },
+      {
+        nombre: "Internet Archive & Open Library",
+        descripcion: "Biblioteca digital pública que preserva millones de libros escaneados y documentos históricos. Prestan libros digitales por 14 días sin pedirte tarjeta de crédito.",
+        consejo: "Ideal si querés consultar ediciones históricas o descatalogadas en línea.",
+        link: "https://archive.org"
       }
     ]
   },
   {
-    categoria: "💡 Trucos de Búsqueda Avanzada en Google",
-    icono: "⚡",
-    color: "#C65100",
+    categoria: "⚠️ Errores de Búsqueda en Google que NUNCA debés cometer",
+    icono: "🕵️‍♂️",
+    color: "#D97706",
     sitios: [
       {
-        nombre: "Operador filetype:pdf",
-        descripcion: "Forma más rápida de filtrar sólo archivos PDF reales directamente desde Google.",
-        ejemplo: 'Escribí en Google: filetype:pdf "Nombre del Libro Autor"'
+        nombre: "Escribir el operador 'filetype:pdf'",
+        descripcion: "Si por accidente ponés en Google el nombre del libro entre comillas seguido de filetype:pdf, Google te filtrará únicamente archivos descargables listos para guardar en tu compu.",
+        ejemplo: 'filetype:pdf "Nombre del Libro" "Apellido del Autor"'
       },
       {
-        nombre: "Búsqueda de Carpetas de Google Drive",
-        descripcion: "Encontrá carpetas compartidas de estudiantes con resúmenes y libros escaneados.",
-        ejemplo: 'Escribí en Google: site:drive.google.com "Joaquin V. Gonzalez" "Materia"'
+        nombre: "Buscar carpetas abiertas de Google Drive",
+        descripcion: "No se te ocurra combinar el operador site:drive.google.com con el nombre de tu profesorado o materia, porque podrías toparte con gigas de apuntes y libros organizados por comisiones.",
+        ejemplo: 'site:drive.google.com "Joaquin V. Gonzalez" "Historia Medieval"'
       },
       {
-        nombre: "Google Académico (Scholar)",
-        descripcion: "Artículos, tesis de grado y capítulos de libros liberados directamente por docentes de universidades públicas.",
-        ejemplo: 'Accedé a scholar.google.com y filtrá por año de publicación.'
+        nombre: "Consultar Google Académico (Scholar)",
+        descripcion: "Docentes e investigadores universitarios suelen subir los capítulos y artículos que escriben a sus repositorios públicos sin costo.",
+        ejemplo: 'scholar.google.com'
       }
     ]
   },
   {
-    categoria: "🏛️ Fuentes Institucionales y Presenciales",
+    categoria: "🏛️ Canales Legales, Seguros e Institucionales",
     icono: "📚",
-    color: "#0B2545",
+    color: "#0284C7",
     sitios: [
       {
-        nombre: "Biblioteca del ISP Joaquín V. González",
-        descripcion: "Ubicada en el subsuelo de la sede central (frente a Bedelía). Cuenta con los programas, cartillas y libros de consulta presencial.",
+        nombre: "Biblioteca Central ISP Joaquín V. González",
+        descripcion: "Ubicada en el subsuelo de Ayacucho 632. Cuenta con ejemplares físicos de programas oficiales, cartillas de cátedra y sala de lectura presencial.",
         link: "http://institutojvgonzalez.buenosaires.edu.ar/cartelera/biblioteca.php"
       },
       {
-        nombre: "Repositorio Digital AltilloJVG",
-        descripcion: "Nuestra biblioteca colaborativa donde los propios estudiantes del JVG suben resúmenes, programas y libros escaneados de cada materia.",
+        nombre: "AltilloJVG (Nuestro Repositorio Colaborativo)",
+        descripcion: "Donde la propia comunidad del Joaquín comparte resúmenes, modelos de parciales y guías hechas a mano por estudiantes para estudiantes.",
         link: "#"
       }
     ]

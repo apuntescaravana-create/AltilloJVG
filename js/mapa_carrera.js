@@ -63,13 +63,27 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  function updateDownloadButtonState() {
+    if (!btnDescargarExcel) return;
+    const selected = selectMapaCarrera ? selectMapaCarrera.value : '';
+    if (!selected) {
+      btnDescargarExcel.style.opacity = '0.55';
+      btnDescargarExcel.style.cursor = 'not-allowed';
+      btnDescargarExcel.innerHTML = '⚠️ Seleccioná tu carrera para descargar';
+    } else {
+      btnDescargarExcel.style.opacity = '1';
+      btnDescargarExcel.style.cursor = 'pointer';
+      const nombreCorto = selected.replace(/^Profesorado de\s+/i, '');
+      btnDescargarExcel.innerHTML = `📥 Descargar Mapa de ${nombreCorto} (.xlsx)`;
+    }
+  }
+
   // Poblar carreras en el desplegable
   function populateCarreras() {
     if (!selectMapaCarrera) return;
-    if (selectMapaCarrera.options.length > 1) return; // ya poblado
-
-    if (typeof AULAS_DATABASE !== 'undefined') {
-      const careers = [...new Set(AULAS_DATABASE.map(item => item.carrera))].sort();
+    if (selectMapaCarrera.options.length <= 1) {
+      // Poblar carreras desde la lista oficial
+      const careers = Object.keys(MAPAS_ARCHIVOS).sort();
       careers.forEach(career => {
         const opt = document.createElement('option');
         opt.value = career;
@@ -77,6 +91,11 @@ document.addEventListener('DOMContentLoaded', () => {
         selectMapaCarrera.appendChild(opt);
       });
     }
+    updateDownloadButtonState();
+  }
+
+  if (selectMapaCarrera) {
+    selectMapaCarrera.addEventListener('change', updateDownloadButtonState);
   }
 
   // Desplegable de Instrucciones "¿Cómo usarlo?"
@@ -90,15 +109,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Manejo de Descarga
   if (btnDescargarExcel) {
-    btnDescargarExcel.addEventListener('click', () => {
+    btnDescargarExcel.addEventListener('click', (e) => {
       const selected = selectMapaCarrera ? selectMapaCarrera.value : '';
-      let fileUrl = "data/mapas/Mapa_de_Carrera_General_Plantilla.xlsx";
-      let fileName = "Mapa_de_Carrera_Personal_LaCaravana.xlsx";
-
-      if (selected && MAPAS_ARCHIVOS[selected]) {
-        fileUrl = MAPAS_ARCHIVOS[selected].archivo;
-        fileName = MAPAS_ARCHIVOS[selected].nombre;
+      if (!selected || !MAPAS_ARCHIVOS[selected]) {
+        e.preventDefault();
+        alert('Por favor, seleccioná tu carrera o profesorado en el menú desplegable para descargar tu mapa oficial correspondiente.');
+        if (selectMapaCarrera) selectMapaCarrera.focus();
+        return;
       }
+
+      const fileUrl = MAPAS_ARCHIVOS[selected].archivo;
+      const fileName = MAPAS_ARCHIVOS[selected].nombre;
 
       const a = document.createElement('a');
       a.href = fileUrl;

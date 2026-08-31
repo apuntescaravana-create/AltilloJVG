@@ -20,12 +20,24 @@ document.addEventListener('DOMContentLoaded', () => {
   const tabApuntes = document.getElementById('tabApuntes');
   const tabNoticias = document.getElementById('tabNoticias');
   const tabFeedback = document.getElementById('tabFeedback');
+  const tabMetricas = document.getElementById('tabMetricas');
 
   // Contenedores de Sección
   const sectionSubmissions = document.getElementById('sectionSubmissions');
   const sectionApuntes = document.getElementById('sectionApuntes');
   const sectionNoticias = document.getElementById('sectionNoticias');
   const sectionFeedback = document.getElementById('sectionFeedback');
+  const sectionMetricas = document.getElementById('sectionMetricas');
+
+  // Elementos de Métricas y Backup
+  const metricTotalApuntes = document.getElementById('metricTotalApuntes');
+  const metricPendingApuntes = document.getElementById('metricPendingApuntes');
+  const metricTotalNews = document.getElementById('metricTotalNews');
+  const metricTotalSubscribers = document.getElementById('metricTotalSubscribers');
+  const btnExportFullBackup = document.getElementById('btnExportFullBackup');
+  const urgentBannerInput = document.getElementById('urgentBannerInput');
+  const btnSaveUrgentBanner = document.getElementById('btnSaveUrgentBanner');
+  const btnClearUrgentBanner = document.getElementById('btnClearUrgentBanner');
 
   // Badges y Contadores
   const pendingBadgeCount = document.getElementById('pendingBadgeCount');
@@ -76,6 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let allMaterials = [];
   let allSubmissions = { pending: [], history: [] };
   let allNews = [];
+  let allFeedbackList = [];
   let adminPassword = localStorage.getItem('altillojvg_admin_pass') || '';
 
   // ==========================================================================
@@ -83,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ==========================================================================
   function switchTab(tabName) {
     // Resetear estilos de los botones
-    [tabSubmissions, tabApuntes, tabNoticias, tabFeedback].forEach(btn => {
+    [tabSubmissions, tabApuntes, tabNoticias, tabFeedback, tabMetricas].forEach(btn => {
       if (btn) {
         btn.classList.remove('border-brand-navy', 'text-brand-navy');
         btn.classList.add('border-transparent', 'text-gray-500');
@@ -95,6 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (sectionApuntes) sectionApuntes.classList.add('hidden');
     if (sectionNoticias) sectionNoticias.classList.add('hidden');
     if (sectionFeedback) sectionFeedback.classList.add('hidden');
+    if (sectionMetricas) sectionMetricas.classList.add('hidden');
 
     if (tabName === 'submissions') {
       if (tabSubmissions) {
@@ -124,6 +138,13 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       if (sectionFeedback) sectionFeedback.classList.remove('hidden');
       loadFeedback();
+    } else if (tabName === 'metricas') {
+      if (tabMetricas) {
+        tabMetricas.classList.add('border-brand-navy', 'text-brand-navy');
+        tabMetricas.classList.remove('border-transparent', 'text-gray-500');
+      }
+      if (sectionMetricas) sectionMetricas.classList.remove('hidden');
+      loadMetricsDashboard();
     }
   }
 
@@ -132,6 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (tabApuntes) tabApuntes.addEventListener('click', () => switchTab('apuntes'));
   if (tabNoticias) tabNoticias.addEventListener('click', () => switchTab('noticias'));
   if (tabFeedback) tabFeedback.addEventListener('click', () => switchTab('feedback'));
+  if (tabMetricas) tabMetricas.addEventListener('click', () => switchTab('metricas'));
 
   // ==========================================================================
   // AUTENTICACIÓN Y SESIÓN
@@ -1334,6 +1356,117 @@ document.addEventListener('DOMContentLoaded', () => {
       alert('Error de conexión.');
     }
   };
+
+  // ==========================================================================
+  // DASHBOARD DE MÉTRICAS Y COPIA DE SEGURIDAD
+  // ==========================================================================
+  async function loadMetricsDashboard() {
+    // 1. Apuntes Aprobados
+    if (metricTotalApuntes) {
+      metricTotalApuntes.textContent = allMaterials ? allMaterials.length : '0';
+    }
+
+    // 2. Aportes Pendientes
+    if (metricPendingApuntes) {
+      metricPendingApuntes.textContent = (allSubmissions && allSubmissions.pending) ? allSubmissions.pending.length : '0';
+    }
+
+    // 3. Tablón de Noticias
+    if (metricTotalNews) {
+      metricTotalNews.textContent = allNews ? allNews.length : '0';
+    }
+
+    // 4. Suscriptores al Newsletter
+    if (metricTotalSubscribers) {
+      try {
+        const res = await fetch('/api/subscribers', {
+          headers: { 'x-admin-password': adminPassword }
+        });
+        if (res.ok) {
+          const data = await res.json();
+          metricTotalSubscribers.textContent = (data && data.subscribers) ? data.subscribers.length : '0';
+        }
+      } catch (err) {
+        metricTotalSubscribers.textContent = '-';
+      }
+    }
+
+    // 5. Cargar valor actual del Banner Urgente si existe
+    if (urgentBannerInput) {
+      urgentBannerInput.value = localStorage.getItem('altillojvg_urgent_banner') || '';
+    }
+  }
+
+  // Guardar Banner Urgente
+  if (btnSaveUrgentBanner && urgentBannerInput) {
+    btnSaveUrgentBanner.addEventListener('click', () => {
+      const text = urgentBannerInput.value.trim();
+      if (!text) {
+        alert('Por favor, escribí un texto para la alerta antes de activarla.');
+        return;
+      }
+      localStorage.setItem('altillojvg_urgent_banner', text);
+      alert('✅ Alerta urgente activada correctamente en toda la plataforma.');
+    });
+  }
+
+  // Desactivar Banner Urgente
+  if (btnClearUrgentBanner && urgentBannerInput) {
+    btnClearUrgentBanner.addEventListener('click', () => {
+      localStorage.removeItem('altillojvg_urgent_banner');
+      urgentBannerInput.value = '';
+      alert('ℹ️ Alerta urgente desactivada.');
+    });
+  }
+
+  // Exportar Backup Completo en 1 Clic
+  if (btnExportFullBackup) {
+    btnExportFullBackup.addEventListener('click', async () => {
+      btnExportFullBackup.disabled = true;
+      btnExportFullBackup.textContent = '⏳ Generando Backup...';
+
+      try {
+        let subscribersList = [];
+        try {
+          const resSub = await fetch('/api/subscribers', {
+            headers: { 'x-admin-password': adminPassword }
+          });
+          if (resSub.ok) {
+            const dataSub = await resSub.json();
+            subscribersList = dataSub.subscribers || [];
+          }
+        } catch (e) {}
+
+        const backupData = {
+          exportDate: new Date().toISOString(),
+          sistema: "AltilloJVG",
+          entorno: "La Caravana + Estudiantes Independientes",
+          materiales: allMaterials,
+          aportes: allSubmissions,
+          noticias: allNews,
+          consultas: allFeedbackList,
+          suscriptores: subscribersList
+        };
+
+        const blob = new Blob([JSON.stringify(backupData, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        const dateStr = new Date().toISOString().split('T')[0];
+        a.href = url;
+        a.download = `altillojvg_backup_${dateStr}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      } catch (err) {
+        console.error(err);
+        alert('Error al generar la copia de seguridad.');
+      } finally {
+        btnExportFullBackup.disabled = false;
+        btnExportFullBackup.textContent = '📥 Descargar Backup Completo (.json)';
+      }
+    });
+  }
 
   function escapeQuote(str) {
     return String(str || '').replace(/'/g, "\\'");

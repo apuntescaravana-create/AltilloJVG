@@ -106,10 +106,12 @@ const JVG_OFFICIAL_RESOURCES = {
       pasos: [
         "Requisito indispensable: tener una tarjeta SUBE registrada a tu nombre en sube.gob.ar.",
         "Estar inscripto/a como estudiante regular en el Joaquín V. González (el instituto informa la nómina oficial periódicamente).",
-        "Ingresar al portal oficial del GCBA de Boleto Estudiantil y completar el formulario con tus datos.",
-        "Una vez aprobado en la web, acercate a cualquier Terminal Automática SUBE (TAS) o apoyá la tarjeta en tu celular con la App SUBE (tecnología NFC) para activar el subsidio."
+        "Ingresar al portal oficial del GCBA de Boleto Estudiantil y completar el formulario con tus datos personales.",
+        "Una vez aprobado en la web, acercate a cualquier Terminal Automática SUBE (TAS) o apoyá la tarjeta en tu celular con la App SUBE (tecnología NFC) para activar el beneficio."
       ],
       link: "https://boletoestudiantil.buenosaires.gob.ar/",
+      linkSecundario: "https://tarjetasube.sube.gob.ar/",
+      textoLinkSecundario: "Registrar / Consultar SUBE",
       infoPdf: "http://institutojvgonzalez.buenosaires.edu.ar/institucional/docs/2026/alumnos2026-boleto-estud1.pdf"
     },
     {
@@ -118,21 +120,25 @@ const JVG_OFFICIAL_RESOURCES = {
       pasos: [
         "Convocatoria anual: habitual apertura entre marzo y mayo de cada ciclo lectivo.",
         "Requisitos: ser estudiante regular del nivel superior y cumplir los criterios socioeconómicos establecidos por el GCBA.",
-        "Inscripción: completar el formulario virtual en el portal de Becas Ciudad y adjuntar constancia de regularidad y comprobantes familiares.",
-        "Cobro: se deposita a través de cuenta bancaria asignada del Banco Ciudad."
+        "Inscripción: ingresar al portal oficial de Becas Ciudad (becasciudad.bue.edu.ar), completar el formulario virtual y adjuntar constancia de regularidad.",
+        "Cobro: se deposita mensualmente a través de cuenta bancaria asignada del Banco Ciudad."
       ],
-      link: "https://buenosaires.gob.ar/educacion/estudiantes/becas-educativas/becas-ciudad"
+      link: "https://becasciudad.bue.edu.ar/",
+      linkSecundario: "https://buenosaires.gob.ar/educacion/estudiantes/becas-educativas",
+      textoLinkSecundario: "Portal Informativo GCBA"
     },
     {
       nombre: "Programa PROGRESAR Nivel Superior",
       descripcion: "Beca nacional orientada a garantizar el acompañamiento y finalización de los estudios terciarios y de formación docente.",
       pasos: [
-        "Requisitos de edad: 17 a 24 años (hasta 30 años para estudiantes avanzados, sin límite para personas con hijos monoparentales, discapacidad o colectivos vulnerables).",
+        "Requisitos de edad: 17 a 24 años (hasta 30 años para estudiantes avanzados, sin límite de edad para personas con hijos a cargo en hogares monoparentales o personas con discapacidad).",
         "Ingresos del grupo familiar: no deben superar los 3 Salarios Mínimos, Vitales y Móviles (SMVM).",
-        "Convocatorias: 1° llamado (marzo-abril) y 2° llamado (agosto-septiembre) en la web de Progresar o la app Mi Argentina.",
-        "El JVG certifica tu regularidad académica automáticamente tras tu postulación."
+        "Convocatorias: 1° llamado (marzo-abril) y 2° llamado (agosto-septiembre) a través de la web oficial de Progresar o la app Mi Argentina.",
+        "El JVG certifica tu regularidad académica automáticamente ante el Ministerio de Capital Humano tras tu postulación."
       ],
-      link: "https://www.argentina.gob.ar/educacion/progresar"
+      link: "https://www.argentina.gob.ar/educacion/progresar",
+      linkSecundario: "https://www.argentina.gob.ar/miargentina/app",
+      textoLinkSecundario: "Descargar App Mi Argentina"
     }
   ],
 
