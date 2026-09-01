@@ -41,6 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Abrir Modal
   window.openMapaCarreraModal = function() {
     if (!mapaModal) return;
+    if (typeof window.trackToolUsage === 'function') window.trackToolUsage('mapas');
     mapaModal.classList.add('active');
     document.body.style.overflow = 'hidden';
     populateCarreras();

@@ -32,6 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Open Aulas Modal trigger (will be called from main.js)
   window.openAulasModal = function() {
     if (!aulasModal) return;
+    if (typeof window.trackToolUsage === 'function') window.trackToolUsage('aulas');
     populateDropdowns();
     renderAulasResults();
     aulasModal.classList.add('active');

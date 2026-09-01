@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (btn && uploadModal) {
       btn.addEventListener('click', (e) => {
         e.preventDefault();
+        trackToolUsage('upload');
         uploadModal.classList.add('active');
         document.body.style.overflow = 'hidden';
       });
@@ -87,12 +88,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     card.addEventListener('click', (e) => {
       e.preventDefault();
-      if (card.classList.contains('normativa')) openNormativasModal();
-      else if (card.classList.contains('planes')) openPlanesModal();
-      else if (card.classList.contains('horarios')) {
+      if (card.classList.contains('normativa')) {
+        trackToolUsage('tramites');
+        openNormativasModal();
+      } else if (card.classList.contains('planes')) {
+        trackToolUsage('tramites');
+        openPlanesModal();
+      } else if (card.classList.contains('horarios')) {
+        trackToolUsage('aulas');
         if (typeof window.openAulasModal === 'function') window.openAulasModal();
         else openHorariosModal();
       } else if (card.classList.contains('mapa-carrera')) {
+        trackToolUsage('mapas');
         if (typeof window.openMapaCarreraModal === 'function') window.openMapaCarreraModal();
       }
     });
@@ -109,16 +116,16 @@ document.addEventListener('DOMContentLoaded', () => {
         trackToolUsage('mapas');
         if (typeof window.openMapaCarreraModal === 'function') window.openMapaCarreraModal();
       } else if (box.classList.contains('box-finales')) {
-        trackToolUsage('promedio');
+        trackToolUsage('tramites');
         openFinalesModal();
       } else if (box.classList.contains('box-tramites')) {
-        trackToolUsage('becas');
+        trackToolUsage('tramites');
         openTramitesModal();
       } else if (box.classList.contains('box-becas')) {
         trackToolUsage('becas');
         openBecasModal();
       } else if (box.classList.contains('box-derechos')) {
-        trackToolUsage('becas');
+        trackToolUsage('tramites');
         openDerechosModal();
       } else if (box.classList.contains('box-libros')) {
         trackToolUsage('apuntes');
@@ -409,6 +416,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   window.openFeedbackModal = function() {
     if (!feedbackModal) return;
+    if (typeof trackToolUsage === 'function') trackToolUsage('feedback');
     feedbackModal.classList.add('active');
     document.body.style.overflow = 'hidden';
   };
@@ -611,12 +619,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
   window.trackToolUsage = function(toolKey) {
     try {
+      if (!toolKey) return;
+      let key = String(toolKey).toLowerCase().trim();
+      if (key === 'promedio' || key === 'finales') key = 'tramites';
+
+      const todayStr = new Date().toISOString().split('T')[0];
+
+      // 1. Guardar local total
       const tools = JSON.parse(localStorage.getItem('altillojvg_analytics_tools') || '{}');
-      tools[toolKey] = (tools[toolKey] || 0) + 1;
+      delete tools.promedio;
+      tools[key] = (tools[key] || 0) + 1;
       localStorage.setItem('altillojvg_analytics_tools', JSON.stringify(tools));
 
-      // Persistencia global en backend
-      fetch(`/api/metrics?action=tool&key=${encodeURIComponent(toolKey)}`, {
+      // 2. Guardar local diario
+      const toolsByDate = JSON.parse(localStorage.getItem('altillojvg_analytics_tools_by_date') || '{}');
+      if (!toolsByDate[todayStr]) toolsByDate[todayStr] = {};
+      delete toolsByDate[todayStr].promedio;
+      toolsByDate[todayStr][key] = (toolsByDate[todayStr][key] || 0) + 1;
+      localStorage.setItem('altillojvg_analytics_tools_by_date', JSON.stringify(toolsByDate));
+
+      // 3. Persistencia global en backend
+      fetch(`/api/metrics?action=tool&key=${encodeURIComponent(key)}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         keepalive: true

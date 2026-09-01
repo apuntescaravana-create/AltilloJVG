@@ -59,6 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // 3. Abrir e inicializar el explorador para una carrera específica
   function openExplorerForCareer(carreraName) {
     if (!materialesModal) return;
+    if (typeof window.trackToolUsage === 'function') window.trackToolUsage('apuntes');
 
     // Poblar selector carrera (bloqueado para edición directa por el alumno)
     explorerCarrera.innerHTML = `<option value="${carreraName}">${carreraName}</option>`;

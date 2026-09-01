@@ -1376,11 +1376,12 @@ document.addEventListener('DOMContentLoaded', () => {
     'aulas': { name: 'Buscador de Aulas y Cursadas', icon: '🏫', color: 'bg-blue-500' },
     'apuntes': { name: 'Repositorio de Apuntes', icon: '📚', color: 'bg-emerald-500' },
     'mapas': { name: 'Mapas de Carrera (.xlsx)', icon: '🗺️', color: 'bg-sky-500' },
-    'promedio': { name: 'Calculadora de Promedio', icon: '🧮', color: 'bg-indigo-500' },
+    'upload': { name: 'Subida de Apuntes', icon: '📤', color: 'bg-teal-500' },
     'computadoras': { name: 'Préstamo de Netbooks', icon: '💻', color: 'bg-amber-500' },
     'becas': { name: 'Boleto Estudiantil y Becas', icon: '🎟️', color: 'bg-orange-500' },
     'tablon': { name: 'Tablón de Novedades', icon: '📢', color: 'bg-cyan-500' },
-    'feedback': { name: 'Buzón de Consultas', icon: '💬', color: 'bg-purple-500' }
+    'feedback': { name: 'Buzón de Consultas', icon: '💬', color: 'bg-purple-500' },
+    'tramites': { name: 'Trámites y Normativas', icon: '📝', color: 'bg-rose-500' }
   };
 
   async function loadMetricsDashboard() {
@@ -1405,14 +1406,17 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    // 3. Analítica de Visitas (Filtrado por Día, Mes, Año, Total)
+    // 3. Analítica de Visitas y Herramientas (Filtrado por Día, Mes, Año, Total)
     const period = metricsPeriodFilter ? metricsPeriodFilter.value : 'total';
     let visitsData = {};
     let toolsData = {};
+    let toolsByDate = {};
 
     try {
       visitsData = JSON.parse(localStorage.getItem('altillojvg_analytics_visits') || '{}');
       toolsData = JSON.parse(localStorage.getItem('altillojvg_analytics_tools') || '{}');
+      toolsByDate = JSON.parse(localStorage.getItem('altillojvg_analytics_tools_by_date') || '{}');
+      delete toolsData.promedio;
     } catch (e) {}
 
     // Consultar telemetría consolidada del servidor
@@ -1422,13 +1426,18 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       if (mResp.ok) {
         const mData = await mResp.json();
-        if (mData && mData.visits && Object.keys(mData.visits).length > 0) {
+        if (mData && mData.visits) {
           visitsData = mData.visits;
           localStorage.setItem('altillojvg_analytics_visits', JSON.stringify(visitsData));
         }
-        if (mData && mData.tools && Object.keys(mData.tools).length > 0) {
+        if (mData && mData.tools) {
           toolsData = mData.tools;
+          delete toolsData.promedio;
           localStorage.setItem('altillojvg_analytics_tools', JSON.stringify(toolsData));
+        }
+        if (mData && mData.tools_by_date) {
+          toolsByDate = mData.tools_by_date;
+          localStorage.setItem('altillojvg_analytics_tools_by_date', JSON.stringify(toolsByDate));
         }
       }
     } catch (e) {
@@ -1438,10 +1447,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const todayStr = new Date().toISOString().split('T')[0];
     const currentMonth = todayStr.substring(0, 7);
     const currentYear = todayStr.substring(0, 4);
-
-    if (!visitsData[todayStr]) {
-      visitsData[todayStr] = 48;
-    }
 
     let totalVisits = 0;
     let periodLabel = 'Histórico Total';
@@ -1469,11 +1474,39 @@ document.addEventListener('DOMContentLoaded', () => {
     if (metricTotalVisits) metricTotalVisits.textContent = totalVisits.toLocaleString('es-AR');
     if (metricVisitsPeriodTag) metricVisitsPeriodTag.textContent = `● ${periodLabel}`;
 
-    // 4. Analítica de Herramientas Más Usadas
-    const defaultTools = { aulas: 142, apuntes: 118, mapas: 96, promedio: 74, computadoras: 53, becas: 45, tablon: 39, feedback: 22 };
-    Object.keys(defaultTools).forEach(k => {
-      if (!toolsData[k]) toolsData[k] = defaultTools[k];
-    });
+    // 4. Analítica de Herramientas Más Usadas FILTRADA POR PERÍODO
+    const currentToolsPeriod = {};
+    Object.keys(TOOL_INFO).forEach(k => { currentToolsPeriod[k] = 0; });
+
+    if (period === 'hoy') {
+      const todayTools = toolsByDate[todayStr] || {};
+      Object.keys(todayTools).forEach(k => {
+        if (k in currentToolsPeriod) currentToolsPeriod[k] = todayTools[k] || 0;
+      });
+    } else if (period === 'mes') {
+      Object.keys(toolsByDate).forEach(d => {
+        if (d.startsWith(currentMonth)) {
+          const dayTools = toolsByDate[d] || {};
+          Object.keys(dayTools).forEach(k => {
+            if (k in currentToolsPeriod) currentToolsPeriod[k] += (dayTools[k] || 0);
+          });
+        }
+      });
+    } else if (period === 'anio') {
+      Object.keys(toolsByDate).forEach(d => {
+        if (d.startsWith(currentYear)) {
+          const dayTools = toolsByDate[d] || {};
+          Object.keys(dayTools).forEach(k => {
+            if (k in currentToolsPeriod) currentToolsPeriod[k] += (dayTools[k] || 0);
+          });
+        }
+      });
+    } else {
+      // Histórico Total
+      Object.keys(toolsData).forEach(k => {
+        if (k in currentToolsPeriod) currentToolsPeriod[k] = toolsData[k] || 0;
+      });
+    }
 
     const toolKeys = Object.keys(TOOL_INFO);
     const sortedTools = toolKeys.map(k => ({
@@ -1481,19 +1514,24 @@ document.addEventListener('DOMContentLoaded', () => {
       name: TOOL_INFO[k].name,
       icon: TOOL_INFO[k].icon,
       color: TOOL_INFO[k].color,
-      count: toolsData[k] || 0
+      count: currentToolsPeriod[k] || 0
     })).sort((a, b) => b.count - a.count);
 
-    const totalClicks = sortedTools.reduce((acc, t) => acc + t.count, 0) || 1;
-    const topTool = sortedTools[0];
+    const totalClicks = sortedTools.reduce((acc, t) => acc + t.count, 0);
 
-    if (metricTopTool) metricTopTool.textContent = `${topTool.icon} ${topTool.name}`;
-    if (metricTopToolClicks) metricTopToolClicks.textContent = `${topTool.count} usos (${Math.round((topTool.count / totalClicks) * 100)}%)`;
+    if (totalClicks > 0) {
+      const topTool = sortedTools[0];
+      if (metricTopTool) metricTopTool.textContent = `${topTool.icon} ${topTool.name}`;
+      if (metricTopToolClicks) metricTopToolClicks.textContent = `${topTool.count} uso${topTool.count === 1 ? '' : 's'} (${Math.round((topTool.count / totalClicks) * 100)}%)`;
+    } else {
+      if (metricTopTool) metricTopTool.textContent = 'Sin uso registrado';
+      if (metricTopToolClicks) metricTopToolClicks.textContent = '0 usos en este período';
+    }
 
     // Renderizar Ranking de Herramientas con Barras de Progreso
     if (toolRankingContainer) {
       toolRankingContainer.innerHTML = sortedTools.map((t, idx) => {
-        const pct = Math.round((t.count / totalClicks) * 100);
+        const pct = totalClicks > 0 ? Math.round((t.count / totalClicks) * 100) : 0;
         return `
           <div>
             <div class="flex justify-between items-center text-xs font-semibold mb-1">
@@ -1502,7 +1540,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <span>${t.icon}</span>
                 <span>${t.name}</span>
               </span>
-              <span class="text-gray-500 font-mono">${t.count} usos <strong class="text-brand-navy">(${pct}%)</strong></span>
+              <span class="text-gray-500 font-mono">${t.count} uso${t.count === 1 ? '' : 's'} <strong class="text-brand-navy">(${pct}%)</strong></span>
             </div>
             <div class="w-full bg-gray-100 rounded-full h-2 overflow-hidden">
               <div class="${t.color} h-2 rounded-full transition-all duration-500" style="width: ${pct}%;"></div>
