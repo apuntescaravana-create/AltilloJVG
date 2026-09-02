@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const tabNoticias = document.getElementById('tabNoticias');
   const tabFeedback = document.getElementById('tabFeedback');
   const tabMetricas = document.getElementById('tabMetricas');
+  const tabEditor = document.getElementById('tabEditor');
 
   // Contenedores de Sección
   const sectionSubmissions = document.getElementById('sectionSubmissions');
@@ -28,6 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const sectionNoticias = document.getElementById('sectionNoticias');
   const sectionFeedback = document.getElementById('sectionFeedback');
   const sectionMetricas = document.getElementById('sectionMetricas');
+  const sectionEditor = document.getElementById('sectionEditor');
 
   // Elementos de Métricas y Backup
   const metricTotalVisits = document.getElementById('metricTotalVisits');
@@ -103,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ==========================================================================
   function switchTab(tabName) {
     // Resetear estilos de los botones
-    [tabSubmissions, tabApuntes, tabNoticias, tabFeedback, tabMetricas].forEach(btn => {
+    [tabSubmissions, tabApuntes, tabNoticias, tabFeedback, tabMetricas, tabEditor].forEach(btn => {
       if (btn) {
         btn.classList.remove('border-brand-navy', 'text-brand-navy');
         btn.classList.add('border-transparent', 'text-gray-500');
@@ -116,6 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (sectionNoticias) sectionNoticias.classList.add('hidden');
     if (sectionFeedback) sectionFeedback.classList.add('hidden');
     if (sectionMetricas) sectionMetricas.classList.add('hidden');
+    if (sectionEditor) sectionEditor.classList.add('hidden');
 
     if (tabName === 'submissions') {
       if (tabSubmissions) {
@@ -152,6 +155,13 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       if (sectionMetricas) sectionMetricas.classList.remove('hidden');
       loadMetricsDashboard();
+    } else if (tabName === 'editor') {
+      if (tabEditor) {
+        tabEditor.classList.add('border-brand-navy', 'text-brand-navy');
+        tabEditor.classList.remove('border-transparent', 'text-gray-500');
+      }
+      if (sectionEditor) sectionEditor.classList.remove('hidden');
+      loadSiteEditor();
     }
   }
 
@@ -161,6 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (tabNoticias) tabNoticias.addEventListener('click', () => switchTab('noticias'));
   if (tabFeedback) tabFeedback.addEventListener('click', () => switchTab('feedback'));
   if (tabMetricas) tabMetricas.addEventListener('click', () => switchTab('metricas'));
+  if (tabEditor) tabEditor.addEventListener('click', () => switchTab('editor'));
 
   // ==========================================================================
   // AUTENTICACIÓN Y SESIÓN
@@ -1642,6 +1653,535 @@ document.addEventListener('DOMContentLoaded', () => {
       } finally {
         btnExportFullBackup.disabled = false;
         btnExportFullBackup.textContent = '📥 Descargar Backup Completo (.json)';
+      }
+    });
+  }
+
+  // ==========================================================================
+  // 6. EDITOR DEL SITIO (CMS NO-CODE & LIVE PREVIEW)
+  // ==========================================================================
+  let siteConfig = null;
+  let activeEditorCarrera = "";
+  let activeEditorPlan = "Plan Vigente";
+  let previewDevice = "mobile"; // 'mobile' | 'desktop'
+  let isEditorDirty = false;
+
+  const subTabCurriculum = document.getElementById('subTabCurriculum');
+  const subTabTools = document.getElementById('subTabTools');
+  const subTabPreview = document.getElementById('subTabPreview');
+
+  const editorSubViewCurriculum = document.getElementById('editorSubViewCurriculum');
+  const editorSubViewTools = document.getElementById('editorSubViewTools');
+  const editorSubViewPreview = document.getElementById('editorSubViewPreview');
+
+  const editorSelectCarrera = document.getElementById('editorSelectCarrera');
+  const editorSelectPlan = document.getElementById('editorSelectPlan');
+  const editorYearsContainer = document.getElementById('editorYearsContainer');
+  const editorToolsList = document.getElementById('editorToolsList');
+
+  const btnAddNewPlan = document.getElementById('btnAddNewPlan');
+  const btnRenamePlan = document.getElementById('btnRenamePlan');
+  const btnDeletePlan = document.getElementById('btnDeletePlan');
+
+  const btnSaveSiteConfig = document.getElementById('btnSaveSiteConfig');
+  const btnResetSiteConfig = document.getElementById('btnResetSiteConfig');
+  const editorSaveStatus = document.getElementById('editorSaveStatus');
+
+  const btnPreviewMobile = document.getElementById('btnPreviewMobile');
+  const btnPreviewDesktop = document.getElementById('btnPreviewDesktop');
+  const previewFrameWrapper = document.getElementById('previewFrameWrapper');
+  const previewDeviceMock = document.getElementById('previewDeviceMock');
+  const previewNotch = document.getElementById('previewNotch');
+  const previewContentBody = document.getElementById('previewContentBody');
+
+  function setEditorDirty(dirty) {
+    isEditorDirty = dirty;
+    if (editorSaveStatus) {
+      if (dirty) {
+        editorSaveStatus.className = 'bg-amber-100 text-amber-800 text-xs px-2.5 py-0.5 rounded-full font-bold flex items-center gap-1';
+        editorSaveStatus.innerHTML = '● Cambios sin guardar';
+      } else {
+        editorSaveStatus.className = 'bg-emerald-100 text-emerald-800 text-xs px-2.5 py-0.5 rounded-full font-bold flex items-center gap-1';
+        editorSaveStatus.innerHTML = '✓ Sincronizado';
+      }
+    }
+  }
+
+  function switchEditorSubTab(subTabName) {
+    [subTabCurriculum, subTabTools, subTabPreview].forEach(b => {
+      if (b) {
+        b.classList.remove('border-brand-navy', 'text-brand-navy');
+        b.classList.add('border-transparent', 'text-gray-500');
+      }
+    });
+
+    if (editorSubViewCurriculum) editorSubViewCurriculum.classList.add('hidden');
+    if (editorSubViewTools) editorSubViewTools.classList.add('hidden');
+    if (editorSubViewPreview) editorSubViewPreview.classList.add('hidden');
+
+    if (subTabName === 'curriculum') {
+      if (subTabCurriculum) {
+        subTabCurriculum.classList.add('border-brand-navy', 'text-brand-navy');
+        subTabCurriculum.classList.remove('border-transparent', 'text-gray-500');
+      }
+      if (editorSubViewCurriculum) editorSubViewCurriculum.classList.remove('hidden');
+      renderEditorCarreraCurriculum();
+    } else if (subTabName === 'tools') {
+      if (subTabTools) {
+        subTabTools.classList.add('border-brand-navy', 'text-brand-navy');
+        subTabTools.classList.remove('border-transparent', 'text-gray-500');
+      }
+      if (editorSubViewTools) editorSubViewTools.classList.remove('hidden');
+      renderEditorTools();
+    } else if (subTabName === 'preview') {
+      if (subTabPreview) {
+        subTabPreview.classList.add('border-brand-navy', 'text-brand-navy');
+        subTabPreview.classList.remove('border-transparent', 'text-gray-500');
+      }
+      if (editorSubViewPreview) editorSubViewPreview.classList.remove('hidden');
+      renderLivePreview();
+    }
+  }
+
+  if (subTabCurriculum) subTabCurriculum.addEventListener('click', () => switchEditorSubTab('curriculum'));
+  if (subTabTools) subTabTools.addEventListener('click', () => switchEditorSubTab('tools'));
+  if (subTabPreview) subTabPreview.addEventListener('click', () => switchEditorSubTab('preview'));
+
+  async function loadSiteEditor() {
+    try {
+      const res = await fetch('/api/site_config');
+      if (res.ok) {
+        const data = await res.json();
+        if (data && data.curriculum && Object.keys(data.curriculum).length > 0) {
+          siteConfig = data;
+        }
+      }
+    } catch (e) {
+      console.warn('Error fetching /api/site_config:', e);
+    }
+
+    if (!siteConfig) {
+      try {
+        const cached = localStorage.getItem('altillojvg_site_config');
+        if (cached) siteConfig = JSON.parse(cached);
+      } catch (e) {}
+    }
+
+    if (!siteConfig || !siteConfig.curriculum || Object.keys(siteConfig.curriculum).length === 0) {
+      const baseCurriculum = (typeof CURRICULUM_DATA !== 'undefined') ? JSON.parse(JSON.stringify(CURRICULUM_DATA)) : {};
+      siteConfig = {
+        curriculum: baseCurriculum,
+        tools_config: {
+          aulas: { id: 'aulas', visible: true, nombre: 'Buscador de Aulas', subtitulo: 'Consultá salones, materias y horarios (Base de datos 1.658 clases).' },
+          mapas: { id: 'mapas', visible: true, nombre: 'Mapa de Carrera Personal', subtitulo: 'Seguí tus correlatividades y avance de carrera en tu Drive.' },
+          comodato: { id: 'comodato', visible: true, nombre: 'Préstamo de Computadoras', subtitulo: 'Netbooks en comodato: requisitos y modelo de carta.' },
+          becas: { id: 'becas', visible: true, nombre: 'Boleto Estudiantil y Becas', subtitulo: 'Instructivos para SUBE, Beca Ciudad y Progresar.' },
+          normativas: { id: 'normativas', visible: true, nombre: 'Normativa Institucional', subtitulo: 'Reglamento Orgánico (ROI), correlatividades y resoluciones.' },
+          planes: { id: 'planes', visible: true, nombre: 'Planes de Estudio', subtitulo: 'Planes de los profesorados del instituto y resoluciones.' },
+          feedback: { id: 'feedback', visible: true, nombre: 'Consultas y Sugerencias', subtitulo: 'Escribinos directamente al equipo de administración.' }
+        }
+      };
+    }
+
+    populateEditorCarrerasDropdown();
+    switchEditorSubTab('curriculum');
+  }
+
+  function populateEditorCarrerasDropdown() {
+    if (!editorSelectCarrera || !siteConfig || !siteConfig.curriculum) return;
+    const carreras = Object.keys(siteConfig.curriculum).sort();
+    editorSelectCarrera.innerHTML = carreras.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('');
+
+    if (!activeEditorCarrera || !siteConfig.curriculum[activeEditorCarrera]) {
+      activeEditorCarrera = carreras[0] || "";
+    }
+    editorSelectCarrera.value = activeEditorCarrera;
+
+    editorSelectCarrera.onchange = (e) => {
+      activeEditorCarrera = e.target.value;
+      activeEditorPlan = "Plan Vigente";
+      renderEditorCarreraCurriculum();
+    };
+
+    renderEditorCarreraCurriculum();
+  }
+
+  function renderEditorCarreraCurriculum() {
+    if (!activeEditorCarrera || !siteConfig || !siteConfig.curriculum || !siteConfig.curriculum[activeEditorCarrera]) return;
+
+    const carreraObj = siteConfig.curriculum[activeEditorCarrera];
+    if (!carreraObj.planes) {
+      carreraObj.planes = { "Plan Vigente": carreraObj };
+    }
+
+    const planNames = Object.keys(carreraObj.planes);
+    if (!planNames.includes(activeEditorPlan)) {
+      activeEditorPlan = planNames[0] || "Plan Vigente";
+    }
+
+    if (editorSelectPlan) {
+      editorSelectPlan.innerHTML = planNames.map(p => `<option value="${escapeHtml(p)}" ${p === activeEditorPlan ? 'selected' : ''}>${escapeHtml(p)}</option>`).join('');
+      editorSelectPlan.onchange = (e) => {
+        activeEditorPlan = e.target.value;
+        renderEditorCarreraCurriculum();
+      };
+    }
+
+    const currentPlanYears = carreraObj.planes[activeEditorPlan] || {};
+
+    if (!editorYearsContainer) return;
+    const yearsOrder = ["1° Año", "2° Año", "3° Año", "4° Año", "5° Año", "Tramo Superior / Seminarios"];
+    const allYears = Array.from(new Set([...yearsOrder, ...Object.keys(currentPlanYears)]));
+
+    editorYearsContainer.innerHTML = allYears.map(yearName => {
+      const materias = currentPlanYears[yearName] || [];
+      const count = materias.length;
+
+      const materiasHtml = materias.map((mat, idx) => {
+        const isComision = /\(Comisi[oó]n\s+[A-Z0-9]+\)/i.test(mat);
+        return `
+          <div class="flex items-center justify-between p-2.5 bg-gray-50 border border-gray-200 rounded-xl hover:bg-white hover:border-brand-blue transition group">
+            <div class="flex items-center gap-2 flex-1 min-w-0 pr-2">
+              <span class="text-xs font-bold text-gray-800 truncate">${escapeHtml(mat)}</span>
+              ${isComision ? `<span class="bg-blue-100 text-blue-800 text-[10px] font-bold px-1.5 py-0.5 rounded">Comisión</span>` : ''}
+            </div>
+            <div class="flex items-center gap-1 opacity-90 group-hover:opacity-100 flex-shrink-0">
+              <button type="button" onclick="editSubjectPrompt('${escapeQuote(yearName)}', ${idx})" title="Renombrar materia" class="p-1 text-gray-500 hover:text-brand-navy hover:bg-gray-200 rounded">
+                ✏️
+              </button>
+              <button type="button" onclick="deleteSubject('${escapeQuote(yearName)}', ${idx})" title="Eliminar materia" class="p-1 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded">
+                🗑️
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      const inputDomId = 'newMateriaInput_' + yearName.replace(/[^a-zA-Z0-9]/g, '');
+      return `
+        <div class="border border-gray-200 rounded-xl overflow-hidden bg-white">
+          <div class="bg-gray-50 px-4 py-2.5 border-b border-gray-200 flex justify-between items-center">
+            <h5 class="text-xs sm:text-sm font-bold text-brand-navy flex items-center gap-2">
+              <span>📅</span> ${escapeHtml(yearName)}
+              <span class="text-[11px] font-normal text-gray-500 font-mono">(${count} materias)</span>
+            </h5>
+          </div>
+          <div class="p-4 space-y-3">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              ${materiasHtml || `<p class="text-xs text-gray-400 italic py-2 col-span-2">No hay materias registradas en este año.</p>`}
+            </div>
+            <div class="flex gap-2 pt-2 border-t border-gray-100">
+              <input type="text" id="${inputDomId}" placeholder="Escribí el nombre de la materia (ej: Geometría I Comisión B)..." class="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-xs outline-none focus:ring-2 focus:ring-brand-blue font-medium">
+              <button type="button" onclick="addSubjectToYear('${escapeQuote(yearName)}')" class="px-3.5 py-2 bg-brand-navy hover:bg-brand-blue text-white rounded-lg text-xs font-bold whitespace-nowrap transition">
+                + Agregar
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  // Operaciones No-Code sobre Materias
+  window.addSubjectToYear = function(yearName) {
+    if (!activeEditorCarrera || !siteConfig) return;
+    const inputDomId = 'newMateriaInput_' + yearName.replace(/[^a-zA-Z0-9]/g, '');
+    const input = document.getElementById(inputDomId);
+    if (!input) return;
+    const name = input.value.trim();
+    if (!name) return;
+
+    const carreraObj = siteConfig.curriculum[activeEditorCarrera];
+    if (!carreraObj.planes[activeEditorPlan]) carreraObj.planes[activeEditorPlan] = {};
+    if (!carreraObj.planes[activeEditorPlan][yearName]) carreraObj.planes[activeEditorPlan][yearName] = [];
+
+    carreraObj.planes[activeEditorPlan][yearName].push(name);
+    setEditorDirty(true);
+    input.value = '';
+    renderEditorCarreraCurriculum();
+  };
+
+  window.editSubjectPrompt = function(yearName, index) {
+    if (!activeEditorCarrera || !siteConfig) return;
+    const list = siteConfig.curriculum[activeEditorCarrera].planes[activeEditorPlan][yearName];
+    if (!list || list[index] === undefined) return;
+
+    const current = list[index];
+    const updated = prompt(`Modificar nombre de la materia o comisión:`, current);
+    if (updated !== null && updated.trim() !== '' && updated.trim() !== current) {
+      list[index] = updated.trim();
+      setEditorDirty(true);
+      renderEditorCarreraCurriculum();
+    }
+  };
+
+  window.deleteSubject = function(yearName, index) {
+    if (!activeEditorCarrera || !siteConfig) return;
+    const list = siteConfig.curriculum[activeEditorCarrera].planes[activeEditorPlan][yearName];
+    if (!list || list[index] === undefined) return;
+
+    if (confirm(`¿Seguro que querés eliminar "${list[index]}"?`)) {
+      list.splice(index, 1);
+      setEditorDirty(true);
+      renderEditorCarreraCurriculum();
+    }
+  };
+
+  // Gestión de Planes de Estudio
+  if (btnAddNewPlan) {
+    btnAddNewPlan.addEventListener('click', () => {
+      if (!activeEditorCarrera || !siteConfig) return;
+      const planName = prompt('Nombre del nuevo plan de estudio (ej: Reforma 2026, Plan 2027):');
+      if (!planName || !planName.trim()) return;
+      const cleanPlanName = planName.trim();
+
+      const carreraObj = siteConfig.curriculum[activeEditorCarrera];
+      if (carreraObj.planes[cleanPlanName]) {
+        alert('Ya existe un plan con ese nombre.');
+        return;
+      }
+
+      const clone = confirm('¿Querés copiar las materias del plan actual para usarlas como base?\n\n(Aceptar = Copiar materias actuales, Cancelar = Empezar con plan vacío)');
+      if (clone) {
+        carreraObj.planes[cleanPlanName] = JSON.parse(JSON.stringify(carreraObj.planes[activeEditorPlan] || {}));
+      } else {
+        carreraObj.planes[cleanPlanName] = {
+          "1° Año": [], "2° Año": [], "3° Año": [], "4° Año": [], "5° Año": [], "Tramo Superior / Seminarios": []
+        };
+      }
+
+      activeEditorPlan = cleanPlanName;
+      setEditorDirty(true);
+      renderEditorCarreraCurriculum();
+    });
+  }
+
+  if (btnRenamePlan) {
+    btnRenamePlan.addEventListener('click', () => {
+      if (!activeEditorCarrera || !siteConfig) return;
+      const newName = prompt('Nuevo nombre para este plan de estudio:', activeEditorPlan);
+      if (!newName || !newName.trim() || newName.trim() === activeEditorPlan) return;
+      const clean = newName.trim();
+
+      const carreraObj = siteConfig.curriculum[activeEditorCarrera];
+      if (carreraObj.planes[clean]) {
+        alert('Ya existe un plan con ese nombre.');
+        return;
+      }
+
+      carreraObj.planes[clean] = carreraObj.planes[activeEditorPlan];
+      delete carreraObj.planes[activeEditorPlan];
+      activeEditorPlan = clean;
+      setEditorDirty(true);
+      renderEditorCarreraCurriculum();
+    });
+  }
+
+  if (btnDeletePlan) {
+    btnDeletePlan.addEventListener('click', () => {
+      if (!activeEditorCarrera || !siteConfig) return;
+      const carreraObj = siteConfig.curriculum[activeEditorCarrera];
+      const planKeys = Object.keys(carreraObj.planes);
+      if (planKeys.length <= 1) {
+        alert('No podés eliminar este plan: cada carrera debe tener al menos un plan de estudios activo.');
+        return;
+      }
+
+      if (confirm(`¿Seguro que deseás eliminar por completo el plan "${activeEditorPlan}"?`)) {
+        delete carreraObj.planes[activeEditorPlan];
+        activeEditorPlan = Object.keys(carreraObj.planes)[0];
+        setEditorDirty(true);
+        renderEditorCarreraCurriculum();
+      }
+    });
+  }
+
+  // Gestión de Herramientas
+  function renderEditorTools() {
+    if (!editorToolsList || !siteConfig || !siteConfig.tools_config) return;
+    const tools = siteConfig.tools_config;
+
+    const toolKeys = Object.keys(tools);
+    editorToolsList.innerHTML = toolKeys.map(k => {
+      const t = tools[k];
+      return `
+        <div class="p-4 rounded-xl border ${t.visible ? 'border-gray-200 bg-white' : 'border-dashed border-gray-300 bg-gray-50 opacity-80'} transition space-y-3">
+          <div class="flex items-center justify-between flex-wrap gap-2">
+            <div class="flex items-center gap-2">
+              <span class="text-xl">${t.id === 'comodato' ? '💻' : t.id === 'becas' ? '🎟️' : t.id === 'aulas' ? '🏫' : t.id === 'mapas' ? '🗺️' : '📜'}</span>
+              <strong class="text-sm text-gray-800">${escapeHtml(t.nombre)}</strong>
+              <span class="text-[10px] font-mono text-gray-400">(${t.id})</span>
+            </div>
+            <label class="flex items-center gap-2 cursor-pointer bg-gray-100 hover:bg-gray-200 px-3 py-1.5 rounded-lg text-xs font-bold">
+              <input type="checkbox" onchange="toggleToolVisibility('${t.id}', this.checked)" ${t.visible ? 'checked' : ''} class="w-4 h-4 text-emerald-600 rounded">
+              <span class="${t.visible ? 'text-emerald-700' : 'text-gray-500'}">${t.visible ? '✓ Visible en la web' : '✕ Oculta'}</span>
+            </label>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+            <div>
+              <label class="block text-[11px] font-bold text-gray-500 uppercase mb-1">Título de la Tarjeta</label>
+              <input type="text" value="${escapeHtml(t.nombre)}" onchange="updateToolField('${t.id}', 'nombre', this.value)" class="w-full px-3 py-1.5 border border-gray-300 rounded-lg text-xs font-semibold focus:ring-2 focus:ring-brand-blue outline-none">
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold text-gray-500 uppercase mb-1">Subtítulo / Bajada Descriptiva</label>
+              <input type="text" value="${escapeHtml(t.subtitulo || '')}" onchange="updateToolField('${t.id}', 'subtitulo', this.value)" class="w-full px-3 py-1.5 border border-gray-300 rounded-lg text-xs focus:ring-2 focus:ring-brand-blue outline-none">
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  window.toggleToolVisibility = function(toolId, isVisible) {
+    if (!siteConfig || !siteConfig.tools_config || !siteConfig.tools_config[toolId]) return;
+    siteConfig.tools_config[toolId].visible = isVisible;
+    setEditorDirty(true);
+    renderEditorTools();
+  };
+
+  window.updateToolField = function(toolId, field, value) {
+    if (!siteConfig || !siteConfig.tools_config || !siteConfig.tools_config[toolId]) return;
+    siteConfig.tools_config[toolId][field] = value.trim();
+    setEditorDirty(true);
+  };
+
+  // Previsualizador en Vivo
+  if (btnPreviewMobile) {
+    btnPreviewMobile.addEventListener('click', () => {
+      previewDevice = 'mobile';
+      btnPreviewMobile.className = 'px-4 py-1.5 rounded-lg text-xs font-bold transition bg-white shadow-sm text-brand-navy';
+      btnPreviewDesktop.className = 'px-4 py-1.5 rounded-lg text-xs font-bold transition text-gray-600 hover:text-brand-navy';
+      if (previewFrameWrapper) previewFrameWrapper.className = 'w-full max-w-[390px] transition-all duration-300';
+      if (previewDeviceMock) previewDeviceMock.className = 'bg-white rounded-[32px] border-8 border-gray-800 shadow-2xl overflow-hidden flex flex-col min-h-[600px]';
+      if (previewNotch) previewNotch.classList.remove('hidden');
+      renderLivePreview();
+    });
+  }
+
+  if (btnPreviewDesktop) {
+    btnPreviewDesktop.addEventListener('click', () => {
+      previewDevice = 'desktop';
+      btnPreviewDesktop.className = 'px-4 py-1.5 rounded-lg text-xs font-bold transition bg-white shadow-sm text-brand-navy';
+      btnPreviewMobile.className = 'px-4 py-1.5 rounded-lg text-xs font-bold transition text-gray-600 hover:text-brand-navy';
+      if (previewFrameWrapper) previewFrameWrapper.className = 'w-full max-w-5xl transition-all duration-300';
+      if (previewDeviceMock) previewDeviceMock.className = 'bg-white rounded-xl border border-gray-300 shadow-md overflow-hidden flex flex-col min-h-[500px]';
+      if (previewNotch) previewNotch.classList.add('hidden');
+      renderLivePreview();
+    });
+  }
+
+  function renderLivePreview() {
+    if (!previewContentBody || !siteConfig) return;
+    const tools = siteConfig.tools_config || {};
+    const carrera = activeEditorCarrera || Object.keys(siteConfig.curriculum || {})[0] || "Profesorado de Matemática";
+    const plan = activeEditorPlan || "Plan Vigente";
+    const years = (siteConfig.curriculum[carrera]?.planes[plan]) || {};
+
+    let toolsCardsHtml = Object.keys(tools).filter(k => tools[k].visible).map(k => {
+      const t = tools[k];
+      return `
+        <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-sm flex items-center gap-3">
+          <span class="text-xl bg-blue-50 p-2 rounded-lg">${k === 'comodato' ? '💻' : k === 'becas' ? '🎟️' : k === 'aulas' ? '🏫' : '🗺️'}</span>
+          <div class="flex-1 min-w-0">
+            <h6 class="text-xs font-bold text-slate-800 truncate">${escapeHtml(t.nombre)}</h6>
+            <p class="text-[10px] text-slate-500 line-clamp-1">${escapeHtml(t.subtitulo || '')}</p>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    let yearsSampleHtml = Object.keys(years).slice(0, 2).map(y => {
+      const mats = years[y] || [];
+      return `
+        <div class="bg-white p-3 rounded-xl border border-slate-200">
+          <strong class="text-[11px] text-brand-navy block mb-2 font-bold">${escapeHtml(y)} (${mats.length} materias)</strong>
+          <div class="flex flex-wrap gap-1.5">
+            ${mats.slice(0, 6).map(m => `<span class="bg-slate-100 text-slate-700 text-[10px] px-2 py-0.5 rounded font-medium">${escapeHtml(m)}</span>`).join('')}
+            ${mats.length > 6 ? `<span class="text-[10px] text-slate-400 italic">+${mats.length - 6} más</span>` : ''}
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    previewContentBody.innerHTML = `
+      <div class="space-y-4">
+        <div class="bg-brand-navy text-white p-4 rounded-xl shadow">
+          <span class="text-xs font-serif font-bold">AltilloJVG <span class="text-brand-gold italic">Estudiantes</span></span>
+          <p class="text-[10px] text-slate-300 mt-0.5">Vista previa en vivo de las herramientas y materias configuradas</p>
+        </div>
+
+        <div class="space-y-2">
+          <div class="flex justify-between items-center px-1">
+            <span class="text-[11px] font-bold text-slate-700 uppercase">Herramientas Activas (${Object.keys(tools).filter(k => tools[k].visible).length})</span>
+          </div>
+          <div class="grid ${previewDevice === 'desktop' ? 'grid-cols-3' : 'grid-cols-1'} gap-2">
+            ${toolsCardsHtml || `<p class="text-xs text-red-500 p-2">No hay herramientas activas visibles.</p>`}
+          </div>
+        </div>
+
+        <div class="space-y-2 pt-2">
+          <div class="flex justify-between items-center px-1">
+            <span class="text-[11px] font-bold text-slate-700 uppercase">Explorador: ${escapeHtml(carrera)}</span>
+            <span class="text-[10px] bg-sky-100 text-sky-800 font-bold px-2 py-0.5 rounded-full">${escapeHtml(plan)}</span>
+          </div>
+          <div class="space-y-2">
+            ${yearsSampleHtml || `<p class="text-xs text-slate-400">Sin materias cargadas.</p>`}
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  // Guardar y Publicar
+  if (btnSaveSiteConfig) {
+    btnSaveSiteConfig.addEventListener('click', async () => {
+      if (!adminPassword) {
+        alert('Debés ingresar la contraseña de administrador para publicar cambios.');
+        return;
+      }
+
+      btnSaveSiteConfig.disabled = true;
+      btnSaveSiteConfig.textContent = '⏳ Publicando...';
+
+      try {
+        const res = await fetch('/api/site_config', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-admin-password': adminPassword
+          },
+          body: JSON.stringify(siteConfig)
+        });
+
+        if (res.ok) {
+          localStorage.setItem('altillojvg_site_config', JSON.stringify(siteConfig));
+          setEditorDirty(false);
+          alert('✅ ¡Cambios guardados y publicados exitosamente en la web!');
+        } else {
+          const err = await res.json();
+          alert('⚠️ Error: ' + (err.error || 'No se pudo guardar la configuración.'));
+        }
+      } catch (err) {
+        console.warn('Fallback guardado local:', err);
+        localStorage.setItem('altillojvg_site_config', JSON.stringify(siteConfig));
+        setEditorDirty(false);
+        alert('⚠️ Guardado localmente en este navegador. Se sincronizará al haber conexión con el servidor.');
+      } finally {
+        btnSaveSiteConfig.disabled = false;
+        btnSaveSiteConfig.textContent = '💾 Guardar y Publicar en la Web';
+      }
+    });
+  }
+
+  // Restablecer Valores Iniciales
+  if (btnResetSiteConfig) {
+    btnResetSiteConfig.addEventListener('click', () => {
+      if (confirm('¿Seguro que deseás restablecer todas las materias y herramientas a los valores originales de fábrica? Se perderán las modificaciones no guardadas.')) {
+        localStorage.removeItem('altillojvg_site_config');
+        siteConfig = null;
+        loadSiteEditor();
+        setEditorDirty(true);
       }
     });
   }

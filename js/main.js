@@ -646,4 +646,65 @@ document.addEventListener('DOMContentLoaded', () => {
       }).catch(() => {});
     } catch (e) {}
   };
+
+  // ============================================================================
+  // APLICACIÓN DINÁMICA DE CONFIGURACIÓN DE HERRAMIENTAS (CMS NO-CODE)
+  // ============================================================================
+  async function applyDynamicSiteToolsConfig() {
+    let toolsConfig = null;
+
+    try {
+      const cached = localStorage.getItem('altillojvg_site_config');
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (parsed && parsed.tools_config) toolsConfig = parsed.tools_config;
+      }
+    } catch (e) {}
+
+    if (!toolsConfig) {
+      try {
+        const res = await fetch('/api/site_config');
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.tools_config) {
+            toolsConfig = data.tools_config;
+            localStorage.setItem('altillojvg_site_config', JSON.stringify(data));
+          }
+        }
+      } catch (e) {}
+    }
+
+    if (!toolsConfig) return;
+
+    for (const toolId in toolsConfig) {
+      const cfg = toolsConfig[toolId];
+      // Tarjetas laterales
+      const sideCards = document.querySelectorAll('.side-card.' + toolId);
+      sideCards.forEach(card => {
+        if (!cfg.visible) {
+          card.style.display = 'none';
+        } else {
+          card.style.display = '';
+          const titleEl = card.querySelector('.side-card-title');
+          const descEl = card.querySelector('.side-card-desc');
+          if (titleEl && cfg.nombre) titleEl.textContent = cfg.nombre;
+          if (descEl && cfg.subtitulo) descEl.textContent = cfg.subtitulo;
+        }
+      });
+
+      // Chips móviles correspondientes
+      const mobileChips = document.querySelectorAll('.compact-tool-btn.' + toolId);
+      mobileChips.forEach(chip => {
+        if (!cfg.visible) {
+          chip.style.display = 'none';
+        } else {
+          chip.style.display = '';
+          const label = chip.querySelector('span');
+          if (label && cfg.nombre) label.textContent = cfg.nombre;
+        }
+      });
+    }
+  }
+
+  applyDynamicSiteToolsConfig();
 });

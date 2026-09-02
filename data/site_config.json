@@ -1,0 +1,1256 @@
+{
+  "curriculum": {
+    "Profesorado de Italiano": {
+      "planes": {
+        "Plan Vigente": {
+          "1° Año": [
+            "Lengua Italiana I",
+            "Gramatica Italiana I",
+            "Fonterica y Fonologia I",
+            "Literatura Italiana Medieval",
+            "Historia Romana y Medieval",
+            "La Enseñanza del Italiano a Partir de las Culturas Regionales",
+            "La Enseñanza del Italiano a Partir del Cine y Teatro Italianos",
+            "Lectura, Escritura y Oralidad",
+            "Pedagogía",
+            "Psicología Educaicional",
+            "Psicología y Sujetos del Nivel",
+            "Trabajo de Campo I",
+            "Taller de Consolidacion de la Lengua Italiana"
+          ],
+          "2° Año": [
+            "Lengua Italiana II",
+            "Gramatica Italiana II",
+            "Fonterica y Fonologia II",
+            "Literatura del Humanismo y del Renacimiento",
+            "Historia Italiana Moderna",
+            "Latin I",
+            "Didactica General",
+            "Trabajo de Campo II",
+            "La Enseñanza del Italiano y la Divina Comedia I",
+            "Nuevas Tecnologias"
+          ],
+          "3° Año": [
+            "Lengua Italiana III",
+            "Literatura Italiana del Barroco y del Iluminismo",
+            "Latin II",
+            "Construcción de la Practica Docente en el Nivel Medio",
+            "Filosofía",
+            "Lingüistica",
+            "Construcción de la Practica Docente en el Nivel Inicial y Primario",
+            "La Enseñanza del Italiano y la Divina Comedia II",
+            "Educación Sexual Integral (ESI)"
+          ],
+          "4° Año": [
+            "Lengua Italina IV",
+            "La Enseñanza del Italiano a Partir del Arte Italiano",
+            "Residencia en Contextos de Injerencia Profesional / Didáctica Especifica II y Residencia",
+            "Historia de la Educación Argentina",
+            "Derechos Humanos (DDHH), Sociedad y Estado",
+            "Sistema y Política Educativa",
+            "Taller de Didactica de la Fonetica",
+            "Lengua Extranjera I",
+            "Lengua Extranjera II"
+          ],
+          "5° Año": [
+            "Historia Civilización Italina del Risogimento y Siglo Xx",
+            "Historia de la Lengua Italiana",
+            "La Enseñanza del Italiano a Partir de la Musica Italiana",
+            "Taller de Tecnicas de Lectocomprensión e Investigación",
+            "Construcción de la Práctica Doncete en el Nivel Superior y Residencia en Contextos de Injerencia Profesional",
+            "Lengua 5: Sociolingüistica",
+            "Taller de la Didáctica del Italiano en el Nivel Superior",
+            "• Taller de Consolidación de la Lengua Italiana Cursan con Carácter Obligatorio Solo los Ingresantes Que Hayan Aprobado el Examen de Admisión con V (cinco) Ó 6 (seis) Puntos. Aquellos Ingresantres Que Hayan Obtenido 7 (siete) o Más Puntos Estarán en Condiciones de Acreditar el Taller de Consolidación Y, por Lo Tanto, No Deberán Cursalo (ver Acta de Acreditación de 2.11.2018)."
+          ]
+        }
+      },
+      "active_plan": "Plan Vigente"
+    },
+    "Profesorado de Economía": {
+      "planes": {
+        "Plan Vigente": {
+          "1° Año": [
+            "Sistenas de Información Contable",
+            "Analisis Matemático",
+            "Derecho Publico",
+            "Introduccion a la Economía",
+            "Historia Economica General y Argentina",
+            "Lectura, Escritura y Oralidad (LEO) I",
+            "Pedagogía",
+            "Psicología Educacional",
+            "Sujetos de la Enseñanza",
+            "Trabajo de Campo I"
+          ],
+          "2° Año": [
+            "Principios de Administración",
+            "Estadistica",
+            "Derecho Civil y Societario",
+            "Didactica General",
+            "Filosofia",
+            "Geografia Economica",
+            "Lectura, Escritura y Oralidad (LEO) II",
+            "Trabajo de Campo II"
+          ],
+          "3° Año": [
+            "Microeconomía",
+            "Finanzas Publicas",
+            "Didactica Especifica y Construcción de la Practica Docente I",
+            "Historia del Pensamiento Economico",
+            "Historia de la Educación Argentina",
+            "Derechos Humanos (DDHH), Sociedad y Estado",
+            "Sem/taller Opt. Economias Comparadas",
+            "Sem/taller Opt. Politica Economia"
+          ],
+          "4° Año": [
+            "Macroeconomia",
+            "Crecimiento y Desarrollo Economico",
+            "Dinero, Credito y Bancos",
+            "Aplicativos Informaticos",
+            "Metodología de la Investigación",
+            "Taller de Nuevas Tecnologias",
+            "Sistema y Politica Educativa",
+            "Didactica de la Educación Superior",
+            "Didactica de la Educación a Distancia"
+          ],
+          "5° Año": [
+            "Taller de Idioma Extranjero Ingles",
+            "Taller de Informatica",
+            "Educación Sexual Integral (ESI)",
+            "Construcción de la Practica Docente II",
+            "Econometria"
+          ]
+        }
+      },
+      "active_plan": "Plan Vigente"
+    },
+    "Profesorado de Física": {
+      "planes": {
+        "Plan Vigente": {
+          "1° Año": [
+            "Física I",
+            "Análisis Matemático I",
+            "Álgebras I",
+            "Geometría"
+          ],
+          "Tramo Superior / Seminarios": [
+            "Trabajo de Campo I",
+            "Lectura, Escritura y Oralidad I",
+            "Pedagogía",
+            "Nuevas Tecnologias",
+            "Trabajo de Campo II",
+            "Didáctica General",
+            "Psicología Educacional",
+            "Sujeros del Nivel",
+            "Astrofísica",
+            "Matemática Superior a",
+            "Matemática Superior B",
+            "Didáctica de la Física I",
+            "Trabajo de Campo III",
+            "Derechos Humanos (DDHH), Estado y Sociedad",
+            "Educación Sexual Integral (ESI)",
+            "Filosofía",
+            "Lectura, Escritura y Oralidad II"
+          ],
+          "2° Año": [
+            "Física II",
+            "Análisis Matemático II",
+            "Álgebra II",
+            "Química"
+          ],
+          "3° Año": [
+            "Física III a",
+            "Física III B"
+          ],
+          "4° Año": [
+            "Física IV",
+            "Física Teórica I a",
+            "Física Experimental",
+            "Didáctica de la Física II para el Nivel Medio",
+            "Residencia Pedagógica para el Nivel Medio",
+            "Epistemología e Historia de la Física",
+            "Historia de la Educación Argentina",
+            "Sistema y Política Educativa",
+            "Lengua Extranjera"
+          ],
+          "5° Año": [
+            "Física Teórica II",
+            "Física Teórica I B",
+            "Mecánica Cuántica",
+            "Astronomía",
+            "Didáctica de la Física II para el Nivel Superior",
+            "Residencia Pedagógica para el Nivel Superior"
+          ]
+        }
+      },
+      "active_plan": "Plan Vigente"
+    },
+    "Profesorado de Matemática": {
+      "planes": {
+        "Plan Vigente": {
+          "1° Año": [
+            "Elementos Básicos de Matemática",
+            "Álgebra I (Comisión A)",
+            "Álgebra I (Comisión B)",
+            "Álgebra I (Comisión C)",
+            "Geometría I (Comisión A)",
+            "Geometría I (Comisión B)",
+            "Geometría I (Comisión C)",
+            "Análisis Matemático I (Comisión A)",
+            "Análisis Matemático I (Comisión B)",
+            "Análisis Matemático I (Comisión C)",
+            "Introducción a la Matemática Superior (Comisión B)",
+            "Introducción a la Matemática Superior (Comisión C)",
+            "Pedagogía (Comisión A)",
+            "Pedagogía (Comisión B)",
+            "Pedagogía (Comisión C)",
+            "Psicología Educacional",
+            "Sujeto del Aprendizaje",
+            "Lectura, Escritura y Oralidad (LEO) I",
+            "Trabajo de Campo I (Comisión A)",
+            "Trabajo de Campo I (Comisión B)"
+          ],
+          "2° Año": [
+            "Álgebra II (Comisión A)",
+            "Álgebra II (Comisión B)",
+            "Geometría II (Comisión A)",
+            "Geometría II (Comisión B)",
+            "Análisis Matemático II (Comisión A)",
+            "Análisis Matemático II (Comisión B)",
+            "Física (Comisión A)",
+            "Física (Comisión B)",
+            "Nuevas Tecnologías (Comisión A)",
+            "Nuevas Tecnologías (Comisión B)",
+            "Filosofía (Comisión A)",
+            "Filosofía (Comisión B)",
+            "Didáctica General (Comisión A)",
+            "Didáctica General (Comisión B)",
+            "Trabajo de Campo II (Comisión A)",
+            "Trabajo de Campo II (Comisión B)"
+          ],
+          "3° Año": [
+            "Tics en el Aula de Matemática (Comisión A)",
+            "Tics en el Aula de Matemática (Comisión B)",
+            "Álgebra III (Comisión A)",
+            "Álgebra III (Comisión B)",
+            "Probabilidades y Estadística",
+            "Historia de la Matemática (Comisión A)",
+            "Historia de la Matemática (Comisión B)",
+            "Historia de la Educación Argentina (Comisión A)",
+            "Historia de la Educación Argentina (Comisión B)",
+            "Derechos Humanos (DDHH), Estado y Sociedad",
+            "Didáctica de la Matemática I",
+            "Lectura, Escritura y Oralidad (LEO) II",
+            "Trabajo de Campo III"
+          ],
+          "4° Año": [
+            "Fundamentos de la Matemática (Comisión A)",
+            "Fundamentos de la Matemática (Comisión B)",
+            "Astronomía General Básica",
+            "Lengua Extranjera",
+            "Sistema y Política Educativa",
+            "Didáctica de la Matemática II",
+            "Construcción de la Práctica Docente I",
+            "Reflexión y Actualización de la Práctica Docente",
+            "Educación Sexual Integral (ESI)"
+          ],
+          "5° Año": [
+            "Construcción de la Práctica Docente II",
+            "Temas Avanzados de Matemática",
+            "Fundamentos de la Física (Comisión A)",
+            "Fundamentos de la Física (Comisión B)",
+            "Análisis Matemático III (Comisión A)",
+            "Análisis Matemático III (Comisión B)",
+            "Astronomía Superior"
+          ]
+        }
+      },
+      "active_plan": "Plan Vigente"
+    },
+    "Profesorado de Psicología": {
+      "planes": {
+        "Plan Vigente": {
+          "1° Año": [
+            "Pedagogía",
+            "Antropología Social y Cultural",
+            "Psicología General",
+            "Lectura, Escritura y Oralidad (LEO) I",
+            "Filosofía",
+            "Procesos Colectivos y Problemas Sociales",
+            "Metedo de la Investigación Social",
+            "Lógica",
+            "Biología",
+            "Trabajo de Campo I",
+            "Teórica de la Argumentación",
+            "Estadística",
+            "Neurobiología y Adaptación"
+          ],
+          "2° Año": [
+            "Psicología Social",
+            "Estadi, Sociedad y Derechos Humanos (DDHH)",
+            "Nuevas Tecnologias",
+            "Psicología de los Ciclos Vitales I",
+            "Psicologiía Educacional",
+            "Didáctica General",
+            "Bases Neurofisiológicas",
+            "Epistemología General y Especial",
+            "Lectura, Escritura y Oralidad (LEO) II",
+            "Aproximación Al Proceso Salud y Enfermedad",
+            "Trabajo de Campo II"
+          ],
+          "Tramo Superior / Seminarios": [
+            "Escuela y Comunidad"
+          ],
+          "3° Año": [
+            "Historia de la Educación Argentina",
+            "Psicología de los Ciclos Vitales II",
+            "Adolescencia y Mundo Contemporaneo",
+            "Teória de las Organizaciones y Análisis Institucionales",
+            "Teória Psicoanalitica",
+            "Tecnicas de Exploración Psicologica",
+            "Teória y Dinamica de los Grupos de Aprendizaje",
+            "Estrategias para la Resolución de Conflictos",
+            "Sistema y Política Educativa",
+            "Teória Psicoanalitica Post Freudiana",
+            "Teória y Practica de la Comunicación",
+            "Neuropsicología del Aprendizaje"
+          ],
+          "4° Año": [
+            "Educación Sexual Integral (ESI)",
+            "Taller Didáctico para la Enseñanza de la Piscología",
+            "Historia de la Psicología",
+            "Prácticas de la Investigación Psicologíca",
+            "Piscopedagogia",
+            "Psicopatologia",
+            "Psicología del Arte",
+            "Escuela y Violencia",
+            "Práctica de la Enseñanza Psicologica Nivel Medio y Superior",
+            "Lengua Extranjera"
+          ],
+          "5° Año": [
+            "Práctica de la Enseñanza Psicologica Nivel Medio y Residencia",
+            "Introducción a los Estudios de Genero",
+            "Pedagogía de la Convivencia Escolar",
+            "Psicología Aplicada Al Deporte",
+            "Orientación Vocacional y Ocupacional",
+            "Epistemologia y Psicología Genetica",
+            "• Es Obligatorio Cursar y Apobrar a Lo Largo de la Carrera Cuatro Instancias Curriculares Optativas."
+          ]
+        }
+      },
+      "active_plan": "Plan Vigente"
+    },
+    "Profesorado de Química": {
+      "planes": {
+        "Plan Vigente": {
+          "1° Año": [
+            "Análisis Matemático I",
+            "Mecánica y Óptica Geométrica",
+            "Introducción a la Química",
+            "Química General e Inorgánica I",
+            "Trabajo de Campo I",
+            "Sujetos de Nivel",
+            "Psicología Educacional",
+            "Lectura, Escritura y Oralidad I",
+            "Pedagogía"
+          ],
+          "2° Año": [
+            "Análisis Matemático II",
+            "Electromagnetismo y Fenomenos Ondulatorios",
+            "Introducción a la Dinámica Terrestre y Mineralogía",
+            "Química General e Inorgánica II",
+            "Química Orgánica I",
+            "Trabajo de Campo II",
+            "Didáctica General",
+            "Derechos Humanos (DDHH), Sociedad y Estado"
+          ],
+          "3° Año": [
+            "Matemática Aplicada",
+            "Calor y Termodinámica",
+            "Dinamica Terrestre",
+            "Química Orgánica II",
+            "Química Analitica",
+            "Biología Celular",
+            "Fisiologia Celular y Humana",
+            "Construcción de la Practica Docente I",
+            "Filosofía",
+            "Educación Sexual Integral (ESI)"
+          ],
+          "4° Año": [
+            "Química Física",
+            "Intoducción a la Química Industrial",
+            "Química Industrial Descriptiva",
+            "Química Biológica",
+            "Epistemología e Historia de la Química"
+          ],
+          "Tramo Superior / Seminarios": [
+            "Lectura, Escritura y Oralidad II",
+            "Sistema y Política Educativa",
+            "Historia de la Educación Argentina"
+          ],
+          "5° Año": [
+            "Biología Molecular",
+            "Biotecnologia",
+            "Metodologia de la Investigación",
+            "Nuevas Tecnologias",
+            "Lengua Extranjera",
+            "Construcción de la Practica Docente II"
+          ]
+        }
+      },
+      "active_plan": "Plan Vigente"
+    },
+    "Profesorado de Inglés": {
+      "planes": {
+        "Plan Vigente": {
+          "1° Año": [
+            "Lengua Inglesa I (Comisión A)",
+            "Lengua Inglesa I (Comisión B)",
+            "Lengua Inglesa I (Comisión C)",
+            "Gramática Inglesa I (Comisión A)",
+            "Gramática Inglesa I (Comisión B)",
+            "Gramática Inglesa I (Comisión C)",
+            "Fonética y Fonología I (Comisión A)",
+            "Fonética y Fonología I (Comisión B)",
+            "Fonética y Fonología I (Comisión C)",
+            "Prácticas en el Laboratorio de Idiomas I",
+            "Geografía y Cultura de las Islas Británicas",
+            "Geografía y Cultura de los Eeuu y Otros Pueblos de Habla Inglesa",
+            "Lectura, Escritura y Oralidad (LEO)",
+            "Psicología Educacional (Comisión A)",
+            "Psicología Educacional (Comisión B)",
+            "Psicología Educacional (Comisión C)",
+            "Sujetos de Nivel",
+            "Pedagogía (Comisión A)",
+            "Pedagogía (Comisión B)",
+            "Pedagogía (Comisión C)",
+            "Trabajo de Campo I (Comisión A)",
+            "Trabajo de Campo I (Comisión B)",
+            "Trabajo de Campo I (Comisión C)"
+          ],
+          "2° Año": [
+            "Lengua Inglesa II (Comisión A)",
+            "Lengua Inglesa II (Comisión B)",
+            "Lengua Inglesa II (Comisión C)",
+            "Gramática Inglesa II (Comisión A)",
+            "Gramática Inglesa II (Comisión B)",
+            "Gramática Inglesa II (Comisión C)",
+            "Fonética y Fonología II (Comisión A)",
+            "Fonética y Fonología II (Comisión B)",
+            "Fonética y Fonología II (Comisión C)",
+            "Prácticas en el Laboratorio de Idiomas II",
+            "Historia de la Civilización Inglesa I (Comisión A)",
+            "Historia de la Civilización Inglesa I (Comisión B)",
+            "Historia de la Civilización Inglesa I (Comisión C)",
+            "Literatura Inglesa I (Comisión A)",
+            "Literatura Inglesa I (Comisión B)",
+            "Literatura Inglesa I (Comisión C)",
+            "Didáctica General (Comisión A)",
+            "Didáctica General (Comisión B)",
+            "Didáctica General (Comisión C)",
+            "Análisis del Discurso (Comisión A)",
+            "Análisis del Discurso (Comisión B)",
+            "Trabajo de Campo II (Comisión A)",
+            "Trabajo de Campo II (Comisión B)",
+            "Trabajo de Campo II (Comisión C)",
+            "Construcción de la Práctica Docente en los Niveles Inicial y Primario I"
+          ],
+          "3° Año": [
+            "Lengua Inglesa III (Comisión A)",
+            "Lengua Inglesa III (Comisión C)",
+            "Fonología en Laboratorio y su Didáctica I",
+            "Historia de la Civilización Inglesa II",
+            "Literatura Inglesa II (Comisión A)",
+            "Literatura Inglesa II (Comisión B)",
+            "Literatura Inglesa II (Comisión C)",
+            "Historia Norteamericana (Comisión A)",
+            "Historia Norteamericana (Comisión C)",
+            "Filosofía (Comisión A)",
+            "Filosofía (Comisión C)",
+            "Adquisición de la Lengua Materna y Extranjera",
+            "Construcción de la Práctica Docente en el Nivel Medio I",
+            "Educación Sexual Integral (ESI)",
+            "Construcción de la Práctica Docente en los Niveles Inicial y Primario II y Residencia",
+            "Introducción a la Lingüística (Comisión A)",
+            "Introducción a la Lingüística (Comisión B)",
+            "Introducción a la Lingüística (Comisión C)"
+          ],
+          "4° Año": [
+            "Lengua Inglesa IV (Comisión A)",
+            "Lengua Inglesa IV (Comisión B)",
+            "Literatura Inglesa III (Comisión A)",
+            "Literatura Inglesa III (Comisión B)",
+            "Literatura Contemporánea en Lengua Inglesa",
+            "Fonología en Laboratorio y su Didáctica II",
+            "Literatura Norteamericana (Comisión A)",
+            "Literatura Norteamericana (Comisión B)",
+            "Literatura Norteamericana (Comisión C)",
+            "Historia de la Educación Argentina (Comisión A)",
+            "Historia de la Educación Argentina (Comisión B)",
+            "Sistema y Política Educativa",
+            "Derechos Humanos (DDHH), Sociedad y Estado",
+            "Construcción de la Práctica Docente en el Nivel Medio II y Residencia"
+          ],
+          "5° Año": [
+            "Metodología de la Investigación en Lenguas Extranjeras",
+            "Escritura Académica",
+            "Construcción de la Práctica Docente en el Nivel Superior y Residencia",
+            "Lengua Extranjera Nivel I",
+            "Lengua Extranjera Nivel II",
+            "Prerrequisitos",
+            "Nuevas Tecnologías",
+            "Taller Formativo Docente I",
+            "El Texto Literario en el Aula",
+            "Saberes Lúdicos, Motores y Corporales",
+            "Historia Contemporánea de los Pueblos Angloparlantes",
+            "Literaturas en Lengua Inglesa",
+            "El Profesor de Inglés y el Maestro de Grado / Sala",
+            "Taller Formativo Docente II",
+            "Alfabetización",
+            "El Uso de la Voz en el Aula",
+            "Escritura Creativa",
+            "Técnicas Teatrales en el Aula de Inglés",
+            "Redacción del Discurso Académico",
+            "Taller de Didáctica Específica",
+            "Multimedios Aplicados a la Enseñanza del Inglés",
+            "Enseñanza de las Lenguas Extranjeras en Educación Especial",
+            "Técnicas Informáticas Aplicadas a la Enseñanza de la Lengua Extranjera",
+            "Dinámica de Grupos"
+          ]
+        }
+      },
+      "active_plan": "Plan Vigente"
+    },
+    "Profesorado de Historia": {
+      "planes": {
+        "Plan Vigente": {
+          "1° Año": [
+            "Introducción a la Historia",
+            "Prehistoria y Arqueología",
+            "Introducción a la Historia Antigua",
+            "Historia Argentina y Americana I",
+            "Lectura, Escritura y Oralidad (LEO) I",
+            "Pedagogía General",
+            "Trabajo de Campo I"
+          ],
+          "2° Año": [
+            "Historia Argentina y Americana II",
+            "Historia de Roma",
+            "Historia de Grecia",
+            "Historia de España",
+            "Didáctica General",
+            "Trabajo de Campo II",
+            "Lectura, Escritura y Oralidad (LEO) II"
+          ],
+          "3° Año": [
+            "Historia Argentina y Americana III",
+            "Historia de la Edad Media",
+            "Historia de la Edad Moderna",
+            "Enseñanza de la Historia y Construcción de la Práctica Docente I",
+            "Introducción a la Geografía",
+            "Psicología Educacional",
+            "Sujetos del Nivel"
+          ],
+          "4° Año": [
+            "Historia Argentina Contemporánea"
+          ],
+          "Tramo Superior / Seminarios": [
+            "Historia Americana Contemporánea",
+            "Construcción de la Práctica Docente II / Residencia Media y Superior",
+            "Historia Contemporánea",
+            "Filosofía"
+          ],
+          "5° Año": [
+            "Teoría e Historia de la Historiografía",
+            "Historia de la Educación Argentina",
+            "Derechos Humanos (DDHH), Sociedad y Estado",
+            "Historia del Arte",
+            "Sistema y Política Educativa",
+            "Lengua Extranjera",
+            "Educación Sexual Integral (ESI)",
+            "Nuevas Tecnologías",
+            "Historia de Asia",
+            "Historia de África",
+            "Historia del Pensamiento Social y Económico",
+            "Historia del Pensamiento Político",
+            "Historia de las Mujeres y de Género",
+            "Historia Americana Desde los Orígenes"
+          ]
+        }
+      },
+      "active_plan": "Plan Vigente"
+    },
+    "Profesorado de Ciencia Política": {
+      "planes": {
+        "Plan Vigente": {
+          "1° Año": [
+            "Introducción a las Ciencias Sociales: Política y Jurídica",
+            "Fundamentos de la Ciencia Política",
+            "Historia Mundial Contemporánea",
+            "Historia del Pensamiento Político",
+            "Historia de los Hechos y de las Ideas Económicas",
+            "Sociología",
+            "Antropología Cultural",
+            "Lectura, Escritura y Oralidad I",
+            "Pedagogía General",
+            "Psicología Educacional",
+            "Sujeto de Nivel",
+            "Trabajo de Campo I"
+          ],
+          "2° Año": [
+            "Teoría y Prática Política I",
+            "Historia Política y Social Latinoamericana y Argentina Contemporánea",
+            "Historia de los Movimientos Políticos y Sociales",
+            "Derecho Constitucional",
+            "Economía Política",
+            "Didactica General",
+            "Lectura, Escritura y Oralidad II",
+            "Filosofía",
+            "Educación Sexual Integral (ESI)",
+            "Trabajo de Campo II"
+          ],
+          "3° Año": [
+            "Teoría y Prática Política II",
+            "Movimientos Políticos y Sociales",
+            "Gobierno y Administración Nacional, Provincial y Municipal",
+            "Derecho a las Relaciones Internacionales",
+            "Epistemología y Metodología de la Investigación",
+            "Construcción de la Práctica Docente",
+            "Enseñanza de la Ciencia Política I",
+            "Ecología y Ambiente",
+            "Historia de la Educación Argentina",
+            "Derechos Humanos (DDHH), Sociedad y Estado",
+            "Taller Optativo: Estrategias para el Analisis del Discurso Político"
+          ],
+          "4° Año": [
+            "Ética",
+            "Relaciones Internacionales",
+            "Psicología Política y Social",
+            "Política Educacional y Legislación Escolar / Sistema y Política Educativa",
+            "Lengua Extranjera",
+            "Nuevas Tecnologias"
+          ],
+          "5° Año": [
+            "Enseñanza de la Ciencia Política II",
+            "Residencia Pedagógica",
+            "Medios de Comunicación y Opinión Publica",
+            "Const. Políticas de los Pueblos Originarios de America Latina y en Especial Argentina",
+            "Análisis de las Políticas Publicas"
+          ]
+        }
+      },
+      "active_plan": "Plan Vigente"
+    },
+    "Profesorado de Geografía": {
+      "planes": {
+        "Plan Vigente": {
+          "1° Año": [
+            "Ciencias de la Tierra 1: Geologia y Paleontologia",
+            "Información Geográfica I",
+            "Dinamica de los Procesos Climaticos",
+            "Introdución a la Geografía",
+            "Economía y Territorios",
+            "Lectura, Escritura y Oralidad (LEO) I",
+            "Pedagogía",
+            "Psicología Educacional",
+            "Psicología del Sujeto del Nviel",
+            "Historia Mundial",
+            "Trabajo de Campo I"
+          ],
+          "2° Año": [
+            "Posicionamiento Espacial y Geomatico",
+            "Geografía Política",
+            "Ciencias de la Tierra II",
+            "Ecología y Biogeografía",
+            "Geografía Económica Mundial",
+            "Territorios 1: America Latina y Anglosajona",
+            "Didáctica General",
+            "Trabajo de Campo II",
+            "Historia Social Latinoamericana"
+          ],
+          "3° Año": [
+            "Información Geográfica II",
+            "Territorios 2: Europa",
+            "Geografia de la Argentina I",
+            "Geografia de la Argentina II",
+            "Construcción de la Práctica Docente y Enseñanza de la Geografía I",
+            "Historia de la Educación Argentina",
+            "Lectura, Escritura y Oralidad (LEO) II",
+            "Filosofía",
+            "Derechos Humanos (DDHH), Sociedad y Estado"
+          ],
+          "4° Año": [
+            "Epistemología e Historia de la Geografía",
+            "Geografía de la Republica Argentina III",
+            "Geografía Social",
+            "Teledetección Geográfica",
+            "Problemáticas Socioambientales"
+          ],
+          "Tramo Superior / Seminarios": [
+            "Territorios 3: Asia",
+            "Geografía Urbana y Rural",
+            "Enseñanza de la Geografía II y Residemcia Pedagógica",
+            "Territorios 4: Africa y Oceania",
+            "Nuevas Tecnologias",
+            "Lengua Extranjera: Portugues",
+            "Antropologia",
+            "Educación Sexual Integral (ESI)"
+          ]
+        }
+      },
+      "active_plan": "Plan Vigente"
+    },
+    "Profesorado de Filosofía": {
+      "planes": {
+        "Plan Vigente": {
+          "1° Año": [
+            "Lógica I y Teoría de la Argumentación",
+            "Introducción a la Filosofía",
+            "Psicología Educacional",
+            "Psicología del Desarrollo",
+            "Sociología",
+            "Pedagogía",
+            "Lectura, Escritura y Oralidad (LEO) I",
+            "Trabajo de Campo I",
+            "Educación Sexual Integral (ESI)",
+            "Lengua Extranjera"
+          ],
+          "2° Año": [
+            "Didáctica General",
+            "Historia de la Educación Argentina",
+            "Historia de la Filosofía Antigua",
+            "Filosofía Argentina y Latinoamericana",
+            "Historia del Arte",
+            "Metodología de la Investigación",
+            "Nuevas Tecnologias",
+            "Lectura, Escritura y Oralidad (LEO) II",
+            "Trabajo de Campo II"
+          ],
+          "3° Año": [
+            "Logica II",
+            "Filosofía de la Logica",
+            "Historia de la Filosofia Medieval",
+            "Metafisica",
+            "Historia de la Ciencia",
+            "Trabajo de Campo III",
+            "Sistema y Política Educativa",
+            "Taller Filosofía y Educación",
+            "Teoría del Conocimiento",
+            "Etica"
+          ],
+          "Tramo Superior / Seminarios": [
+            "Filosofia del Lenguaje",
+            "Estetica",
+            "Filosofica Politca",
+            "Historia de la Filosofia Moderna",
+            "Residencia",
+            "Filosofía de la Historia",
+            "Filosofía de la Ciencia"
+          ],
+          "5° Año": [
+            "Antropologia Cultural",
+            "Filosofia de Genero",
+            "Filosofia de la Religión",
+            "Sociedad, Estado y Derechos Humanos (DDHH)",
+            "Filosofia Contemporanea"
+          ]
+        }
+      },
+      "active_plan": "Plan Vigente"
+    },
+    "Profesorado de Informática": {
+      "planes": {
+        "Plan Vigente": {
+          "1° Año": [
+            "Álgebra",
+            "Herramientas Informaticas",
+            "Trabajo de Campo I",
+            "Programación I",
+            "Diseño I",
+            "Informatica",
+            "Lectura, Escritura y Oralidad (LEO) I",
+            "Psicología Educacional",
+            "Sujetos de Nivel",
+            "Pedagogía"
+          ],
+          "2° Año": [
+            "Calculo para Informatica",
+            "Tecnologia de la Información y la Comunicación",
+            "Trabajo de Campo II",
+            "Sistemas Informaticos",
+            "Lectura, Escritura y Oralidad (LEO) II",
+            "Diseño II",
+            "Programación II",
+            "Didáctica General",
+            "Educación Sexual Integral (ESI)"
+          ],
+          "3° Año": [
+            "Informatica Educativa",
+            "Filosofía",
+            "Ingles I",
+            "Redes y Comunicaciones de Datos",
+            "Discursos Digitales",
+            "Logica Informatica",
+            "Programación III",
+            "Derechos Humanos (DDHH), Sociedad y Estado"
+          ],
+          "4° Año": [
+            "Recursos Informaticos Aplicados a Otras Disciplinas",
+            "Proyectos Educativos",
+            "Construcción de la Practica Docente I",
+            "Historia de la Educación Argentina",
+            "Nuevos Escenarios, Cultura Tecnologica y Subjetividad",
+            "Ingles II",
+            "Informatica Educativa II",
+            "Tecnicas Digitales"
+          ],
+          "5° Año": [
+            "Diseño de Sistemas",
+            "Modelizacion Matemática y Simulación",
+            "Inteligencia Artifical",
+            "Lengua Extranjera",
+            "Sistema y Politica Educativa"
+          ]
+        }
+      },
+      "active_plan": "Plan Vigente"
+    },
+    "Profesorado de Lengua y Literatura": {
+      "planes": {
+        "Plan Vigente": {
+          "1° Año": [
+            "Lectura, Escritura y Oralidad 1: Generos Académicos",
+            "Taller de Lectura de Textos Literarios",
+            "Taller de Gramatica y Lingüistica",
+            "Taller de Literatura y Teoría Literaria",
+            "Taller de Literatura Argentina y Latinoamericana Conectada con la Literatura Española",
+            "Teoría Literaria",
+            "Fílosofia",
+            "Introducción Al Estudio del Lenguaje y Elemento de Semiología",
+            "Introducción a la Lengua y la Literatura Latina",
+            "Latín I y Literatura Latina",
+            "Pedagogía (Comisión A)",
+            "Pedagogía (Comisión B)",
+            "Psicología Educacional",
+            "Sujetos del Nivel Medio y Superior"
+          ],
+          "2° Año": [
+            "Lectura, Escritura y Oralidad 2: Generos e Intercursividad",
+            "Gramática I (Comisión A)",
+            "Gramática I (Comisión C)",
+            "Literatura Francesa e Italiana",
+            "Historia del Arte",
+            "Latín II y Literatura Latina",
+            "Didáctica General",
+            "La Lectura y la Escritura en la Educación Formal y No Formal",
+            "Lectocomprensión de Lengua Extranjera I",
+            "Lectocomprensión de Lengua Extranjera II",
+            "Nuevas Tecnologias"
+          ],
+          "3° Año": [
+            "Gramática II",
+            "Literatura en la Lengua Inglesa y Alemana",
+            "Literatura Española del Siglo de Oro",
+            "Latín III y Literatura Latina",
+            "Griego I y Literatura Griega",
+            "Historia de la Educación Argentina",
+            "Sistema y Politica Educativa"
+          ],
+          "4° Año": [
+            "Gramática III",
+            "Gramática Histórica",
+            "Literatura Argentina",
+            "Literatura Latinoamericana",
+            "Lengua y Literatura Latinas y su Enseñanza en el Nivel Medio y Superior",
+            "Griego II y Literatura Griega",
+            "Metodología Especial y Prácticas de la Enseñanza"
+          ],
+          "5° Año": [
+            "Derechos Humanos (DDHH), Sociedad y Estado",
+            "Lingüistica",
+            "Estudio de la Diversidad Lingüística y su Enseñanza en el Nivel Medio y Superior",
+            "Problemas de Literatura Contemporánea en Lengua Española",
+            "Literatura, Cine y Otros Lenguajes en los Siglos Xx y Xxi",
+            "Metodología Especial y Residencia"
+          ],
+          "Tramo Superior / Seminarios": [
+            "Lenguaje, Sociedad y Educacíon",
+            "Canon Literario, Canon Escolar y Formación del Gusto",
+            "Representación y Proyección de los Discrusos de la Antigüedad en la Escuela",
+            "Retórica y Poética",
+            "Literatura Rusa y de Otros Patrimonios Culturales No Occidentales",
+            "Análisis del Discurso",
+            "Estudios Hispánicos"
+          ]
+        }
+      },
+      "active_plan": "Plan Vigente"
+    },
+    "Profesorado de Ciencias de la Administración": {
+      "planes": {
+        "Plan Vigente": {
+          "1° Año": [
+            "Sistemas de Información Contable",
+            "Análisis Matemático",
+            "Derecho Público",
+            "Introducción a la Economía",
+            "Historia Económica General y Argentina",
+            "Lectura, Escritura y Oralidad I",
+            "Pedagogía",
+            "Psicología Educacional",
+            "Sujetos de la Enseñanza",
+            "Trabajo de Campo I"
+          ],
+          "2° Año": [
+            "Pricipios de Administración",
+            "Estadística",
+            "Derecho Civil y Societario",
+            "Didactica General",
+            "Filosofía",
+            "Geografía Económica",
+            "Lectura, Escritura y Oralidad II",
+            "Trabajo de Campo II"
+          ],
+          "3° Año": [
+            "Contabilidad de Gestión y Costos",
+            "Régimen Tributario y Laboral",
+            "Derecho Comercial y Económico",
+            "Didáctica Específica de las Ciencias de la Administración y Constr. de la Práctica Docente",
+            "Historia de la Educación Argentina",
+            "Dd Hh, Sociedad y Estado",
+            "Matemática Financiera"
+          ],
+          "4° Año": [
+            "Administración Estratégica",
+            "Taller Diseño y Gestión de Organizaciones",
+            "Taller de Nuevas Tecnologias",
+            "Metodología de la Investigación",
+            "Sistema y Política Educativa",
+            "Aplicativos Informáticos",
+            "Didáctica de la Educación Superior",
+            "Didactica de Educación a Distancia",
+            "Comercialización y Marketing",
+            "Administración de Recursos Humanos"
+          ],
+          "5° Año": [
+            "Taller de Lengua Extranjera - Ingles",
+            "Taller de Informática",
+            "Educación Sexual Integral (ESI)",
+            "Construccion de la Practica Docente II"
+          ],
+          "Tramo Superior / Seminarios": [
+            "Taller Optativo: Valuación Contable"
+          ]
+        }
+      },
+      "active_plan": "Plan Vigente"
+    },
+    "Profesorado de Ciencias Jurídicas": {
+      "planes": {
+        "Plan Vigente": {
+          "1° Año": [
+            "Derecho Político",
+            "Historia de las Instituciones Argentinas I",
+            "Historia de las Ideas e Instituciones Politicas",
+            "Historia de los Hechos y de las Ideas Económicas",
+            "Introducción Al Derecho",
+            "Taller de Expresión Oral y Escrita I",
+            "Pedagogia General",
+            "Sociología General",
+            "Psicología del Desarrollo y del Aprendizaje",
+            "Trabajo de Campo I"
+          ],
+          "2° Año": [
+            "Derecho Privado I",
+            "Historia de las Instituciones Argentinas II",
+            "Derecho Penal y Criminalidad",
+            "Economía Política",
+            "Derecho Constitucional",
+            "Derechos Humanos y Garantias",
+            "Didactica General",
+            "Introducción a la Filosofía",
+            "Taller de Expresión Oral y Escrita II",
+            "Trabajo de Campo II"
+          ],
+          "3° Año": [
+            "Derecho Privado II",
+            "Derecho Administrativo y Municipal",
+            "Elementos de Derecho Procesal y Régimen Legal de Concursos y Quiebras",
+            "Relaciones Laborales y Seguridad Social",
+            "Demografía, Ecología y Geografía Humana",
+            "Didactica Especifica I y Trabajo de Campo III",
+            "Estado, Sociedad y Derechos Humanos (DDHH)",
+            "Historia Mundial Contemporanea"
+          ],
+          "4° Año": [
+            "Derecho Internacional Público",
+            "Derecho Ambiental y de los Recursos Naturales"
+          ],
+          "Tramo Superior / Seminarios": [
+            "Psicología Social y Jurídica",
+            "Derecho de las Comunicaciones de los Transportes",
+            "Nociones de Etica",
+            "Historia Social de la Educación",
+            "Didáctica Específica II y Residencia",
+            "Política Educacional y Legislación Escolar",
+            "Finanzas y Legislación Impositiva",
+            "Taller Optativo: el Adulto Como Sujeto del Aprendizaje",
+            "Educación Sexual Integral (ESI)",
+            "Politica Educacional y Legislación Escolar",
+            "Para Cursar Trabajo de Campo I Es Necesario Estar Cursando o Haber Cursado: • Pedagogía General • Psicología del Desarrollo y del Aprendizaje"
+          ]
+        }
+      },
+      "active_plan": "Plan Vigente"
+    },
+    "Profesorado de Ciencias de la Educación": {
+      "planes": {
+        "Plan Vigente": {
+          "1° Año": [
+            "Pedagogía",
+            "Lectura, Escritura y Oralidad (LEO) I",
+            "Antropología Social y Cultural",
+            "Psicología General",
+            "Bases Biologicas de la Subjetividad",
+            "Filosofía",
+            "Estudios Culturales y Educación",
+            "Trabajo de Campo I",
+            "Educación Sexual Integral (ESI)"
+          ],
+          "2° Año": [
+            "Psicología Ciclos Vitales",
+            "Lectura, Escritura y Oralidad (LEO) II",
+            "Didáctica General",
+            "Sociología de la Educación",
+            "Filosofía de la Educación",
+            "Instituciones Educativas",
+            "Psicología de la Educación",
+            "Estado, Sociedad y Derechos Humanos (DDHH)",
+            "Nuevas Tecnologias",
+            "Trabajo de Campo II",
+            "Psicología Social y Analisis de las Organizaciones Educativas"
+          ],
+          "3° Año": [
+            "Historia Social de la Educación",
+            "Problemas Didacticos I",
+            "Educación No Formal e Informal",
+            "Trabajo de Campo III",
+            "Curriculum",
+            "Evaluación",
+            "Trabajo Docente",
+            "Lengua Extranjera",
+            "Epistemologia de las Ciencias Sociales",
+            "Sistema y Política Educativa"
+          ],
+          "4° Año": [
+            "Metodologia de la Investigación Educativa",
+            "Estadistica Socioeducativa",
+            "Legislación Educativa",
+            "Construcción de la Practica Docente I",
+            "Políticas Epistematicas",
+            "Historia de la Educación Argentina",
+            "Autoridad Pedagógica",
+            "Problemas Didacticos II",
+            "Dimensión Etica del Trabajo Docente",
+            "Pedagogía Social"
+          ],
+          "5° Año": [
+            "Configuración Dinamica de Roles Profesionales",
+            "Practica de la Investigación Educativa"
+          ],
+          "Tramo Superior / Seminarios": [
+            "Construcción de la Practica Docente II",
+            "Ateneo de Politicas Publicas",
+            "Experiencias Educativas en Contexto"
+          ]
+        }
+      },
+      "active_plan": "Plan Vigente"
+    },
+    "Profesorado de Biología": {
+      "planes": {
+        "Plan Vigente": {
+          "1° Año": [
+            "Matemática",
+            "Física (Comisión A)",
+            "Física (Comisión D)",
+            "Química",
+            "Introducción a los Sistemas Vivientes (Comisión A)",
+            "Introducción a los Sistemas Vivientes (Comisión D)",
+            "Psicología Educacional",
+            "Psicología del Desarrollo y del Aprendizaje",
+            "Lectura, Escritura y Oralidad (LEO)"
+          ],
+          "2° Año": [
+            "Biología de los Animales I",
+            "Biología de las Plantas I",
+            "Biología Molecular y Celular",
+            "Ciencias de la Tierra",
+            "Física Biológica",
+            "Química Biológica",
+            "Pedagogía",
+            "Trabajo de Campo I",
+            "Derechos Humanos (DDHH), Sociedad y Estado",
+            "Taller de Lengua Extranjera",
+            "Taller de Actualización en Didacticas Especificas",
+            "Taller de Actualización Disciplinar y su Didactica",
+            "Nuevas Tecnologias"
+          ],
+          "3° Año": [
+            "Genética Clasica, Molecular y Poblacional",
+            "Biología de las Plantas II",
+            "Biología Humana I",
+            "Biodiversidad de las Plantas",
+            "Biología de los Animales II",
+            "Didactica General",
+            "Filosofía",
+            "Trabajo de Campo II",
+            "La Experimentación en Biología y su Didactica"
+          ],
+          "4° Año": [
+            "Biología de los Microorganimos, las Algas y los Hongos",
+            "Biología de los Animales III",
+            "Biología Humana II",
+            "Dinamica Terrestre",
+            "Historia. Filosofia y Sociologia de la Biología",
+            "Construcción Practica Docente I para el Nivel Medio",
+            "Taller de Educación No Formal",
+            "El Lenguaje de la Biología y su Didactica",
+            "Historia de la Educación Argentina",
+            "Ecología y Etología"
+          ],
+          "5° Año": [
+            "Morfofisiologia Comparada de los Animales y Ambiente",
+            "Genetica, Ambiente y Sociedad",
+            "Evolución e Historia de la Vida",
+            "Construcción Practica Docente II y Residencia Niveles Medio y Superior",
+            "Metodologia de la Investigación",
+            "Educación para la Salud",
+            "Sistema y Politica Educativa",
+            "Didactica de la Educación en el Ambiente y la Sustentabilidad"
+          ]
+        }
+      },
+      "active_plan": "Plan Vigente"
+    },
+    "Profesorado de Francés": {
+      "planes": {
+        "Plan Vigente": {
+          "1° Año": [
+            "Trabajo de Campo I",
+            "Lengua Francesa I",
+            "Introducción a los Estudios Socioculturales",
+            "Lectura, Escritura y Oralidad (LEO)",
+            "Pedagogía",
+            "Taller de Oralidad en Frances",
+            "Fonética y Fonología I",
+            "Gramática I",
+            "Sujetos del Nivel",
+            "Psicología Educacional"
+          ],
+          "2° Año": [
+            "Nuevas Tecnologias",
+            "Derechos Humanos (DDHH), Sociedad y Estado",
+            "Trabajo de Campo II",
+            "Lengua Francesa II",
+            "Gramática II",
+            "Introducción a la Literatura",
+            "Fonética y Fonología II",
+            "Historia de Francia I",
+            "Didáctica General",
+            "Lengua Extranjera I",
+            "Lengua Extranjera II"
+          ],
+          "3° Año": [
+            "Historia de Francia II",
+            "Fonética y Fonología III",
+            "Educación Sexual Integral (ESI)",
+            "Didáctica para el Nivel Incial y Primario / Construcción de la Práctica Docente",
+            "Lengua Francesa III",
+            "Linguistica General y Análisis del Discurso",
+            "Literatura Francesa I",
+            "Didactica para Nivel Medio I y Construcción de la Práctica Docente"
+          ],
+          "4° Año": [
+            "Didáctica de la Fonética",
+            "Sistema y Política Educativa",
+            "Residencia para el Nivel Inicial y Primario",
+            "Literatura Francesa II",
+            "Gramática del Texto",
+            "Lengua Francesa IV",
+            "Didáctica del Fle para el Nivel Medio II y Residencia"
+          ],
+          "5° Año": [
+            "Historia de la Educación Argentina",
+            "Introducción a la Investigación en Ciencias del Lenguaje",
+            "Literatura Francesa Contemporánea",
+            "Estudios Linguísticos Comparados",
+            "Historia de la Lengua Francesa",
+            "Historia del Arte",
+            "Filosofía",
+            "Didactica del Fle para Nivel Superior y Residencia"
+          ]
+        }
+      },
+      "active_plan": "Plan Vigente"
+    }
+  },
+  "tools_config": {
+    "aulas": {
+      "id": "aulas",
+      "visible": true,
+      "nombre": "Buscador de Aulas",
+      "subtitulo": "Consultá salones, materias y horarios (Base de datos 1.658 clases).",
+      "categoria": "Herramienta Clave",
+      "badge": "En vivo"
+    },
+    "mapas": {
+      "id": "mapas",
+      "visible": true,
+      "nombre": "Mapa de Carrera Personal",
+      "subtitulo": "Seguí tus correlatividades y avance de carrera en tu Drive.",
+      "categoria": "Plan de Estudio",
+      "badge": "Excel .xlsx"
+    },
+    "comodato": {
+      "id": "comodato",
+      "visible": true,
+      "nombre": "Préstamo de Computadoras",
+      "subtitulo": "Netbooks en comodato: requisitos y modelo de carta.",
+      "categoria": "Recurso Estudiantil",
+      "badge": "Comodato"
+    },
+    "becas": {
+      "id": "becas",
+      "visible": true,
+      "nombre": "Boleto Estudiantil y Becas",
+      "subtitulo": "Instructivos para SUBE, Beca Ciudad y Progresar.",
+      "categoria": "Beneficios",
+      "badge": "Trámites"
+    },
+    "normativas": {
+      "id": "normativas",
+      "visible": true,
+      "nombre": "Normativa Institucional",
+      "subtitulo": "Reglamento Orgánico (ROI), correlatividades y resoluciones.",
+      "categoria": "Institucional",
+      "badge": "Oficial JVG"
+    },
+    "planes": {
+      "id": "planes",
+      "visible": true,
+      "nombre": "Planes de Estudio",
+      "subtitulo": "Planes de los profesorados del instituto y resoluciones.",
+      "categoria": "Académica",
+      "badge": "Departamentos"
+    },
+    "feedback": {
+      "id": "feedback",
+      "visible": true,
+      "nombre": "Consultas y Sugerencias",
+      "subtitulo": "Escribinos directamente al equipo de administración.",
+      "categoria": "Comunidad",
+      "badge": "Buzón"
+    }
+  },
+  "updated_at": "2026-09-02T12:00:00Z"
+}

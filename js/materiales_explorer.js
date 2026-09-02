@@ -56,16 +56,74 @@ document.addEventListener('DOMContentLoaded', () => {
     return cardTitle;
   }
 
+  const explorerPlanWrapper = document.getElementById('explorerPlanWrapper');
+  const explorerPlan = document.getElementById('explorerPlan');
+
+  // Obtener currículo activo (prioriza site_config de admin/API/localStorage)
+  function getCurriculumConfig() {
+    try {
+      const cached = localStorage.getItem('altillojvg_site_config');
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (parsed && parsed.curriculum && Object.keys(parsed.curriculum).length > 0) {
+          return parsed.curriculum;
+        }
+      }
+    } catch (e) {}
+    if (typeof window.CURRICULUM_DATA !== 'undefined') {
+      return window.CURRICULUM_DATA;
+    }
+    return window.ACTIVE_CURRICULUM || {};
+  }
+
+  function getCareerPlans(carreraName) {
+    const config = getCurriculumConfig();
+    const carreraData = config[carreraName];
+    if (!carreraData) return { "Plan Vigente": {} };
+    if (carreraData.planes) return carreraData.planes;
+    return { "Plan Vigente": carreraData };
+  }
+
   // 3. Abrir e inicializar el explorador para una carrera específica
   function openExplorerForCareer(carreraName) {
     if (!materialesModal) return;
     if (typeof window.trackToolUsage === 'function') window.trackToolUsage('apuntes');
 
+    activeCarrera = carreraName;
+
     // Poblar selector carrera (bloqueado para edición directa por el alumno)
     explorerCarrera.innerHTML = `<option value="${carreraName}">${carreraName}</option>`;
     explorerCarrera.value = carreraName;
 
-    // Poblar años correspondientes a esa carrera
+    const plans = getCareerPlans(carreraName);
+    const planNames = Object.keys(plans);
+
+    if (explorerPlanWrapper && explorerPlan) {
+      if (planNames.length > 1) {
+        explorerPlanWrapper.style.display = 'block';
+        explorerPlan.innerHTML = planNames.map(p => `<option value="${p}">${p}</option>`).join('');
+      } else {
+        explorerPlanWrapper.style.display = 'none';
+        explorerPlan.innerHTML = `<option value="${planNames[0] || 'Plan Vigente'}">${planNames[0] || 'Plan Vigente'}</option>`;
+      }
+
+      explorerPlan.onchange = () => {
+        populateAniosForSelectedPlan(carreraName, explorerPlan.value);
+      };
+    }
+
+    const initialPlan = (explorerPlan && explorerPlan.value) ? explorerPlan.value : planNames[0];
+    populateAniosForSelectedPlan(carreraName, initialPlan);
+
+    // Abrir modal
+    materialesModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function populateAniosForSelectedPlan(carreraName, selectedPlan) {
+    const plans = getCareerPlans(carreraName);
+    const yearsData = plans[selectedPlan] || {};
+
     explorerAnio.innerHTML = '<option value="">-- Seleccioná el Año --</option>';
     explorerMateria.innerHTML = '<option value="">-- Primero elegí Año --</option>';
     explorerMateria.disabled = true;
@@ -76,19 +134,13 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
     materialsCounter.textContent = "Seleccioná carrera, año y materia para ver materiales";
 
-    if (window.ACTIVE_CURRICULUM && window.ACTIVE_CURRICULUM[carreraName]) {
-      const anios = Object.keys(window.ACTIVE_CURRICULUM[carreraName]);
-      anios.forEach(anio => {
-        const option = document.createElement('option');
-        option.value = anio;
-        option.textContent = anio;
-        explorerAnio.appendChild(option);
-      });
-    }
-
-    // Abrir modal
-    materialesModal.classList.add('active');
-    document.body.style.overflow = 'hidden';
+    const anios = Object.keys(yearsData);
+    anios.forEach(anio => {
+      const option = document.createElement('option');
+      option.value = anio;
+      option.textContent = anio;
+      explorerAnio.appendChild(option);
+    });
   }
 
   // 4. On Año Select -> Habilitar y Poblar Materias
@@ -103,12 +155,15 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
       materialsCounter.textContent = "Filtrando por materias...";
 
-      if (!selectedAnio || !window.ACTIVE_CURRICULUM[activeCarrera] || !window.ACTIVE_CURRICULUM[activeCarrera][selectedAnio]) {
+      const currentPlan = (explorerPlan && explorerPlan.value) ? explorerPlan.value : "Plan Vigente";
+      const plans = getCareerPlans(activeCarrera);
+      const materias = (plans[currentPlan] && plans[currentPlan][selectedAnio]) ? plans[currentPlan][selectedAnio] : [];
+
+      if (!selectedAnio || materias.length === 0) {
         explorerMateria.disabled = true;
         return;
       }
 
-      const materias = window.ACTIVE_CURRICULUM[activeCarrera][selectedAnio];
       materias.forEach(materia => {
         const option = document.createElement('option');
         option.value = materia;
