@@ -181,11 +181,25 @@ document.addEventListener('DOMContentLoaded', () => {
     if (dashboardSection) dashboardSection.classList.add('hidden');
   }
 
+  async function refreshFeedbackBadge() {
+    try {
+      const res = await fetch('/api/feedback', {
+        headers: { 'x-admin-password': adminPassword }
+      });
+      if (res.ok) {
+        const msgs = await res.json();
+        const count = Array.isArray(msgs) ? msgs.length : 0;
+        if (feedbackBadgeCount) feedbackBadgeCount.textContent = count;
+      }
+    } catch (e) {}
+  }
+
   function showDashboard() {
     if (loginSection) loginSection.classList.add('hidden');
     if (dashboardSection) dashboardSection.classList.remove('hidden');
     populateCareerFilter();
     switchTab('submissions');
+    refreshFeedbackBadge();
   }
 
   if (adminPassword) {

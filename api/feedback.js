@@ -20,6 +20,8 @@ export default async function handler(req, res) {
   const SUPABASE_URL = process.env.SUPABASE_URL || "https://nfpmrjvdjzzyzjskmiqt.supabase.co";
   const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || "";
   const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
+  const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
+  const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
   const localFilePath = path.join(process.cwd(), 'data', 'feedback.json');
 
@@ -53,23 +55,57 @@ export default async function handler(req, res) {
       return res.status(401).json({ error: 'Acceso no autorizado. Contraseña incorrecta.' });
     }
 
-    try {
-      const resp = await fetch(`${SUPABASE_URL}/rest/v1/feedback?order=created_at.desc`, {
-        method: 'GET',
-        headers: {
-          'apikey': SUPABASE_SERVICE_ROLE_KEY,
-          'Authorization': `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`
-        }
-      });
+    // 1. Intentar leer de tabla dedicada public.feedback
+    if (SUPABASE_URL && SUPABASE_SERVICE_ROLE_KEY) {
+      try {
+        const resp = await fetch(`${SUPABASE_URL}/rest/v1/feedback?order=created_at.desc`, {
+          method: 'GET',
+          headers: {
+            'apikey': SUPABASE_SERVICE_ROLE_KEY,
+            'Authorization': `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`
+          }
+        });
 
-      if (resp.ok) {
-        const data = await resp.json();
-        return res.status(200).json(data);
+        if (resp.ok) {
+          const data = await resp.json();
+          if (Array.isArray(data) && data.length > 0) {
+            return res.status(200).json(data);
+          }
+        }
+      } catch (e) {
+        console.warn('Supabase feedback table query failed:', e.message);
       }
-    } catch (e) {
-      console.warn('Supabase feedback query error, fallback to local:', e.message);
+
+      // 2. Si tabla dedicada no existe o está vacía, consultar tabla submissions (estado = 'feedback')
+      try {
+        const subResp = await fetch(`${SUPABASE_URL}/rest/v1/submissions?estado=eq.feedback&order=created_at.desc`, {
+          method: 'GET',
+          headers: {
+            'apikey': SUPABASE_SERVICE_ROLE_KEY,
+            'Authorization': `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`
+          }
+        });
+
+        if (subResp.ok) {
+          const subData = await subResp.json();
+          if (Array.isArray(subData)) {
+            const mapped = subData.map(s => ({
+              id: s.id,
+              nombre: s.nombre || 'Estudiante anónimo',
+              carrera: s.carrera || 'No especificada',
+              tipo: s.tipo || 'Sugerencia',
+              mensaje: s.link || '',
+              created_at: s.created_at
+            }));
+            return res.status(200).json(mapped);
+          }
+        }
+      } catch (e) {
+        console.warn('Supabase submissions feedback fallback error:', e.message);
+      }
     }
 
+    // 3. Fallback a archivo local
     const localList = getLocalFeedback();
     return res.status(200).json(localList);
   }
@@ -92,28 +128,104 @@ export default async function handler(req, res) {
       created_at: new Date().toISOString()
     };
 
-    try {
-      await fetch(`${SUPABASE_URL}/rest/v1/feedback`, {
-        method: 'POST',
-        headers: {
-          'apikey': SUPABASE_SERVICE_ROLE_KEY,
-          'Authorization': `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
-          'Content-Type': 'application/json',
-          'Prefer': 'return=minimal'
-        },
-        body: JSON.stringify(newFeedback)
-      });
-    } catch (e) {
-      console.warn('Supabase insert feedback error:', e.message);
+    let savedInSupabase = false;
+
+    // 1. Intentar guardar en Supabase (tabla feedback o fallback a submissions)
+    if (SUPABASE_URL && SUPABASE_SERVICE_ROLE_KEY) {
+      try {
+        const fbRes = await fetch(`${SUPABASE_URL}/rest/v1/feedback`, {
+          method: 'POST',
+          headers: {
+            'apikey': SUPABASE_SERVICE_ROLE_KEY,
+            'Authorization': `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
+            'Content-Type': 'application/json',
+            'Prefer': 'return=minimal'
+          },
+          body: JSON.stringify(newFeedback)
+        });
+
+        if (fbRes.ok) {
+          savedInSupabase = true;
+        }
+      } catch (e) {
+        console.warn('Error inserting into feedback table:', e.message);
+      }
+
+      // Si falló la tabla feedback (ej. 404 porque no existe), guardar en submissions con estado='feedback'
+      if (!savedInSupabase) {
+        try {
+          const subRes = await fetch(`${SUPABASE_URL}/rest/v1/submissions`, {
+            method: 'POST',
+            headers: {
+              'apikey': SUPABASE_SERVICE_ROLE_KEY,
+              'Authorization': `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
+              'Content-Type': 'application/json',
+              'Prefer': 'return=minimal'
+            },
+            body: JSON.stringify({
+              carrera: newFeedback.carrera,
+              anio: 'General',
+              materia: '[FEEDBACK]',
+              tipo: newFeedback.tipo,
+              nombre: newFeedback.nombre,
+              link: newFeedback.mensaje,
+              estado: 'feedback',
+              created_at: newFeedback.created_at
+            })
+          });
+
+          if (subRes.ok) {
+            savedInSupabase = true;
+          }
+        } catch (e) {
+          console.warn('Error inserting into submissions as feedback fallback:', e.message);
+        }
+      }
     }
 
-    // Respaldo en archivo local
-    const localList = getLocalFeedback();
-    localList.unshift({
-      id: Date.now(),
-      ...newFeedback
-    });
-    saveLocalFeedback(localList);
+    // 2. Notificación Instantánea a Telegram (Administradores)
+    if (TELEGRAM_BOT_TOKEN && TELEGRAM_CHAT_ID) {
+      try {
+        const fechaStr = new Date().toLocaleString('es-AR', { timeZone: 'America/Argentina/Buenos_Aires' });
+        const tgText = `📬 *¡Nueva Consulta o Sugerencia Recibida en AltilloJVG!*
+
+` +
+          `👤 *Nombre:* ${newFeedback.nombre}
+` +
+          `🎓 *Carrera:* ${newFeedback.carrera}
+` +
+          `🏷️ *Tipo:* ${newFeedback.tipo}
+
+` +
+          `💬 *Mensaje:*
+${newFeedback.mensaje}
+
+` +
+          `📅 *Fecha:* ${fechaStr}`;
+
+        await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            chat_id: TELEGRAM_CHAT_ID,
+            text: tgText,
+            parse_mode: 'Markdown'
+          })
+        });
+      } catch (tgErr) {
+        console.warn('Telegram feedback notification error:', tgErr.message);
+      }
+    }
+
+    // 3. Respaldo en archivo local
+    try {
+      const localList = getLocalFeedback();
+      localList.unshift({
+        id: Date.now(),
+        ...newFeedback
+      });
+      saveLocalFeedback(localList);
+    } catch (e) {}
 
     return res.status(200).json({
       success: true,
@@ -135,21 +247,35 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'ID requerido para eliminar mensaje.' });
     }
 
-    try {
-      await fetch(`${SUPABASE_URL}/rest/v1/feedback?id=eq.${id}`, {
-        method: 'DELETE',
-        headers: {
-          'apikey': SUPABASE_SERVICE_ROLE_KEY,
-          'Authorization': `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`
-        }
-      });
-    } catch (e) {
-      console.warn('Supabase delete feedback error:', e.message);
+    if (SUPABASE_URL && SUPABASE_SERVICE_ROLE_KEY) {
+      try {
+        // Intentar borrar en feedback
+        await fetch(`${SUPABASE_URL}/rest/v1/feedback?id=eq.${id}`, {
+          method: 'DELETE',
+          headers: {
+            'apikey': SUPABASE_SERVICE_ROLE_KEY,
+            'Authorization': `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`
+          }
+        });
+      } catch (e) {}
+
+      try {
+        // Intentar borrar en submissions
+        await fetch(`${SUPABASE_URL}/rest/v1/submissions?id=eq.${id}&estado=eq.feedback`, {
+          method: 'DELETE',
+          headers: {
+            'apikey': SUPABASE_SERVICE_ROLE_KEY,
+            'Authorization': `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`
+          }
+        });
+      } catch (e) {}
     }
 
-    let localList = getLocalFeedback();
-    localList = localList.filter(item => String(item.id) !== String(id));
-    saveLocalFeedback(localList);
+    try {
+      let localList = getLocalFeedback();
+      localList = localList.filter(item => String(item.id) !== String(id));
+      saveLocalFeedback(localList);
+    } catch (e) {}
 
     return res.status(200).json({ success: true, message: 'Mensaje eliminado correctamente.' });
   }
