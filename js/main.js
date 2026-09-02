@@ -137,6 +137,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // Helper para leer contenido dinámico configurado desde el CMS
+  function getDynamicResource(key, fallback) {
+    try {
+      const cached = localStorage.getItem('altillojvg_site_config');
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (parsed?.tools_config?.[key]?.modal_content) {
+          return parsed.tools_config[key].modal_content;
+        }
+      }
+    } catch (e) {}
+    return fallback;
+  }
+
   // Modal Render Functions
   function openNormativasModal() {
     if (!infoModal) return;
@@ -144,15 +158,16 @@ document.addEventListener('DOMContentLoaded', () => {
     
     let html = `<p style="margin-bottom:16px; color:#64748B;">Reglamentos oficiales del Instituto Superior del Profesorado Joaquín V. González:</p><div style="display:flex; flex-direction:column; gap:12px;">`;
     
-    if (typeof JVG_OFFICIAL_RESOURCES !== 'undefined') {
-      JVG_OFFICIAL_RESOURCES.normativas.forEach(item => {
+    const normativas = getDynamicResource('normativas', (typeof JVG_OFFICIAL_RESOURCES !== 'undefined' ? JVG_OFFICIAL_RESOURCES.normativas : []));
+    if (Array.isArray(normativas)) {
+      normativas.forEach(item => {
         html += `
           <div style="background:#FAFDFF; border:1px solid #BEE3F8; padding:14px; border-radius:10px;">
             <h4 style="color:#0B2545; font-size:0.95rem; margin-bottom:4px;">${item.titulo}</h4>
-            <p style="font-size:0.83rem; color:#64748B; margin-bottom:8px;">${item.descripcion}</p>
-            <a href="${item.link}" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:6px; background:#009BE3; color:#fff; padding:6px 12px; border-radius:6px; text-decoration:none; font-size:0.78rem; font-weight:600;">
+            <p style="font-size:0.83rem; color:#64748B; margin-bottom:8px;">${item.descripcion || ''}</p>
+            ${item.link ? `<a href="${item.link}" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:6px; background:#009BE3; color:#fff; padding:6px 12px; border-radius:6px; text-decoration:none; font-size:0.78rem; font-weight:600;">
               Ver en Sitio Oficial JVG →
-            </a>
+            </a>` : ''}
           </div>`;
       });
     }
@@ -166,9 +181,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!infoModal) return;
     infoModalTitle.textContent = "🎓 Planes de Estudio y Departamentos";
     
-    let html = `<p style="margin-bottom:16px; color:#64748B;">Acceso directo a las páginas oficiales de cada Departamento del Joaquín V. González:</p><div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:10px;">`;
+    const planesCfg = getDynamicResource('planes', null);
+    const avisoText = planesCfg?.aviso || "Acceso directo a las páginas oficiales de cada Departamento del Joaquín V. González:";
+
+    let html = `<p style="margin-bottom:16px; color:#64748B;">${avisoText}</p><div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:10px;">`;
     
-    if (typeof JVG_OFFICIAL_RESOURCES !== 'undefined') {
+    if (typeof JVG_OFFICIAL_RESOURCES !== 'undefined' && Array.isArray(JVG_OFFICIAL_RESOURCES.planes)) {
       JVG_OFFICIAL_RESOURCES.planes.forEach(item => {
         html += `
           <a href="${item.link}" target="_blank" rel="noopener" style="background:#E6F5FC; border:1px solid #BEE3F8; padding:12px; border-radius:8px; text-decoration:none; color:#0B2545; display:block;">
@@ -249,9 +267,11 @@ document.addEventListener('DOMContentLoaded', () => {
     infoModalTitle.textContent = "🎟️ Boleto Estudiantil y Becas";
     
     let html = `<div style="display:flex; flex-direction:column; gap:14px;">`;
-    if (typeof JVG_OFFICIAL_RESOURCES !== 'undefined') {
-      JVG_OFFICIAL_RESOURCES.becas.forEach(item => {
-        const pasosHtml = Array.isArray(item.pasos)
+    const becas = getDynamicResource('becas', (typeof JVG_OFFICIAL_RESOURCES !== 'undefined' ? JVG_OFFICIAL_RESOURCES.becas : []));
+    
+    if (Array.isArray(becas)) {
+      becas.forEach(item => {
+        const pasosHtml = Array.isArray(item.pasos) && item.pasos.length > 0
           ? `<div style="background:#F8FAFC; border-left:3px solid #009BE3; padding:10px 12px; border-radius:4px; margin-bottom:10px;">
                <strong style="font-size:0.78rem; color:#0284C7; display:block; margin-bottom:4px;">¿Cómo realizarlo paso a paso?</strong>
                <ul style="margin:0 0 0 16px; font-size:0.81rem; color:#334155; line-height:1.5;">${item.pasos.map(p => `<li style="margin-bottom:3px;">${p.replace(/^\d+[\.\)]\s*/, '')}</li>`).join('')}</ul>
@@ -261,12 +281,12 @@ document.addEventListener('DOMContentLoaded', () => {
         html += `
           <div style="background:#FAFDFF; border:1px solid #BEE3F8; padding:16px; border-radius:10px;">
             <h4 style="color:#0B2545; font-size:0.98rem; font-weight:700; margin-bottom:4px;">${item.nombre}</h4>
-            <p style="font-size:0.83rem; color:#64748B; margin-bottom:8px;">${item.descripcion}</p>
+            <p style="font-size:0.83rem; color:#64748B; margin-bottom:8px;">${item.descripcion || ''}</p>
             ${pasosHtml}
             <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:8px;">
-              <a href="${item.link}" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:6px; background:#009BE3; color:#fff; padding:7px 13px; border-radius:6px; text-decoration:none; font-size:0.8rem; font-weight:700;">
+              ${item.link ? `<a href="${item.link}" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:6px; background:#009BE3; color:#fff; padding:7px 13px; border-radius:6px; text-decoration:none; font-size:0.8rem; font-weight:700;">
                 🌐 Portal de Inscripción Oficial →
-              </a>
+              </a>` : ''}
               ${item.linkSecundario ? `<a href="${item.linkSecundario}" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:6px; background:#F0F9FF; color:#0369A1; border:1px solid #BAE6FD; padding:7px 12px; border-radius:6px; text-decoration:none; font-size:0.8rem; font-weight:600;">${item.textoLinkSecundario || 'Más Información'} →</a>` : ''}
               ${item.infoPdf ? `<a href="${item.infoPdf}" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:6px; background:#EEF4F8; color:#0B2545; border:1px solid #CBD5E1; padding:7px 12px; border-radius:6px; text-decoration:none; font-size:0.8rem; font-weight:600;">📄 Descargar Instructivo PDF</a>` : ''}
             </div>
@@ -282,15 +302,18 @@ document.addEventListener('DOMContentLoaded', () => {
   function openComodatoModal() {
     if (!infoModal) return;
     infoModalTitle.textContent = "💻 Préstamo de Computadoras en Comodato";
-    const comodato = JVG_OFFICIAL_RESOURCES.comodato;
+    
+    const comodato = getDynamicResource('comodato', (typeof JVG_OFFICIAL_RESOURCES !== 'undefined' ? JVG_OFFICIAL_RESOURCES.comodato : {}));
+    const pasos = Array.isArray(comodato.pasos) ? comodato.pasos : [];
+
     let html = `
       <div style="background:#FAFDFF; border:1px solid #BEE3F8; padding:18px; border-radius:12px;">
-        <h4 style="color:#0B2545; font-size:1rem; font-weight:700; margin-bottom:6px;">${comodato.titulo}</h4>
-        <p style="font-size:0.84rem; color:#475569; line-height:1.5; margin-bottom:14px;">${comodato.descripcion}</p>
+        <h4 style="color:#0B2545; font-size:1rem; font-weight:700; margin-bottom:6px;">${comodato.titulo || 'Préstamo de Computadoras en Comodato'}</h4>
+        <p style="font-size:0.84rem; color:#475569; line-height:1.5; margin-bottom:14px;">${comodato.descripcion || ''}</p>
         
         <h5 style="color:#007BB5; font-size:0.86rem; font-weight:700; margin-bottom:6px;">📌 Requisitos y Pasos para Solicitarla:</h5>
         <ol style="margin-left:20px; font-size:0.82rem; color:#334155; line-height:1.5; margin-bottom:16px;">
-          ${comodato.pasos.map(p => `<li style="margin-bottom:4px;">${p.replace(/^\d+[\.\)]\s*/, '')}</li>`).join('')}
+          ${pasos.map(p => `<li style="margin-bottom:4px;">${p.replace(/^\d+[\.\)]\s*/, '')}</li>`).join('')}
         </ol>
 
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
@@ -299,7 +322,7 @@ document.addEventListener('DOMContentLoaded', () => {
             📋 Copiar modelo
           </button>
         </div>
-        <div style="background:#F1F5F9; border:1px solid #CBD5E1; border-radius:8px; padding:14px; font-family:monospace; font-size:0.82rem; color:#1E293B; white-space:pre-wrap; line-height:1.45; margin-bottom:12px;" id="cartaComodatoText">${comodato.modeloCarta}</div>
+        <div style="background:#F1F5F9; border:1px solid #CBD5E1; border-radius:8px; padding:14px; font-family:monospace; font-size:0.82rem; color:#1E293B; white-space:pre-wrap; line-height:1.45; margin-bottom:12px;" id="cartaComodatoText">${comodato.modeloCarta || ''}</div>
       </div>
     `;
     infoModalBody.innerHTML = html;
@@ -309,20 +332,14 @@ document.addEventListener('DOMContentLoaded', () => {
   window.openComodatoModal = openComodatoModal;
 
   window.copyCartaComodato = function() {
-    if (typeof JVG_OFFICIAL_RESOURCES !== 'undefined' && JVG_OFFICIAL_RESOURCES.comodato) {
-      navigator.clipboard.writeText(JVG_OFFICIAL_RESOURCES.comodato.modeloCarta).then(() => {
+    const textEl = document.getElementById('cartaComodatoText');
+    const textToCopy = textEl ? textEl.textContent : (typeof JVG_OFFICIAL_RESOURCES !== 'undefined' ? JVG_OFFICIAL_RESOURCES.comodato.modeloCarta : '');
+    
+    if (textToCopy) {
+      navigator.clipboard.writeText(textToCopy).then(() => {
         alert('¡Modelo de carta copiado al portapapeles! Pegalo en tu procesador de textos o completalo con tus datos personales.');
       }).catch(() => {
-        const textEl = document.getElementById('cartaComodatoText');
-        if (textEl) {
-          const range = document.createRange();
-          range.selectNodeContents(textEl);
-          const sel = window.getSelection();
-          sel.removeAllRanges();
-          sel.addRange(range);
-          document.execCommand('copy');
-          alert('¡Modelo de carta copiado al portapapeles!');
-        }
+        alert('¡Modelo de carta copiado al portapapeles!');
       });
     }
   };
@@ -646,4 +663,65 @@ document.addEventListener('DOMContentLoaded', () => {
       }).catch(() => {});
     } catch (e) {}
   };
+
+  // ============================================================================
+  // APLICACIÓN DINÁMICA DE CONFIGURACIÓN DE HERRAMIENTAS (CMS NO-CODE)
+  // ============================================================================
+  async function applyDynamicSiteToolsConfig() {
+    let toolsConfig = null;
+
+    try {
+      const cached = localStorage.getItem('altillojvg_site_config');
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (parsed && parsed.tools_config) toolsConfig = parsed.tools_config;
+      }
+    } catch (e) {}
+
+    if (!toolsConfig) {
+      try {
+        const res = await fetch('/api/site_config');
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.tools_config) {
+            toolsConfig = data.tools_config;
+            localStorage.setItem('altillojvg_site_config', JSON.stringify(data));
+          }
+        }
+      } catch (e) {}
+    }
+
+    if (!toolsConfig) return;
+
+    for (const toolId in toolsConfig) {
+      const cfg = toolsConfig[toolId];
+      // Tarjetas laterales
+      const sideCards = document.querySelectorAll('.side-card.' + toolId);
+      sideCards.forEach(card => {
+        if (!cfg.visible) {
+          card.style.display = 'none';
+        } else {
+          card.style.display = '';
+          const titleEl = card.querySelector('.side-card-title');
+          const descEl = card.querySelector('.side-card-desc');
+          if (titleEl && cfg.nombre) titleEl.textContent = cfg.nombre;
+          if (descEl && cfg.subtitulo) descEl.textContent = cfg.subtitulo;
+        }
+      });
+
+      // Chips móviles correspondientes
+      const mobileChips = document.querySelectorAll('.compact-tool-btn.' + toolId);
+      mobileChips.forEach(chip => {
+        if (!cfg.visible) {
+          chip.style.display = 'none';
+        } else {
+          chip.style.display = '';
+          const label = chip.querySelector('span');
+          if (label && cfg.nombre) label.textContent = cfg.nombre;
+        }
+      });
+    }
+  }
+
+  applyDynamicSiteToolsConfig();
 });
