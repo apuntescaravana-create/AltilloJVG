@@ -43,18 +43,23 @@ El proyecto centraliza apuntes clasificados, programas, exámenes, buscadores de
 * **Lectura Progresiva y Paginación**: Sistema de recorte inteligente de texto ("Ver más" / "Ver menos") y botón expansible para consultar el histórico completo de avisos publicados.
 * **Suscripción y Desuscripción a Notificaciones por Mail**: Widget integrado en el tablón (Desktop y Móvil) con límite de 300 cupos que permite a las y los estudiantes suscribirse para recibir novedades en su correo o darse de baja en cualquier momento de manera inmediata y automatizada.
 
-### 4. 📊 Panel de Administración Integral (5 Vistas)
+### 4. 📊 Panel de Administración Integral (6 Vistas)
 * **Vista 1: Moderación de Aportes**: Bandeja de entrada para aprobar o rechazar documentos enviados por la comunidad, con sincronización a base de datos y canales de Telegram.
 * **Vista 2: Gestión de Apuntes**: Buscador, edición y eliminación de apuntes existentes en el repositorio.
 * **Vista 3: Publicador del Tablón**: Redacción de avisos con soporte de fijado, categorización y límite de edición de 30 minutos. Modal de gestión de suscriptores por mail enumerado (`Fila 1: #1 | usuario@...`) sobre un máximo de 300 cupos.
-* **Vista 4: Buzón de Consultas**: Visualización y respuesta a mensajes e inquietudes remitidas desde la web.
+* **Vista 4: Buzón de Consultas**: Visualización y respuesta a mensajes e inquietudes remitidas desde la web, con persistencia garantizada en Supabase, badge reactivo en el menú y alertas instantáneas a Telegram.
 * **Vista 5: Métricas y Respaldo (Backup)**: Dashboard analítico liviano con selector de período (Hoy/Día, Este Mes, Este Año, Histórico Total), ranking porcentual de herramientas más consultadas, historial de visitas y descarga de Backup JSON consolidado en 1 clic.
+* **Vista 6: 🎨 Editor del Sitio (CMS No-Code) & Simulador en Vivo**:
+  * **Gestor Curricular**: Selector de 18 carreras, creación de nuevos planes de estudio ante reformas académicas, y CRUD completo de asignaturas con detección y ordenamiento automático de comisiones (A/B/C/D).
+  * **Configurador de Herramientas**: Ocultamiento/visibilidad de tarjetas, edición de títulos y subtítulos.
+  * **Editor de Contenido Interno de Ventanas Modales**: Modificación sin tocar código de requisitos y modelo formal de carta de comodato para Rectorado, gestión dinámica de becas y beneficios (agregar/eliminar con instructivos paso a paso), actualización de reglamentos y resoluciones de normativas oficiales y enlaces a planes departamentales.
+  * **Simulador en Vivo**: Previsualizador interactivo conmutador en un clic entre Celular (con marco físico de smartphone y notch) y Computadora de escritorio antes de publicar cambios a producción.
 
-### 5. 🛠️ Herramientas Estudiantiles & Información Útil
+### 5. 🛠️ Herramientas Estudiantiles & Información Útil (Gestionables Dinámicamente)
 * **Buscador de Aulas y Cursadas**: Motor de consulta indexado sobre una base de **1.658 clases y comisiones** (turnos mañana, tarde y vespertino) para encontrar salones, docentes y horarios en segundos.
-* **Préstamo de Computadoras en Comodato**: Instructivo completo con requisitos institucionales y el modelo textual exacto de carta para presentar en Rectorado solicitando netbooks por 6 meses o 1 año, con botón de copiado al portapapeles.
+* **Préstamo de Computadoras en Comodato**: Instructivo completo con requisitos institucionales y el modelo textual exacto de carta para presentar en Rectorado solicitando netbooks por 6 meses o 1 año, con botón de copiado al portapapeles (totalmente editable desde el panel).
 * **Trámites y Certificados**: Guías paso a paso para homologaciones, equivalencias y certificados de alumno regular a través del sistema autogestión / SIU.
-* **Boleto Estudiantil Terciario y Becas**: Instructivos detallados para tramitar el beneficio del Boleto SUBE de CABA, Becas Ciudad y Becas PROGRESAR.
+* **Boleto Estudiantil Terciario y Becas**: Instructivos detallados para tramitar el beneficio del Boleto SUBE de CABA, Becas Ciudad y Becas PROGRESAR (editables dinámicamente con enlaces actualizados).
 * **Normativa Institucional y Régimen Estudiantil**: Reglamento Orgánico (ROI), correlatividades y resoluciones del Consejo Directivo.
 * **Guía de Recursos Bibliográficos**: Metabuscadores abiertos, bibliotecas universitarias y técnicas de búsqueda académica en PDF.
 
