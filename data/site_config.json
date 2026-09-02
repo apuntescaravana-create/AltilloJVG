@@ -1217,7 +1217,19 @@
       "nombre": "Préstamo de Computadoras",
       "subtitulo": "Netbooks en comodato: requisitos y modelo de carta.",
       "categoria": "Recurso Estudiantil",
-      "badge": "Comodato"
+      "badge": "Comodato",
+      "modal_content": {
+        "titulo": "Préstamo de Computadoras en Comodato",
+        "descripcion": "Si no contás con computadora propia para tus cursadas, lecturas y trabajos prácticos, podés solicitar una netbook en comodato al Instituto.",
+        "pasos": [
+          "Ser estudiante regular del ISP Joaquín V. González.",
+          "Redactar una nota formal dirigida a Rectorado solicitando el préstamo bajo contrato de comodato (indicando si es por 6 meses o por 1 año).",
+          "Presentar la nota en Mesa de Entradas / Secretaría del Instituto (o elevarla por el canal administrativo correspondiente).",
+          "Al aprobarse, se firma el acta de comodato donde te comprometés al cuidado del equipo y a su devolución al finalizar el período lectivo convenido.",
+          "Retirás la computadora configurada para uso educativo."
+        ],
+        "modeloCarta": "XX/XX/20XX Ciudad Autónoma de Buenos Aires \n\nA Rectorado:\n\nLes escribo con motivo de solicitar el préstamo de computadora a través de contrato de comodato. Quisiera solicitar el préstamo de la computadora por 6 meses o 1 año (según tu necesidad).\n\nDejo mis datos personales y carrera:\n- Nombre completo: \n- DNI: \n- Carrera: \n\nDesde ya muchas gracias. \n\nSaludos cordiales,\n[Nombre del estudiante y firma]"
+      }
     },
     "becas": {
       "id": "becas",
@@ -1225,7 +1237,42 @@
       "nombre": "Boleto Estudiantil y Becas",
       "subtitulo": "Instructivos para SUBE, Beca Ciudad y Progresar.",
       "categoria": "Beneficios",
-      "badge": "Trámites"
+      "badge": "Trámites",
+      "modal_content": [
+        {
+          "nombre": "Boleto Estudiantil Terciario / Superior (SUBE)",
+          "descripcion": "Beneficio de 50 viajes mensuales gratuitos en colectivos, subte y premetro para estudiantes del nivel terciario.",
+          "pasos": [
+            "Requisito indispensable: tener una tarjeta SUBE registrada a tu nombre en sube.gob.ar.",
+            "Estar inscripto/a como estudiante regular en el Joaquín V. González (el instituto informa la nómina oficial periódicamente).",
+            "Ingresar al portal oficial del GCBA de Boleto Estudiantil y completar el formulario con tus datos personales.",
+            "Una vez aprobado en la web, acercate a cualquier Terminal Automática SUBE (TAS) o apoyá la tarjeta en tu celular con la App SUBE para activar el beneficio."
+          ],
+          "link": "https://boletoestudiantil.buenosaires.gob.ar/"
+        },
+        {
+          "nombre": "Becas Ciudad (Gobierno de la Ciudad de Buenos Aires)",
+          "descripcion": "Estímulo económico destinado a estudiantes regulares de carreras docentes y técnicas en profesorados de CABA.",
+          "pasos": [
+            "Convocatoria anual: habitual apertura entre marzo y mayo de cada ciclo lectivo.",
+            "Requisitos: ser estudiante regular del nivel superior y cumplir los criterios socioeconómicos establecidos por el GCBA.",
+            "Inscripción: ingresar al portal oficial de Becas Ciudad (becasciudad.bue.edu.ar), completar el formulario virtual y adjuntar constancia de regularidad.",
+            "Cobro: se deposita mensualmente a través de cuenta bancaria asignada del Banco Ciudad."
+          ],
+          "link": "https://becasciudad.bue.edu.ar/"
+        },
+        {
+          "nombre": "Programa PROGRESAR Nivel Superior",
+          "descripcion": "Beca nacional orientada a garantizar el acompañamiento y finalización de los estudios terciarios y de formación docente.",
+          "pasos": [
+            "Requisitos de edad: 17 a 24 años (hasta 30 años para estudiantes avanzados, sin límite de edad para personas con hijos a cargo o discapacidad).",
+            "Ingresos del grupo familiar: no deben superar los 3 Salarios Mínimos, Vitales y Móviles (SMVM).",
+            "Convocatorias: llamados a través de la web oficial de Progresar o la app Mi Argentina.",
+            "El JVG certifica tu regularidad académica automáticamente tras tu postulación."
+          ],
+          "link": "https://www.argentina.gob.ar/educacion/progresar"
+        }
+      ]
     },
     "normativas": {
       "id": "normativas",
@@ -1233,7 +1280,33 @@
       "nombre": "Normativa Institucional",
       "subtitulo": "Reglamento Orgánico (ROI), correlatividades y resoluciones.",
       "categoria": "Institucional",
-      "badge": "Oficial JVG"
+      "badge": "Oficial JVG",
+      "modal_content": [
+        {
+          "titulo": "Reglamento Orgánico Institucional (ROM / ROI)",
+          "descripcion": "Marco normativo general sobre derechos, deberes, gobierno institucional y régimen académico.",
+          "categoria": "Reglamento General",
+          "link": "http://institutojvgonzalez.buenosaires.edu.ar/institucional/ROM.php"
+        },
+        {
+          "titulo": "Reglamento de Práctica Docente y Residencia",
+          "descripcion": "Normativa reguladora de las observaciones, residencias y prácticas de enseñanza en colegios.",
+          "categoria": "Prácticas y Residencia",
+          "link": "http://institutojvgonzalez.buenosaires.edu.ar/institucional/con2017-prac_y_residencia.php"
+        },
+        {
+          "titulo": "Normativas y Documentación General",
+          "descripcion": "Pautas institucionales, reglamentaciones de acreditación y correlatividades.",
+          "categoria": "Académica",
+          "link": "http://institutojvgonzalez.buenosaires.edu.ar/informacion-util/normativas-documentacion.php"
+        },
+        {
+          "titulo": "Preguntas Frecuentes y Resoluciones (PDF)",
+          "descripcion": "Guía completa para estudiantes sobre régimen de cursada y trámites.",
+          "categoria": "Documento PDF",
+          "link": "http://institutojvgonzalez.buenosaires.edu.ar/cartelera/docs/preguntas_frecuentes-v2.pdf"
+        }
+      ]
     },
     "planes": {
       "id": "planes",
@@ -1241,7 +1314,11 @@
       "nombre": "Planes de Estudio",
       "subtitulo": "Planes de los profesorados del instituto y resoluciones.",
       "categoria": "Académica",
-      "badge": "Departamentos"
+      "badge": "Departamentos",
+      "modal_content": {
+        "aviso": "Acceso directo a las páginas oficiales de cada Departamento del Joaquín V. González y sus planes de estudio:",
+        "link_general": "http://institutojvgonzalez.buenosaires.edu.ar/departamentos/"
+      }
     },
     "feedback": {
       "id": "feedback",

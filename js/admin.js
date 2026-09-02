@@ -1781,6 +1781,8 @@ document.addEventListener('DOMContentLoaded', () => {
       } catch (e) {}
     }
 
+    const baseResources = (typeof JVG_OFFICIAL_RESOURCES !== 'undefined') ? JVG_OFFICIAL_RESOURCES : {};
+
     if (!siteConfig || !siteConfig.curriculum || Object.keys(siteConfig.curriculum).length === 0) {
       const baseCurriculum = (typeof CURRICULUM_DATA !== 'undefined') ? JSON.parse(JSON.stringify(CURRICULUM_DATA)) : {};
       siteConfig = {
@@ -1788,13 +1790,51 @@ document.addEventListener('DOMContentLoaded', () => {
         tools_config: {
           aulas: { id: 'aulas', visible: true, nombre: 'Buscador de Aulas', subtitulo: 'Consultá salones, materias y horarios (Base de datos 1.658 clases).' },
           mapas: { id: 'mapas', visible: true, nombre: 'Mapa de Carrera Personal', subtitulo: 'Seguí tus correlatividades y avance de carrera en tu Drive.' },
-          comodato: { id: 'comodato', visible: true, nombre: 'Préstamo de Computadoras', subtitulo: 'Netbooks en comodato: requisitos y modelo de carta.' },
-          becas: { id: 'becas', visible: true, nombre: 'Boleto Estudiantil y Becas', subtitulo: 'Instructivos para SUBE, Beca Ciudad y Progresar.' },
-          normativas: { id: 'normativas', visible: true, nombre: 'Normativa Institucional', subtitulo: 'Reglamento Orgánico (ROI), correlatividades y resoluciones.' },
-          planes: { id: 'planes', visible: true, nombre: 'Planes de Estudio', subtitulo: 'Planes de los profesorados del instituto y resoluciones.' },
+          comodato: { 
+            id: 'comodato', 
+            visible: true, 
+            nombre: 'Préstamo de Computadoras', 
+            subtitulo: 'Netbooks en comodato: requisitos y modelo de carta.',
+            modal_content: baseResources.comodato ? JSON.parse(JSON.stringify(baseResources.comodato)) : {}
+          },
+          becas: { 
+            id: 'becas', 
+            visible: true, 
+            nombre: 'Boleto Estudiantil y Becas', 
+            subtitulo: 'Instructivos para SUBE, Beca Ciudad y Progresar.',
+            modal_content: baseResources.becas ? JSON.parse(JSON.stringify(baseResources.becas)) : []
+          },
+          normativas: { 
+            id: 'normativas', 
+            visible: true, 
+            nombre: 'Normativa Institucional', 
+            subtitulo: 'Reglamento Orgánico (ROI), correlatividades y resoluciones.',
+            modal_content: baseResources.normativas ? JSON.parse(JSON.stringify(baseResources.normativas)) : []
+          },
+          planes: { 
+            id: 'planes', 
+            visible: true, 
+            nombre: 'Planes de Estudio', 
+            subtitulo: 'Planes de los profesorados del instituto y resoluciones.',
+            modal_content: { aviso: 'Acceso directo a las páginas oficiales de cada Departamento del Joaquín V. González y sus planes de estudio:', link_general: 'http://institutojvgonzalez.buenosaires.edu.ar/departamentos/' }
+          },
           feedback: { id: 'feedback', visible: true, nombre: 'Consultas y Sugerencias', subtitulo: 'Escribinos directamente al equipo de administración.' }
         }
       };
+    } else if (siteConfig.tools_config) {
+      // Si tools_config ya existe pero no tiene modal_content, inicializarlos
+      if (!siteConfig.tools_config.comodato.modal_content && baseResources.comodato) {
+        siteConfig.tools_config.comodato.modal_content = JSON.parse(JSON.stringify(baseResources.comodato));
+      }
+      if (!siteConfig.tools_config.normativas.modal_content && baseResources.normativas) {
+        siteConfig.tools_config.normativas.modal_content = JSON.parse(JSON.stringify(baseResources.normativas));
+      }
+      if (!siteConfig.tools_config.becas.modal_content && baseResources.becas) {
+        siteConfig.tools_config.becas.modal_content = JSON.parse(JSON.stringify(baseResources.becas));
+      }
+      if (!siteConfig.tools_config.planes.modal_content) {
+        siteConfig.tools_config.planes.modal_content = { aviso: 'Acceso directo a las páginas oficiales de cada Departamento del Joaquín V. González y sus planes de estudio:', link_general: 'http://institutojvgonzalez.buenosaires.edu.ar/departamentos/' };
+      }
     }
 
     populateEditorCarrerasDropdown();
@@ -2041,10 +2081,131 @@ document.addEventListener('DOMContentLoaded', () => {
               <label class="block text-[11px] font-bold text-gray-500 uppercase mb-1">Subtítulo / Bajada Descriptiva</label>
               <input type="text" value="${escapeHtml(t.subtitulo || '')}" onchange="updateToolField('${t.id}', 'subtitulo', this.value)" class="w-full px-3 py-1.5 border border-gray-300 rounded-lg text-xs focus:ring-2 focus:ring-brand-blue outline-none">
             </div>
-          </div>
+          ${renderModalContentEditor(t)}
         </div>
       `;
     }).join('');
+  }
+
+  function renderModalContentEditor(tool) {
+    if (tool.id === 'comodato') {
+      const mc = tool.modal_content || {};
+      const pasosText = Array.isArray(mc.pasos) ? mc.pasos.join('\n') : (mc.pasos || '');
+      return `
+        <details class="mt-3 border-t border-gray-100 pt-3">
+          <summary class="text-xs font-bold text-brand-blue cursor-pointer hover:underline select-none flex items-center gap-1.5 py-1">
+            <span>📝 Editar Contenido Interno de la Ventana (Requisitos y Modelo de Carta)</span>
+          </summary>
+          <div class="mt-3 space-y-3 bg-gray-50 p-3 rounded-lg border border-gray-200">
+            <div>
+              <label class="block text-[11px] font-bold text-gray-600 mb-1">Título de la Ventana</label>
+              <input type="text" value="${escapeHtml(mc.titulo || 'Préstamo de Computadoras en Comodato')}" onchange="updateComodatoField('titulo', this.value)" class="w-full px-2.5 py-1.5 border border-gray-300 rounded text-xs focus:ring-2 focus:ring-brand-blue outline-none">
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold text-gray-600 mb-1">Bajada Descriptiva</label>
+              <input type="text" value="${escapeHtml(mc.descripcion || '')}" onchange="updateComodatoField('descripcion', this.value)" class="w-full px-2.5 py-1.5 border border-gray-300 rounded text-xs focus:ring-2 focus:ring-brand-blue outline-none">
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold text-gray-600 mb-1">Requisitos y Pasos para Solicitarla (un paso por renglón)</label>
+              <textarea rows="4" onchange="updateComodatoPasos(this.value)" class="w-full p-2 border border-gray-300 rounded text-xs leading-relaxed focus:ring-2 focus:ring-brand-blue outline-none">${escapeHtml(pasosText)}</textarea>
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold text-gray-600 mb-1">Modelo de Carta Formal para Presentar en Rectorado</label>
+              <textarea rows="6" onchange="updateComodatoField('modeloCarta', this.value)" class="w-full p-2 border border-gray-300 rounded text-xs font-mono leading-relaxed focus:ring-2 focus:ring-brand-blue outline-none">${escapeHtml(mc.modeloCarta || '')}</textarea>
+            </div>
+          </div>
+        </details>
+      `;
+    }
+
+    if (tool.id === 'normativas') {
+      const items = Array.isArray(tool.modal_content) ? tool.modal_content : [];
+      return `
+        <details class="mt-3 border-t border-gray-100 pt-3">
+          <summary class="text-xs font-bold text-brand-blue cursor-pointer hover:underline select-none flex items-center gap-1.5 py-1">
+            <span>📝 Editar Reglamentos y Resoluciones Oficiales (${items.length} documentos)</span>
+          </summary>
+          <div class="mt-3 space-y-3 bg-gray-50 p-3 rounded-lg border border-gray-200">
+            <div class="space-y-2.5">
+              ${items.map((norm, idx) => `
+                <div class="bg-white p-3 rounded-lg border border-gray-200 space-y-2">
+                  <div class="flex justify-between items-center">
+                    <span class="text-[11px] font-bold text-brand-navy">Documento #${idx + 1}</span>
+                    <button type="button" onclick="deleteNormativaItem(${idx})" class="text-xs text-red-600 hover:text-red-800 font-bold">🗑️ Eliminar</button>
+                  </div>
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <input type="text" placeholder="Título..." value="${escapeHtml(norm.titulo || '')}" onchange="updateNormativaField(${idx}, 'titulo', this.value)" class="px-2.5 py-1.5 border border-gray-300 rounded text-xs font-semibold">
+                    <input type="text" placeholder="Enlace oficial (URL)..." value="${escapeHtml(norm.link || '')}" onchange="updateNormativaField(${idx}, 'link', this.value)" class="px-2.5 py-1.5 border border-gray-300 rounded text-xs font-mono">
+                  </div>
+                  <textarea rows="2" placeholder="Descripción breve..." onchange="updateNormativaField(${idx}, 'descripcion', this.value)" class="w-full px-2.5 py-1.5 border border-gray-300 rounded text-xs">${escapeHtml(norm.descripcion || '')}</textarea>
+                </div>
+              `).join('')}
+            </div>
+            <button type="button" onclick="addNormativaItem()" class="px-3 py-1.5 bg-brand-lightBlue hover:bg-sky-100 text-brand-blue text-xs font-bold rounded-lg border border-sky-200 transition">
+              + Agregar Nuevo Reglamento / Documento
+            </button>
+          </div>
+        </details>
+      `;
+    }
+
+    if (tool.id === 'becas') {
+      const items = Array.isArray(tool.modal_content) ? tool.modal_content : [];
+      return `
+        <details class="mt-3 border-t border-gray-100 pt-3">
+          <summary class="text-xs font-bold text-brand-blue cursor-pointer hover:underline select-none flex items-center gap-1.5 py-1">
+            <span>📝 Editar Becas y Beneficios Estudiantiles (${items.length} beneficios)</span>
+          </summary>
+          <div class="mt-3 space-y-3 bg-gray-50 p-3 rounded-lg border border-gray-200">
+            <div class="space-y-2.5">
+              ${items.map((beca, idx) => `
+                <div class="bg-white p-3 rounded-lg border border-gray-200 space-y-2">
+                  <div class="flex justify-between items-center">
+                    <span class="text-[11px] font-bold text-brand-navy">Beneficio #${idx + 1}</span>
+                    <button type="button" onclick="deleteBecaItem(${idx})" class="text-xs text-red-600 hover:text-red-800 font-bold">🗑️ Eliminar</button>
+                  </div>
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <input type="text" placeholder="Nombre de la beca..." value="${escapeHtml(beca.nombre || '')}" onchange="updateBecaField(${idx}, 'nombre', this.value)" class="px-2.5 py-1.5 border border-gray-300 rounded text-xs font-semibold">
+                    <input type="text" placeholder="Link de inscripción (URL)..." value="${escapeHtml(beca.link || '')}" onchange="updateBecaField(${idx}, 'link', this.value)" class="px-2.5 py-1.5 border border-gray-300 rounded text-xs font-mono">
+                  </div>
+                  <textarea rows="2" placeholder="Descripción breve..." onchange="updateBecaField(${idx}, 'descripcion', this.value)" class="w-full px-2.5 py-1.5 border border-gray-300 rounded text-xs">${escapeHtml(beca.descripcion || '')}</textarea>
+                  <div>
+                    <label class="block text-[10px] font-bold text-gray-500 uppercase mb-0.5">Instructivo paso a paso (un punto por renglón)</label>
+                    <textarea rows="3" onchange="updateBecaPasos(${idx}, this.value)" class="w-full px-2.5 py-1.5 border border-gray-300 rounded text-xs leading-relaxed">${escapeHtml((beca.pasos || []).join('\n'))}</textarea>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+            <button type="button" onclick="addBecaItem()" class="px-3 py-1.5 bg-brand-lightBlue hover:bg-sky-100 text-brand-blue text-xs font-bold rounded-lg border border-sky-200 transition">
+              + Agregar Nueva Beca / Beneficio
+            </button>
+          </div>
+        </details>
+      `;
+    }
+
+    if (tool.id === 'planes') {
+      const mc = tool.modal_content || {};
+      return `
+        <details class="mt-3 border-t border-gray-100 pt-3">
+          <summary class="text-xs font-bold text-brand-blue cursor-pointer hover:underline select-none flex items-center gap-1.5 py-1">
+            <span>📝 Editar Información de Planes y Departamentos</span>
+          </summary>
+          <div class="mt-3 space-y-3 bg-gray-50 p-3 rounded-lg border border-gray-200">
+            <div>
+              <label class="block text-[11px] font-bold text-gray-600 mb-1">Texto Explicativo en la Ventana</label>
+              <input type="text" value="${escapeHtml(mc.aviso || 'Acceso directo a las páginas oficiales de cada Departamento del Joaquín V. González y sus planes de estudio:')}" onchange="updatePlanesField('aviso', this.value)" class="w-full px-2.5 py-1.5 border border-gray-300 rounded text-xs focus:ring-2 focus:ring-brand-blue outline-none">
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold text-gray-600 mb-1">Enlace General a Departamentos del JVG (URL)</label>
+              <input type="text" value="${escapeHtml(mc.link_general || 'http://institutojvgonzalez.buenosaires.edu.ar/departamentos/')}" onchange="updatePlanesField('link_general', this.value)" class="w-full px-2.5 py-1.5 border border-gray-300 rounded text-xs font-mono focus:ring-2 focus:ring-brand-blue outline-none">
+            </div>
+          </div>
+        </details>
+      `;
+    }
+
+    return '';
   }
 
   window.toggleToolVisibility = function(toolId, isVisible) {
@@ -2057,6 +2218,96 @@ document.addEventListener('DOMContentLoaded', () => {
   window.updateToolField = function(toolId, field, value) {
     if (!siteConfig || !siteConfig.tools_config || !siteConfig.tools_config[toolId]) return;
     siteConfig.tools_config[toolId][field] = value.trim();
+    setEditorDirty(true);
+  };
+
+  window.updateComodatoField = function(field, val) {
+    if (!siteConfig?.tools_config?.comodato) return;
+    if (!siteConfig.tools_config.comodato.modal_content) siteConfig.tools_config.comodato.modal_content = {};
+    siteConfig.tools_config.comodato.modal_content[field] = val.trim();
+    setEditorDirty(true);
+  };
+
+  window.updateComodatoPasos = function(val) {
+    if (!siteConfig?.tools_config?.comodato) return;
+    if (!siteConfig.tools_config.comodato.modal_content) siteConfig.tools_config.comodato.modal_content = {};
+    siteConfig.tools_config.comodato.modal_content.pasos = val.split('\n').map(l => l.trim()).filter(Boolean);
+    setEditorDirty(true);
+  };
+
+  window.updateNormativaField = function(idx, field, val) {
+    if (!siteConfig?.tools_config?.normativas) return;
+    if (!Array.isArray(siteConfig.tools_config.normativas.modal_content)) siteConfig.tools_config.normativas.modal_content = [];
+    if (siteConfig.tools_config.normativas.modal_content[idx]) {
+      siteConfig.tools_config.normativas.modal_content[idx][field] = val.trim();
+      setEditorDirty(true);
+    }
+  };
+
+  window.addNormativaItem = function() {
+    if (!siteConfig?.tools_config?.normativas) return;
+    if (!Array.isArray(siteConfig.tools_config.normativas.modal_content)) siteConfig.tools_config.normativas.modal_content = [];
+    siteConfig.tools_config.normativas.modal_content.push({
+      titulo: 'Nueva Normativa / Resolución',
+      descripcion: 'Descripción del reglamento institucional.',
+      link: 'http://institutojvgonzalez.buenosaires.edu.ar/',
+      categoria: 'Institucional'
+    });
+    setEditorDirty(true);
+    renderEditorTools();
+  };
+
+  window.deleteNormativaItem = function(idx) {
+    if (!siteConfig?.tools_config?.normativas) return;
+    if (!Array.isArray(siteConfig.tools_config.normativas.modal_content)) return;
+    siteConfig.tools_config.normativas.modal_content.splice(idx, 1);
+    setEditorDirty(true);
+    renderEditorTools();
+  };
+
+  window.updateBecaField = function(idx, field, val) {
+    if (!siteConfig?.tools_config?.becas) return;
+    if (!Array.isArray(siteConfig.tools_config.becas.modal_content)) siteConfig.tools_config.becas.modal_content = [];
+    if (siteConfig.tools_config.becas.modal_content[idx]) {
+      siteConfig.tools_config.becas.modal_content[idx][field] = val.trim();
+      setEditorDirty(true);
+    }
+  };
+
+  window.updateBecaPasos = function(idx, val) {
+    if (!siteConfig?.tools_config?.becas) return;
+    if (!Array.isArray(siteConfig.tools_config.becas.modal_content)) siteConfig.tools_config.becas.modal_content = [];
+    if (siteConfig.tools_config.becas.modal_content[idx]) {
+      siteConfig.tools_config.becas.modal_content[idx].pasos = val.split('\n').map(l => l.trim()).filter(Boolean);
+      setEditorDirty(true);
+    }
+  };
+
+  window.addBecaItem = function() {
+    if (!siteConfig?.tools_config?.becas) return;
+    if (!Array.isArray(siteConfig.tools_config.becas.modal_content)) siteConfig.tools_config.becas.modal_content = [];
+    siteConfig.tools_config.becas.modal_content.push({
+      nombre: 'Nueva Beca o Beneficio',
+      descripcion: 'Descripción del beneficio y requisitos.',
+      pasos: ['Requisito: ser estudiante regular del nivel superior.', 'Completar solicitud en el portal correspondiente.'],
+      link: 'https://'
+    });
+    setEditorDirty(true);
+    renderEditorTools();
+  };
+
+  window.deleteBecaItem = function(idx) {
+    if (!siteConfig?.tools_config?.becas) return;
+    if (!Array.isArray(siteConfig.tools_config.becas.modal_content)) return;
+    siteConfig.tools_config.becas.modal_content.splice(idx, 1);
+    setEditorDirty(true);
+    renderEditorTools();
+  };
+
+  window.updatePlanesField = function(field, val) {
+    if (!siteConfig?.tools_config?.planes) return;
+    if (!siteConfig.tools_config.planes.modal_content) siteConfig.tools_config.planes.modal_content = {};
+    siteConfig.tools_config.planes.modal_content[field] = val.trim();
     setEditorDirty(true);
   };
 
