@@ -2087,12 +2087,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }).join('');
   }
 
+  const openToolModals = new Set();
+  window.trackToolModalToggle = function(toolId, isOpen) {
+    if (isOpen) openToolModals.add(toolId);
+    else openToolModals.delete(toolId);
+  };
+
   function renderModalContentEditor(tool) {
+    const isOpenAttr = openToolModals.has(tool.id) ? 'open' : '';
+
     if (tool.id === 'comodato') {
       const mc = tool.modal_content || {};
       const pasosText = Array.isArray(mc.pasos) ? mc.pasos.join('\n') : (mc.pasos || '');
       return `
-        <details class="mt-3 border-t border-gray-100 pt-3">
+        <details ${isOpenAttr} ontoggle="trackToolModalToggle('comodato', this.open)" class="mt-3 border-t border-gray-100 pt-3">
           <summary class="text-xs font-bold text-brand-blue cursor-pointer hover:underline select-none flex items-center gap-1.5 py-1">
             <span>📝 Editar Contenido Interno de la Ventana (Requisitos y Modelo de Carta)</span>
           </summary>
@@ -2121,7 +2129,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (tool.id === 'normativas') {
       const items = Array.isArray(tool.modal_content) ? tool.modal_content : [];
       return `
-        <details class="mt-3 border-t border-gray-100 pt-3">
+        <details ${isOpenAttr} ontoggle="trackToolModalToggle('normativas', this.open)" class="mt-3 border-t border-gray-100 pt-3">
           <summary class="text-xs font-bold text-brand-blue cursor-pointer hover:underline select-none flex items-center gap-1.5 py-1">
             <span>📝 Editar Reglamentos y Resoluciones Oficiales (${items.length} documentos)</span>
           </summary>
@@ -2152,12 +2160,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (tool.id === 'becas') {
       const items = Array.isArray(tool.modal_content) ? tool.modal_content : [];
       return `
-        <details class="mt-3 border-t border-gray-100 pt-3">
+        <details ${isOpenAttr} ontoggle="trackToolModalToggle('becas', this.open)" class="mt-3 border-t border-gray-100 pt-3">
           <summary class="text-xs font-bold text-brand-blue cursor-pointer hover:underline select-none flex items-center gap-1.5 py-1">
             <span>📝 Editar Becas y Beneficios Estudiantiles (${items.length} beneficios)</span>
           </summary>
           <div class="mt-3 space-y-3 bg-gray-50 p-3 rounded-lg border border-gray-200">
-            <div class="space-y-2.5">
+            <div id="becasListEditor" class="space-y-2.5">
               ${items.map((beca, idx) => `
                 <div class="bg-white p-3 rounded-lg border border-gray-200 space-y-2">
                   <div class="flex justify-between items-center">
@@ -2187,7 +2195,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (tool.id === 'planes') {
       const mc = tool.modal_content || {};
       return `
-        <details class="mt-3 border-t border-gray-100 pt-3">
+        <details ${isOpenAttr} ontoggle="trackToolModalToggle('planes', this.open)" class="mt-3 border-t border-gray-100 pt-3">
           <summary class="text-xs font-bold text-brand-blue cursor-pointer hover:underline select-none flex items-center gap-1.5 py-1">
             <span>📝 Editar Información de Planes y Departamentos</span>
           </summary>
@@ -2247,6 +2255,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addNormativaItem = function() {
     if (!siteConfig?.tools_config?.normativas) return;
     if (!Array.isArray(siteConfig.tools_config.normativas.modal_content)) siteConfig.tools_config.normativas.modal_content = [];
+    openToolModals.add('normativas');
     siteConfig.tools_config.normativas.modal_content.push({
       titulo: 'Nueva Normativa / Resolución',
       descripcion: 'Descripción del reglamento institucional.',
@@ -2260,6 +2269,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.deleteNormativaItem = function(idx) {
     if (!siteConfig?.tools_config?.normativas) return;
     if (!Array.isArray(siteConfig.tools_config.normativas.modal_content)) return;
+    openToolModals.add('normativas');
     siteConfig.tools_config.normativas.modal_content.splice(idx, 1);
     setEditorDirty(true);
     renderEditorTools();
@@ -2286,6 +2296,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addBecaItem = function() {
     if (!siteConfig?.tools_config?.becas) return;
     if (!Array.isArray(siteConfig.tools_config.becas.modal_content)) siteConfig.tools_config.becas.modal_content = [];
+    openToolModals.add('becas');
     siteConfig.tools_config.becas.modal_content.push({
       nombre: 'Nueva Beca o Beneficio',
       descripcion: 'Descripción del beneficio y requisitos.',
@@ -2299,6 +2310,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.deleteBecaItem = function(idx) {
     if (!siteConfig?.tools_config?.becas) return;
     if (!Array.isArray(siteConfig.tools_config.becas.modal_content)) return;
+    openToolModals.add('becas');
     siteConfig.tools_config.becas.modal_content.splice(idx, 1);
     setEditorDirty(true);
     renderEditorTools();
