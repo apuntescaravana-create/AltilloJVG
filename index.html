@@ -6,6 +6,15 @@
   <title>AltilloJVG | Repositorio Digital del Instituto Joaquín V. González</title>
   <meta name="description" content="Plataforma colaborativa y repositorio digital para alumnos del Instituto Superior del Profesorado Joaquín V. González. Resúmenes, parciales, normativas y derechos estudiantiles impulsados por estudiantes independientes y La Caravana.">
 
+  <!-- Redirección automática de GitHub Pages a la versión oficial en Vercel (para visitas desde QR impreso) -->
+  <script>
+    if (window.location.hostname.includes('github.io')) {
+      var targetPath = window.location.pathname.replace(/^\/[^/]+/, '');
+      if (!targetPath.startsWith('/')) targetPath = '/' + targetPath;
+      window.location.replace('https://altillo-jvg.vercel.app' + targetPath + window.location.search + window.location.hash);
+    }
+  </script>
+
   <!-- Estilos y Fuentes con Cache Buster v=105 -->
   <link rel="stylesheet" href="css/styles.css?v=105">
   <link rel="icon" type="image/svg+xml" href="assets/logo-owl.svg">

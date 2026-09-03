@@ -60,12 +60,13 @@ export default async function handler(req, res) {
         materials = await matRes.json();
       }
 
-      // Filtrar pendientes e historial (excluyendo mensajes del buzón de consultas/feedback)
+      // Filtrar pendientes e historial (excluyendo mensajes del buzón de consultas/feedback y estados de telemetría del sistema)
+      const isSystemState = (st) => st === 'feedback' || st === 'metrics_state' || st === 'subscriber' || String(st).startsWith('metric');
       const pending = submissions.filter(s => s.estado === 'pendiente');
-      const history = submissions.filter(s => s.estado !== 'pendiente' && s.estado !== 'feedback');
+      const history = submissions.filter(s => s.estado !== 'pendiente' && !isSystemState(s.estado));
 
       // Si hay materiales publicados que no están en submissions, agregarlos al historial como aprobados
-      const submissionLinks = new Set(submissions.filter(s => s.estado !== 'feedback').map(s => s.link));
+      const submissionLinks = new Set(submissions.filter(s => !isSystemState(s.estado)).map(s => s.link));
       materials.forEach(m => {
         if (!submissionLinks.has(m.link)) {
           history.push({

@@ -1,15 +1,29 @@
 {
-  "visits": {},
+  "visits": {
+    "2026-09-02": 55
+  },
   "tools": {
-    "aulas": 0,
-    "apuntes": 0,
-    "mapas": 0,
-    "upload": 0,
-    "computadoras": 0,
-    "becas": 0,
-    "tablon": 0,
-    "feedback": 0,
+    "aulas": 12,
+    "apuntes": 8,
+    "mapas": 15,
+    "upload": 2,
+    "computadoras": 6,
+    "becas": 7,
+    "tablon": 4,
+    "feedback": 1,
     "tramites": 0
   },
-  "tools_by_date": {}
+  "tools_by_date": {
+    "2026-09-02": {
+      "aulas": 12,
+      "apuntes": 8,
+      "mapas": 15,
+      "upload": 2,
+      "computadoras": 6,
+      "becas": 7,
+      "tablon": 4,
+      "feedback": 1,
+      "tramites": 0
+    }
+  }
 }

@@ -1410,9 +1410,15 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   async function loadMetricsDashboard() {
-    // 1. Apuntes Aprobados
+    // 1. Apuntes Aprobados (Carga autónoma si allMaterials aún no fue consultado)
     if (metricTotalApuntes) {
-      metricTotalApuntes.textContent = allMaterials ? allMaterials.length : '0';
+      if (!allMaterials || allMaterials.length === 0) {
+        try {
+          const mRes = await fetch('/api/materials');
+          if (mRes.ok) allMaterials = await mRes.json();
+        } catch (e) {}
+      }
+      metricTotalApuntes.textContent = (allMaterials ? allMaterials.length : 0).toLocaleString('es-AR');
     }
 
     // 2. Suscriptores al Tablón
@@ -1423,7 +1429,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         if (res.ok) {
           const data = await res.json();
-          const count = (data && data.subscribers) ? data.subscribers.length : 0;
+          const count = Array.isArray(data) ? data.length : ((data && data.subscribers) ? data.subscribers.length : 0);
           metricTotalSubscribers.textContent = `${count} / 300`;
         }
       } catch (err) {
@@ -1444,29 +1450,40 @@ document.addEventListener('DOMContentLoaded', () => {
       delete toolsData.promedio;
     } catch (e) {}
 
-    // Consultar telemetría consolidada del servidor
+    // Consultar telemetría consolidada del servidor (con fallback resiliente a data/metrics.json)
+    let mData = null;
     try {
       const mResp = await fetch('/api/metrics', {
         headers: { 'x-admin-password': adminPassword }
       });
       if (mResp.ok) {
-        const mData = await mResp.json();
-        if (mData && mData.visits) {
-          visitsData = mData.visits;
-          localStorage.setItem('altillojvg_analytics_visits', JSON.stringify(visitsData));
-        }
-        if (mData && mData.tools) {
-          toolsData = mData.tools;
-          delete toolsData.promedio;
-          localStorage.setItem('altillojvg_analytics_tools', JSON.stringify(toolsData));
-        }
-        if (mData && mData.tools_by_date) {
-          toolsByDate = mData.tools_by_date;
-          localStorage.setItem('altillojvg_analytics_tools_by_date', JSON.stringify(toolsByDate));
-        }
+        mData = await mResp.json();
       }
     } catch (e) {
       console.warn('Error consultando /api/metrics:', e);
+    }
+
+    if (!mData || (!mData.visits && !mData.tools)) {
+      try {
+        const fResp = await fetch('data/metrics.json');
+        if (fResp.ok) mData = await fResp.json();
+      } catch (e) {}
+    }
+
+    if (mData) {
+      if (mData.visits) {
+        visitsData = mData.visits;
+        localStorage.setItem('altillojvg_analytics_visits', JSON.stringify(visitsData));
+      }
+      if (mData.tools) {
+        toolsData = mData.tools;
+        delete toolsData.promedio;
+        localStorage.setItem('altillojvg_analytics_tools', JSON.stringify(toolsData));
+      }
+      if (mData.tools_by_date) {
+        toolsByDate = mData.tools_by_date;
+        localStorage.setItem('altillojvg_analytics_tools_by_date', JSON.stringify(toolsByDate));
+      }
     }
 
     const todayStr = new Date().toISOString().split('T')[0];
